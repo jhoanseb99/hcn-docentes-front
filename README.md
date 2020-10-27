@@ -1,1 +1,1 @@
-# hcn-docentes
+# Simulador de Historias Clínicas Nutricionales orientada al docente

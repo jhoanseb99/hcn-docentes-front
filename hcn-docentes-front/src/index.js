@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.css';
+//import "./index.scss"; // Standard version
+import App from './app/App';
+import reportWebVitals from './app/reportWebVitals';
+
+const { PUBLIC_URL } = process.env;
 
 ReactDOM.render(
   <React.StrictMode>

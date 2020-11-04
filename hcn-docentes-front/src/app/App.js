@@ -1,7 +1,9 @@
-import logo from './logo.svg';
+import logo from './../logo.svg';
 import './App.css';
+import { Advertisements } from './pages/Advertisements';
 
 function App() {
+  /*
   return (
     <div className="App">
       <header className="App-header">
@@ -19,6 +21,13 @@ function App() {
         </a>
       </header>
     </div>
+  );*/
+  return (
+    <>
+    <div className="card bg-success">
+    </div>
+    <Advertisements/>
+    </>
   );
 }
 

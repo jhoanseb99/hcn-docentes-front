@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Advertisements() {
+export default function Advertisements() {
   return (
     <div className="container">
       {/* titulo */}

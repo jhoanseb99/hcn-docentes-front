@@ -1,6 +1,7 @@
 import logo from './../logo.svg';
 import './App.css';
-import { Advertisements } from './pages/Advertisements';
+import Advertisements from './pages/Advertisements';
+import Courses from './pages/Courses';
 
 function App() {
   /*
@@ -26,7 +27,7 @@ function App() {
     <>
     <div className="card bg-success">
     </div>
-    <Advertisements/>
+    <Advertisements />
     </>
   );
 }

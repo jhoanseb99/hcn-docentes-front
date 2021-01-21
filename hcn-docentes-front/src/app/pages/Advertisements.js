@@ -1,13 +1,29 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import {actions} from "../modules/Advertisements/redux/advRedux";
 
 export default function Advertisements() {
+  const { table } = useSelector(state => state.adv);
+  const dispatch = useDispatch();
+
+  const new_table = [1,2,3,4];
+
+  React.useEffect(() => {
+    console.log(table);
+  }, [table]);
+
+  const enviar = () => {
+    dispatch(actions.setTable(new_table));
+  };
+
   return (
     <div className="container">
       {/* titulo */}
       <div className="row pt-5 pb-3">
         <h3 className="text-dark">Anuncios</h3>
         <div className="align-self-center ml-3">
-          <a className="btn btn-success font-weight-bolder font-size-sm mr-3">+</a>
+          <a className="btn btn-success font-weight-bolder font-size-sm mr-3" onClick={enviar}>+</a>
         </div>
       </div>
       {/* anuncios */}

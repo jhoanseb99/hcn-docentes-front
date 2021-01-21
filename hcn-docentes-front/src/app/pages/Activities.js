@@ -1,6 +1,13 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Activities() {
+  const { table } = useSelector(state => state.adv);
+
+  React.useEffect(() => {
+    console.log(table);
+  }, [table]);
+  
   return (
     <div className="container">
       {/* titulo */}

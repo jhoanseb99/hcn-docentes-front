@@ -5,10 +5,10 @@ import Topbar from "./Topbar";
 export function Layout({ children }) {
   return (
     <div className="d-flex flex-column flex-row-fluid">
-      <Topbar />      
+      <Topbar />
       <div className="d-flex flex-column-fluid">
         <Aside />
-        <div className="p-2">
+        <div className="content">
           {children}
         </div>
       </div>

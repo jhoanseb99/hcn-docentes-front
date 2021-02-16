@@ -12,7 +12,8 @@ export const actionTypes = {
 
 const initialAuthState = {
   user: undefined,
-  authToken: undefined
+  authToken: undefined,
+  sessionExpired: false,
 };
 
 export const reducer = persistReducer(
@@ -41,8 +42,28 @@ export const reducer = persistReducer(
         return { ...state, user };
       }
 
+      case actionTypes.setSessionExpired: {
+        return {...state, sessionExpired: true };
+      }
+
       default:
         return state;
     }
   }
 );
+
+export const actions = {
+  login: (authToken) => ({ type: actionTypes.Login, payload: { authToken } }),
+  register: (authToken) => ({
+    type: actionTypes.Register,
+    payload: { authToken },
+  }),
+  logout: () => ({ type: actionTypes.Logout }),
+  requestUser: (user) => ({
+    type: actionTypes.UserRequested,
+    payload: { user },
+  }),
+  fulfillUser: (user) => ({ type: actionTypes.UserLoaded, payload: { user } }),
+  setUser: (user) => ({ type: actionTypes.SetUser, payload: { user } }),
+  setSessionExpired: () => ({ type: actionTypes.setSessionExpired }),
+};

@@ -5,8 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import Routes from "./Routes";
 
 import './App.css';
-import Advertisements from './pages/Advertisements';
-import logo from './../logo.svg';
 
 function App({ store, persistor, basename }) {
   console.log(basename);

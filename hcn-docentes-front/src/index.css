@@ -5,9 +5,8 @@
 @import "./theme/css/index.css";
 
 body {
-  background-color: #ECECEC;
-  padding-top: 90px;
-  padding-left: 200px;
+  background-color: #E5E5E5;
+  padding-top: 100px;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',

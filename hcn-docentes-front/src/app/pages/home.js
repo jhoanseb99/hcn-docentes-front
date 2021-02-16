@@ -1,6 +1,4 @@
 import React from "react";
-import Advertisements from "./Advertisements";
-import Courses from "./Courses";
 
 export default function Home() {
   return (

@@ -1,52 +1,72 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { actions } from "../modules/Activities/_redux/activitiesRedux"; 
+
 export default function Activities() {
-  const { table } = useSelector(state => state.adv);
+  const { list } = useSelector(state => state.activities);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    console.log(table);
-  }, [table]);
+    console.log(list);
+  }, [list]);
   
-  return (
+  React.useEffect(() => {
+    dispatch(actions.getActivitiesList());
+  }, [dispatch]);
+
+  return(
     <div className="container">
+
       {/* titulo */}
-      <div className="row pt-5 pb-3">
-        <h3 className="text-dark">Actividades</h3>
-        <div className="align-self-center ml-3">
-          <a className="btn btn-success font-weight-bolder font-size-sm mr-3">+</a>
+      <div className="row pb-5">
+        <div className="col">
+          <h3 className="text-dark">Actividades</h3>  
         </div>
-      </div>
-      {/* anuncios */}
-      <div className="row">
-        
-        {/* Card */}
-        <div className="card shadow-sm p-3 mb-5 bg-white rounded">
-          {/* Card::body */}
-          <div className="card-body pt-3">
-            {/* Card::body::title */}
-            <div className="card-title">
-              <div className="row">
-                <strong className="align-self-center">Actividad #1</strong>
-                <div className="align-self-center ml-3">
-                  <a className="btn btn-info font-weight-bolder font-size-sm mr-3">editar</a>
-                  <a className="btn btn-danger font-weight-bolder font-size-sm mr-3">eliminar</a>
-                </div>
-              </div>
-            </div>
-            {/* Card::body::info */}
-            <div className="row">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </div>
-            <div className="row pt-1">
-              <small className="text-muted font-weight-bold d-block">
-                19-10-2020
-              </small>
-            </div>
+        <div className="col text-right">
+          <div className="align-self-center ml-3">
+            <a className="btn btn-primary btn-circle font-weight-bolder">+</a> 
           </div>
         </div>
-
       </div>
+
+      {/* anuncios */}
+      {list.map((value, index) => (
+        <div key={index} className="row">
+          {/* Card */}
+          <div className="card custom-card p-3 mb-5 rounded w-100">
+            {/* Card::body */}
+            <div className="card-body">
+              {/* Card::body::title */}
+              <div className="card-title">
+                <div className="row">
+                  <div className="col p-0">
+                    <strong className="align-self-center">{value.Title}</strong>
+                  </div>
+                  <div className="col text-right">
+                    <div className="align-self-center ml-3">
+                      <a className="btn btn-info font-weight-bolder font-size-sm mr-3">editar</a>
+                      <a className="btn btn-danger font-weight-bolder font-size-sm mr-3">eliminar</a>
+                    </div>
+                  </div>
+                  
+                  
+                </div>
+              </div>
+              {/* Card::body::info */}
+              <div className="row">
+                {value.Description}
+              </div>
+              <div className="row pt-1"> 
+                <small className="text-muted font-weight-bold d-block">
+                  {value.CreationDate}
+                </small>
+              </div>
+            </div>
+          </div> 
+        </div>
+      ))} 
+
     </div>
   );
 }

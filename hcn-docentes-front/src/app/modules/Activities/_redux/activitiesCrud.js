@@ -1,4 +1,4 @@
-import makeRequest from "../../General/_redux/Crud";
+import makeRequest from "../../../const/Crud";
 import { getQueryParams } from "../../../const";
 
 export const PATH_ACTIVITIES = "/Activities";
@@ -10,10 +10,18 @@ export const PATH_CREATE_ACTIVITIE = PATH_ACTIVITIES + "/CreateActivity";
 export const PATH_DELETE_ACTIVITIE = PATH_ACTIVITIES + "/DeleteActivity";
 
 export function getAllActivities(authToken) {
-  return makeRequest({
-    path: PATH_GET_ALL_ACTIVITIES, 
-    method: "GET",
-    headers: new Headers(),
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_GET_ALL_ACTIVITIES, 
+      method: "GET",
+      headers: new Headers(),
+    })
+    .then(response => {
+      if(!response.ok) throw new Error(response.status);
+      return response.json();
+    })
+    .then(response => resolve(response))
+    .catch(err => reject(err.message)); 
   });
 }
 

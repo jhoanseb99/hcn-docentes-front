@@ -1,4 +1,4 @@
-import makeRequest from "../../General/_redux/Crud";
+import makeRequest from "../../../const/Crud";
 import { getQueryParams } from "../../../const";
 
 export const PATH_COURSES = "/Courses";
@@ -25,18 +25,34 @@ export const PATH_REMOVE_STUDENT_COURSE = PATH_COURSES + "/RemoveStudent";
 
 
 export function getAllCourses(authToken) {
-  return makeRequest({
-    path: PATH_GET_ALL_COURSES, 
-    method: "GET",
-    headers: new Headers(),
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_GET_ALL_COURSES, 
+      method: "GET",
+      headers: new Headers(),
+    })
+    .then(response => {
+      if(!response.ok) throw new Error(response.status);
+      return response.json();
+    })
+    .then(response => resolve(response))
+    .catch(err => reject(err.message)); 
   });
 }
 
-export function getStudent(params, authToken) {
-  return makeRequest({
-    path: PATH_GET_COURSE + getQueryParams(params), 
-    method: "GET",
-    headers: new Headers(),
+export function getCourse(params, authToken) {
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_GET_COURSE + getQueryParams(params), 
+      method: "GET",
+      headers: new Headers(),
+    })
+    .then(response => {
+      if(!response.ok) throw new Error(response.status);
+      return response.json();
+    })
+    .then(response => resolve(response))
+    .catch(err => reject(err.message)); 
   });
 }
 

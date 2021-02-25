@@ -7,7 +7,8 @@ export const actionTypes = {
   Logout: "[Logout] Action",
   Register: "[Register] Action",
   UserRequested: "[Request User] Action",
-  UserLoaded: "[Load User] Auth API"
+  UserLoaded: "[Load User] Auth API",
+  setSessionExpired: "SET_SESSION_EXPIRED"
 };
 
 const initialAuthState = {

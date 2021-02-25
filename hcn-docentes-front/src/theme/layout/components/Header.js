@@ -9,7 +9,7 @@ export default function Header() {
       <div className="container-fluid d-flex align-items-stretch justify-content-between">
         {/* logo */}
         <div className="align-self-center">
-          <img className="logo" src={toAbsoluteUrl("/media/logos/logo192.png")}/>
+          <img className="logo" src={toAbsoluteUrl("/media/logos/logo_v1.png")}/>
         </div>
         {/* toolbar */}
         <Dropdown className="align-self-center">

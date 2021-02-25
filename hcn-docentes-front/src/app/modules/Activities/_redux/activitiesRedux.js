@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 import * as requestFromServer from "./activitiesCrud";
 import * as authRedux from "../../Auth/_redux/authRedux";
 
+import { ACTIVITIES } from "../../../const/data";
+
 const initActivitiesState = {
-  list: [],
+  activitieslist: [],
 };
 
 const actionTypes = {
@@ -20,17 +21,12 @@ const setList = list => dispatch => {
 /* API - get all activies list */
 const getActivitiesList = () => (dispatch, getState) => {
   return requestFromServer.getAllActivities()
-  .then(response => {
-    console.log(response);
-    if(response.status === 403) dispatch(authRedux.actions.setSessionExpired());
-    if(!response.ok) throw new Error("Ocurrió un error");
-    return response.json();
-  })
-  .then(response => {
-    dispatch(activitiesSlice.actions.setList({ type: actionTypes.set_list, list: response }));
+  .then(data => {
+    dispatch(activitiesSlice.actions.setList({ type: actionTypes.set_list, list: data }));
   })
   .catch(err => {
     console.log(err);
+    dispatch(activitiesSlice.actions.setList({ type: actionTypes.set_list, list: ACTIVITIES }));
   });
 };
 
@@ -45,7 +41,7 @@ export const activitiesSlice = createSlice({
   reducers: {
     setList: (state, action) => {
       const { list } = action.payload;
-      state.list = list;
+      state.activitieslist = list;
     },
   }
 });

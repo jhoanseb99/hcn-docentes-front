@@ -3,8 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as requestFromServer from "./annCrud";
 import * as authRedux from "../../Auth/_redux/authRedux";
 
+import { ANNOUNCEMENTS } from "../../../const/data";
+
 const initAnnState = {
-  list: [],
+  announcementslist: [],
+  annState: {
+    loading: false
+  }
 };
 
 const actionTypes = {
@@ -17,25 +22,24 @@ const setList = list => dispatch => {
 };
 
 /* API - get all announcement list */
-const getAnnList = () => (dispatch, getState) => {
-  return requestFromServer.getAllAnnouncements()
-  .then(response => {
-    console.log(response);
-    if(response.status === 403) dispatch(authRedux.actions.setSessionExpired());
-    if(!response.ok) throw new Error("Ocurrió un error");
-    return response.json();
-  })
-  .then(response => {
-    dispatch(annSlice.actions.setList({ type: actionTypes.set_list, list: response }));
+const getAnnouncementsList = () => (dispatch, getState) => {
+  let course_id = getState().courses.currentCourse.id;
+  console.log(course_id);
+  return requestFromServer.getAllAnnouncements({ CourseID: course_id })
+  .then(data => {
+    dispatch(annSlice.actions.setList({ type: actionTypes.set_list, list: data }));
   })
   .catch(err => {
     console.log(err);
+    dispatch(annSlice.actions.setList({ 
+      type: actionTypes.set_list, list: ANNOUNCEMENTS.filter(value => value.CourseID === course_id) 
+    }));
   });
 };
 
 export const actions = {
   setList,
-  getAnnList,
+  getAnnouncementsList,
 };
 
 export const annSlice = createSlice({
@@ -44,7 +48,7 @@ export const annSlice = createSlice({
   reducers: {
     setList: (state, action) => {
       const { list } = action.payload;
-      state.table = list;
+      state.announcementslist = list;
     },
   }
 });

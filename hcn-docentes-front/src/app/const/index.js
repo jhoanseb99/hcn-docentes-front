@@ -10,13 +10,9 @@ export function getQueryParams(filters) {
       else str = "&";
       
       switch (filter) {
-        case "idEmbargo":
-          ans += str + `idEmbargo=${filters[filter]}`;
+        default:
+          ans += str + `${filter}=${filters[filter]}`; 
           break;
-        case "estadoEmbargo":
-          ans += str + `estadoEmbargo=${filters[filter]}`;
-          break;
-        default: break;
       }
     }
   }

@@ -2,7 +2,7 @@
 @import "bootstrap/dist/css/bootstrap.css";
 
 /* 2: Layout */
-@import "./theme/css/index.css";
+@import "./theme/css/main.css";
 
 body {
   background-color: #E5E5E5;

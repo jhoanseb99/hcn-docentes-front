@@ -8,4 +8,5 @@ export const FEEDBACKS = [{"ID":1,"ActivityID":1,"StudentID":1},{"ID":2,"Activit
 export const CCASES = [{"ID":1,"Title":"El joven parchado","Description":"Benjamón era un joven con IMC PARCHADO.","Media":"../activitiesresources/img1.png","TeacherID":1},{"ID":2,"Title":"El pianista de la selva","Description":"Re La Mi Do#","Media":"../activitiesresources/img2.png","TeacherID":2},{"ID":3,"Title":"Muerte accidental","Description":"¿Por qué se fue? ¿Y por qué murió? ¿Por qué el Señor me la quitó? Se ha ido al cielo y para poder ir yo...","Media":"../activitiesresources/ElUltimoBeso.mp3","TeacherID":3}];
 export const HCN = [{"ID":1,"TeacherID":1},{"ID":2,"TeacherID":1},{"ID":3,"TeacherID":1},{"ID":4,"TeacherID":2},{"ID":5,"TeacherID":3}];
 
+export const USERS = [];
 

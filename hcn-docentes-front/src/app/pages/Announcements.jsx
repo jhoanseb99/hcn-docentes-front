@@ -27,6 +27,7 @@ function Announcements() {
     setAnnValue(ann);
     setOpenUpdateDialog(true);
   }
+  
   return (
     <div className="container">
       {/* titulo */}

@@ -9,6 +9,7 @@ import Announcements from "../../pages/Announcements.jsx";
 import CoursesPage from "../../pages/CoursesPage";
 import CCasesPage from "../../pages/CCasesPage.jsx";
 import HcnPage from "../../pages/HcnPage.jsx";
+import ClinicalCasesDetails from "../ClinicalCases/pages/ClinicalCasesDetails";
 
 export default function CoursesRoute() {
   const { currentCourse } = useSelector(state => state.courses);
@@ -29,6 +30,11 @@ export default function CoursesRoute() {
         <Route exact={true} path="/courses/activities" component={Activities} />
         <Route exact={true} path="/courses/announcements" component={Announcements} />
         <Route exact={true} path="/courses/clinical-cases" component={CCasesPage} />
+        <Route 
+          exact={true} 
+          path="/courses/clinical-cases/:id" 
+          component={ props => <ClinicalCasesDetails {...props} /> } 
+        />
         <Route exact={true} path="/courses/hcn" component={HcnPage} />
         </>
       ) : (

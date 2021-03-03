@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../_redux/ccasesRedux";
 import BaseModal from "../../../components/UI/BaseModal.jsx";
 
-function CreateCCaseDialog({ open, handleClose }) {
+function UpdateCCaseDialog({ open, handleClose, clinical_case }) {
   const dispatch = useDispatch();
   const initInputData = {
-    Title: "",
-    Description: "",
+    Title: clinical_case.Title,
+    Description: clinical_case.Description,
     Media: ""
   };
 
@@ -32,17 +32,17 @@ function CreateCCaseDialog({ open, handleClose }) {
     return ok;
   };
   
-  const handleCreate = () => {  
+  const handleUpdate = () => {  
     console.log(inputs_data);
     if(!validateInputs()) return;
-    dispatch(actions.createCCase(inputs_data))
+    dispatch(actions.updateCCase({ ID: clinical_case.ID, ...inputs_data }))
     .then(() => handleClose())
   };
 
   const actionButtons = [
     {
-      content: "Crear Caso Clínico",
-      onClick: () => handleCreate()
+      content: "Actualizar Caso Clínico",
+      onClick: () => handleUpdate()
     },
     {
       content: "Cancelar",
@@ -53,7 +53,7 @@ function CreateCCaseDialog({ open, handleClose }) {
 
   return (
     <BaseModal 
-      title="Crear nuevo caso clínico"
+      title="Actualizar caso clínico"
       open={open}
       actions={actionButtons}
       handleClose={handleClose}
@@ -95,4 +95,4 @@ function CreateCCaseDialog({ open, handleClose }) {
   );
 }
 
-export default CreateCCaseDialog;
+export default UpdateCCaseDialog;

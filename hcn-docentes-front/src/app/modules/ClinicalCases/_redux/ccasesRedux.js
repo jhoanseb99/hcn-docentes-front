@@ -47,7 +47,51 @@ const getCCasesListByCourse = () => (dispatch, getState) => {
 const addCCaseToCourse = id => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
   return requestFromServer.addCCaseToCourse({ ClinicalCaseID: id, CourseID })
-  .then(data => {
+  .then(() => {
+    dispatch(getCCasesListByCourse());
+  })
+  .catch(err => {
+    console.log(err);
+  });
+};
+
+const createCCase = props => (dispatch, getState) => {
+  return requestFromServer.createCCase({ ...props, TeacherID: 1 })
+  .then(() => {
+    dispatch(getCCasesList());
+  })
+  .catch(err => {
+    console.log(err);
+  });
+};
+
+const updateCCase = props => (dispatch, getState) => {
+  return requestFromServer.updateCCase({ ...props, TeacherID: 1 })
+  .then(() => {
+    dispatch(getCCasesList());
+    dispatch(getCCasesListByCourse());
+  })
+  .catch(err => {
+    console.log(err);
+  });
+};
+
+const deleteCCase = id => (dispatch, getState) => {
+  return dispatch(removeCCase(id))
+  .then(() => requestFromServer.deleteCCase({ ID: id }))
+  .then(() => {
+    dispatch(getCCasesList());
+    dispatch(getCCasesListByCourse());
+  })
+  .catch(err => {
+    console.log(err);
+  });
+};
+
+const removeCCase = id => (dispatch, getState) => {
+  const CourseID = getState().courses.currentCourse.id;
+  return requestFromServer.removeCCaseToCourse({ ClinicalCaseID: id, CourseID })
+  .then(() => {
     dispatch(getCCasesListByCourse());
   })
   .catch(err => {
@@ -59,6 +103,10 @@ export const actions = {
   getCCasesListByCourse,
   getCCasesList,
   addCCaseToCourse,
+  createCCase,
+  updateCCase,
+  removeCCase,
+  deleteCCase
 };
 
 export const ccasesSlice = createSlice({

@@ -18,7 +18,9 @@ function AddCCaseDialog({ open, handleClose }) {
   };
 
   const handleAdd = () => {
-    dispatch(actions.addCCaseToCourse(ccase_id));
+    if(!validateInputs()) return;
+    dispatch(actions.addCCaseToCourse(parseInt(ccase_id)))
+    .then(() => handleClose())
   };
 
 

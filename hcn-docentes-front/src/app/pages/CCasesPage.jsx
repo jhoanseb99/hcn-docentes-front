@@ -1,21 +1,40 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import moment from "moment";
 
 import { actions } from "../modules/ClinicalCases/_redux/ccasesRedux";
 import CreateCCaseDialog from "../modules/ClinicalCases/components/CreateCCaseDialog.jsx";
 import AddCCaseDialog from "../modules/ClinicalCases/components/AddCCaseDialog";
+import UpdateCCaseDialog from "../modules/ClinicalCases/components/UpdateCCaseDialog";
 
 function CCasesPage() {
   const { ccasesListByCourse } = useSelector(state => state.clinicalCases);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [ openCreateDialog, setOpenCreateDialog ] = React.useState(false);
+  const [ openUpdateDialog, setOpenUpdateDialog ] = React.useState(false);
   const [ openAddDialog, setOpenAddDialog ] = React.useState(false);
+  const [ ccaseValue, setCcaseValue ] = React.useState(undefined);
 
   React.useEffect(() => {
     dispatch(actions.getCCasesListByCourse());
   }, [dispatch]);
+
+  const handleUpdate = (data) => {
+    setCcaseValue(data);
+    console.log(data);
+    setOpenUpdateDialog(true);
+  };
+
+  const handleDelete = ({ ID }) => {
+    dispatch(actions.deleteCCase(ID));
+  };
+
+  const handleRemove = ({ ID }) => {
+    dispatch(actions.removeCCase(ID));
+  };
 
   return (
     <div className="container">
@@ -57,9 +76,26 @@ function CCasesPage() {
                     <strong className="align-self-center">{ value.Title }</strong>
                   </div>
                   <div className="col text-right">
-                    <a className="btn btn-info font-weight-bolder font-size-sm mr-3">ver</a>
-                    <a className="btn btn-info font-weight-bolder font-size-sm mr-3">editar</a>
-                    <a className="btn btn-danger font-weight-bolder font-size-sm mr-3">eliminar</a>
+                    {/*<a className="btn btn-info font-weight-bolder font-size-sm mr-3"
+                      onClick={() => {history.push(`clinical-cases/${value.ID}`)}}
+                    >
+                      ver
+                    </a>*/}
+                    <a className="btn btn-info font-weight-bolder font-size-sm mr-3"
+                      onClick={ () => handleUpdate(value) }
+                    >
+                      editar
+                    </a>
+                    <a className="btn btn-danger font-weight-bolder font-size-sm mr-3"
+                      onClick={ () => handleRemove(value) }
+                    >
+                      Remover
+                    </a>
+                    <a className="btn btn-danger font-weight-bolder font-size-sm mr-3"
+                      onClick={ () => handleDelete(value) }
+                    >
+                      eliminar
+                    </a>
                   </div>
                 </div>
               </div>
@@ -94,6 +130,15 @@ function CCasesPage() {
         <AddCCaseDialog 
           open={openAddDialog}
           handleClose={() => setOpenAddDialog(false)}
+        />
+      }
+
+{
+        openUpdateDialog &&
+        <UpdateCCaseDialog 
+          open={openUpdateDialog}
+          handleClose={() => setOpenUpdateDialog(false)}
+          clinical_case={ccaseValue}
         />
       }
     </div>

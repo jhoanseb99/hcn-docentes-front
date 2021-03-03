@@ -52,7 +52,8 @@ function CreateActivityDialog({ open, handleClose }) {
 
   const handleCreate = () => {
     if(!validateInputs()) return;
-    dispatch(actions.createActivity(inputs_data));
+    dispatch(actions.createActivity(inputs_data))
+    .then(() => handleClose())
   };
 
   const actionButtons = [

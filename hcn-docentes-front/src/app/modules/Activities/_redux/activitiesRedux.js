@@ -52,7 +52,7 @@ const createActivity = props => (dispatch, getState) => {
 };
 
 const deleteActivity = id => (dispatch, getState) => {
-  return requestFromServer.deleteActivity(id)
+  return requestFromServer.deleteActivity({ ID: id })
   .then(() => {
     dispatch(getActivitiesList());
   })

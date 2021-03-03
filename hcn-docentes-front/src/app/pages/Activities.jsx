@@ -22,8 +22,8 @@ export default function Activities() {
     dispatch(actions.deleteActivity(ID));
   };
   
-  const handleUpdate = (ann) => {
-    setActivityValue(ann);
+  const handleUpdate = (data) => {
+    setActivityValue(data);
     setOpenUpdateDialog(true);
   }
 

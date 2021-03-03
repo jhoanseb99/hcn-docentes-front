@@ -96,16 +96,19 @@ export function createActivity(props, authToken) {
   });
 }
 
-export function deleteActivity(authToken) {
+export function deleteActivity(props, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
       path: PATH_DELETE_ACTIVITY, 
       method: "DELETE",
       headers: new Headers(),
+      body: JSON.stringify({
+        ID: props.ID
+      })
     })
     .then(response => {
       if(!response.ok) throw new Error(response.status);
-      return response.json();
+      return "It Works!";
     })
     .then(response => resolve(response))
     .catch(err => reject(err.message)); 

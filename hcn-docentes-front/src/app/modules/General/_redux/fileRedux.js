@@ -10,12 +10,10 @@ const actionTypes = {
   set_config: "SET_CONFIG"
 };
 
-const setConfig = (field, data) => dispatch => {
-  dispatch(layoutSlice.actions.setConfig({ type: actionTypes.set_config, field, data }));
-};
-
 export const layoutActions = {
-  setConfig,
+  setConfig: (field, data) => dispatch => {
+    dispatch(layoutSlice.actions.setConfig({ type: actionTypes.set_config, field, data }));
+  }
 };
 
 export const layoutSlice = createSlice({

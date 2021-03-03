@@ -1,5 +1,5 @@
 import React from "react";
-import BaseDialog from "../../../components/UI/BaseDialog.jsx";
+import BaseModal from "../../../components/UI/BaseModal.jsx";
 
 function CreateCCaseDialog({ open, handleClose }) {
   
@@ -20,7 +20,7 @@ function CreateCCaseDialog({ open, handleClose }) {
   ];
 
   return (
-    <BaseDialog 
+    <BaseModal 
       title="Crear nuevo caso clínico"
       open={open}
       actions={actionButtons}
@@ -53,7 +53,7 @@ function CreateCCaseDialog({ open, handleClose }) {
           />
         </div>
       </form>
-    </BaseDialog>
+    </BaseModal>
   );
 }
 

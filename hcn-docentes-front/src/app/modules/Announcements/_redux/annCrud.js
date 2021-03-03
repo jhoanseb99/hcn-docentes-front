@@ -25,48 +25,82 @@ export function getAllAnnouncements(params, authToken) {
   });
 }
 
-export function getAnnouncements(params, authToken) {
-  return makeRequest({
-    path: PATH_GET_ANNOUNCEMENT + getQueryParams(params), 
-    method: "GET",
-    headers: new Headers(),
+export function getAnnouncement(params, authToken) {
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_GET_ANNOUNCEMENT + getQueryParams(params), 
+      method: "GET",
+      headers: new Headers(),
+    })
+    .then(response => {
+      if(!response.ok) throw new Error(response.status);
+      return response.json();
+    })
+    .then(response => resolve(response))
+    .catch(err => reject(err.message)); 
   });
 }
 
-export function updateAnnouncements(props, authToken) {
-  return makeRequest({
-    path: PATH_UPDATE_ANNOUNCEMENT, 
-    method: "POST",
-    headers: new Headers(),
-    body: JSON.stringify({
-      ID            : props.id,
-      CourseID      : props.course_id,
-      Title         : props.title,
-      Description   : props.description,
-      CreationDate  : props.creation_date,
-    }),
+export function updateAnnouncement(props, authToken) {
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_UPDATE_ANNOUNCEMENT, 
+      method: "POST",
+      headers: new Headers(),
+      body: JSON.stringify({
+        ID            : props.ID,
+        CourseID      : props.CourseID,
+        Title         : props.Title,
+        Description   : props.Description,
+        CreationDate  : props.CreationDate,
+      }),
+    })
+    .then(response => {
+      if(!response.ok) throw new Error(response.status);
+      return response.json();
+    })
+    .then(response => resolve(response))
+    .catch(err => reject(err.message)); 
   });
 }
 
-export function createAnnouncements(props, authToken) {
-  return makeRequest({
-    path: PATH_CREATE_ANNOUNCEMENT, 
-    method: "POST",
-    headers: new Headers(),
-    body: JSON.stringify({
-      ID            : props.id,
-      CourseID      : props.course_id,
-      Title         : props.title,
-      Description   : props.description,
-      CreationDate  : props.creation_date,
-    }),
+export function createAnnouncement(props, authToken) {
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_CREATE_ANNOUNCEMENT, 
+      method: "POST",
+      headers: new Headers(),
+      body: JSON.stringify({
+        CourseID      : props.CourseID,
+        Title         : props.Title,
+        Description   : props.Description,
+        CreationDate  : props.CreationDate,
+      }),
+    })
+    .then(response => {
+      if(!response.ok) throw new Error(response.status);
+      return response.json();
+    })
+    .then(response => resolve(response))
+    .catch(err => reject(err.message)); 
   });
 }
 
-export function deleteAnnouncements(authToken) {
-  return makeRequest({
-    path: PATH_DELETE_ANNOUNCEMENT, 
-    method: "DELETE",
-    headers: new Headers(),
+export function deleteAnnouncement(id, authToken) {
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_DELETE_ANNOUNCEMENT, 
+      method: "DELETE",
+      headers: new Headers(),
+      body: JSON.stringify({
+        ID: id
+      })
+    })
+    .then(response => {
+      if(!response.ok) throw new Error(response.status);
+      return response.json();
+    })
+    .then(response => resolve(response))
+    .catch(err => reject(err.message)); 
   });
 }

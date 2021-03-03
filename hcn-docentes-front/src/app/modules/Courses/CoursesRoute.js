@@ -15,11 +15,10 @@ export default function CoursesRoute() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    console.log("aquiii")
     if(currentCourse.id) {
       dispatch(actions.getCourseData(currentCourse.id));
     }
-  }, [currentCourse]);
+  }, [dispatch]);
 
   return (
     <Switch>

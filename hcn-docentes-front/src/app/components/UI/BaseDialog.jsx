@@ -1,32 +1,37 @@
 import React from "react";
-import { Modal } from "react-bootstrap";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Snackbar,
+} from "@material-ui/core";
 
 function BaseDialog(props) {
-  const { open, title, handleClose, actions, children, ...others } = props;
+  const { open, title, actions, children, ...others } = props;
   return (
-    <Modal show={open} onHide={handleClose} {...others}>
-      <Modal.Header closeButton>
-        <Modal.Title>{ title }</Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="p-4">
+    <Dialog open={open} {...others}>
+      <DialogTitle>{ title }</DialogTitle>
+      <DialogContent className="p-4">
         { children }
-      </Modal.Body>
+      </DialogContent>
       {actions && 
-        <Modal.Footer>
+        <DialogActions>
           {actions.map((action, index) => {
             const { content, ...props } = action;
             return (
-              <button 
+              <Button 
                 className={props.className ? props.className : "btn btn-primary"} key={ index }
                 { ...props } 
               >
                   { content }
-              </button>
+              </Button>
             );
           })}
-        </Modal.Footer>
+        </DialogActions>
       }
-    </Modal>
+    </Dialog>
   );
 }
 

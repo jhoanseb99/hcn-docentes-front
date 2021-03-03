@@ -5,11 +5,11 @@ import { actions } from "../_redux/annRedux";
 
 import BaseModal from "../../../components/UI/BaseModal.jsx";
 
-function CreateAnnDialog({ open, handleClose }) {
+function UpdateAnnDialog({ open, handleClose, announcement }) {
   const dispatch = useDispatch();
   const initInputData = {
-    Title: "",
-    Description: "" 
+    Title: announcement.Title,
+    Description: announcement.Description,
   };
 
   const [ state, setState ] = React.useState({
@@ -32,21 +32,17 @@ function CreateAnnDialog({ open, handleClose }) {
 
   const handleInputsChange = event => {
     const { name, value } = event.target;
-    setInputData({
-      ...inputs_data,
-      [name]: value
-    })
+    setInputData({ ...inputs_data, [name]: value })
   };
 
   const handleCreate = () => {
     if(!validateInputs()) return;
-    dispatch(actions.createAnnouncement(inputs_data))
-    .then(() => handleClose())
+    dispatch(actions.updateAnnouncement({ ...announcement, ...inputs_data }));
   };
 
   const actionButtons = [
     {
-      content: "Publicar anuncio",
+      content: "Actualizar anuncio",
       onClick: () => handleCreate()
     },
     {
@@ -58,7 +54,7 @@ function CreateAnnDialog({ open, handleClose }) {
 
   return (
     <BaseModal 
-      title="Crear nuevo anuncio"
+      title="Actualizar anuncio"
       open={open}
       actions={actionButtons}
       handleClose={handleClose}
@@ -90,4 +86,4 @@ function CreateAnnDialog({ open, handleClose }) {
   );
 }
 
-export default CreateAnnDialog;
+export default UpdateAnnDialog;

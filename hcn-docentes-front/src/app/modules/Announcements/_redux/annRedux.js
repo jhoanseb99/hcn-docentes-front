@@ -21,25 +21,63 @@ const setList = list => dispatch => {
   dispatch(annSlice.actions.setList({ type: actionTypes.set_list, list }));
 };
 
-/* API - get all announcement list */
 const getAnnouncementsList = () => (dispatch, getState) => {
-  let course_id = getState().courses.currentCourse.id;
-  console.log(course_id);
-  return requestFromServer.getAllAnnouncements({ CourseID: course_id })
+  const CourseID = getState().courses.currentCourse.id;
+  return requestFromServer.getAllAnnouncements({ CourseID })
   .then(data => {
-    dispatch(annSlice.actions.setList({ type: actionTypes.set_list, list: data }));
+    dispatch(annSlice.actions.setList({ type: actionTypes.set_list, list: data.filter(value => value.CourseID === CourseID) }));
   })
   .catch(err => {
     console.log(err);
     dispatch(annSlice.actions.setList({ 
-      type: actionTypes.set_list, list: ANNOUNCEMENTS.filter(value => value.CourseID === course_id) 
+      type: actionTypes.set_list, list: ANNOUNCEMENTS.filter(value => value.CourseID === CourseID) 
     }));
+  });
+};
+
+const updateAnnouncement = props => (dispatch, getState) => {
+  const CourseID = getState().courses.currentCourse.id;
+  return requestFromServer.updateAnnouncement({ ...props, CourseID })
+  .then(() => {
+    dispatch(getAnnouncementsList());
+  })
+  .catch(err => {
+    console.log(err);
+  });
+};
+
+const createAnnouncement = props => (dispatch, getState) => {
+  const CourseID = getState().courses.currentCourse.id;
+  return requestFromServer.createAnnouncement({ ...props, CourseID })
+  .then(() => {
+    dispatch(getAnnouncementsList());
+  })
+  .catch(err => {
+    console.log(err);
+  });
+};
+
+const deleteAnnouncement = id => (dispatch, getState) => {
+  return requestFromServer.deleteAnnouncement(id)
+  .then(() => {
+    dispatch(getAnnouncementsList());
+  })
+  .catch(err => {
+    console.log(err);
+    /*
+    dispatch(annSlice.actions.setList({ 
+      type: actionTypes.set_list, list: ANNOUNCEMENTS.filter(value => value.ID !== id) 
+    }));
+    */
   });
 };
 
 export const actions = {
   setList,
   getAnnouncementsList,
+  updateAnnouncement,
+  createAnnouncement,
+  deleteAnnouncement,
 };
 
 export const annSlice = createSlice({

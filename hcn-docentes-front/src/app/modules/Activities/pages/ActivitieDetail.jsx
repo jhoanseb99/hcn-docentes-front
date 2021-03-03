@@ -1,5 +1,5 @@
 import React from "react";
-import BaseDialog from "../../../components/UI/BaseDialog.jsx";
+import BaseModal from "../../../components/UI/BaseModal.jsx";
 
 function ActivitieDetail({ open, handleClose }) {
   
@@ -20,7 +20,7 @@ function ActivitieDetail({ open, handleClose }) {
   ];
 
   return (
-    <BaseDialog 
+    <BaseModal 
       title="Crear nueva actividad"
       open={open}
       actions={actionButtons}
@@ -82,7 +82,7 @@ function ActivitieDetail({ open, handleClose }) {
         </div>
       </form>
       
-    </BaseDialog>
+    </BaseModal>
   );
 }
 

@@ -4,17 +4,29 @@ import moment from "moment";
 
 import CreateAnnDialog from "../modules/Announcements/components/CreateAnnDialog.jsx";
 import { actions } from "../modules/Announcements/_redux/annRedux";
+import UpdateAnnDialog from "../modules/Announcements/components/UpdateAnnDialog.jsx";
 
-export default function Announcements() {
+function Announcements() {
   const { announcementslist } = useSelector(state => state.announcements);
   const dispatch = useDispatch();
 
   const [ openCreateDialog, setOpenCreateDialog ] = React.useState(false);
+  const [ openUpdateDialog, setOpenUpdateDialog ] = React.useState(false);
+  const [ annValue, setAnnValue ] = React.useState(undefined);
 
   React.useEffect(() => {
     dispatch(actions.getAnnouncementsList());
   }, [dispatch]);
 
+  const handleDelete = ({ ID }) => {
+    dispatch(actions.deleteAnnouncement(ID))
+    .then(() => dispatch(actions.getAnnouncementsList()));
+  };
+  
+  const handleUpdate = (ann) => {
+    setAnnValue(ann);
+    setOpenUpdateDialog(true);
+  }
   return (
     <div className="container">
       {/* titulo */}
@@ -26,7 +38,7 @@ export default function Announcements() {
           <div className="align-self-center ml-3">
             <a 
               className="btn btn-primary btn-circle font-weight-bolder"
-              onClick={() => setOpenCreateDialog(true)}
+              onClick={ () => setOpenCreateDialog(true) }
             >
               +
             </a> 
@@ -47,8 +59,17 @@ export default function Announcements() {
                     <strong className="align-self-center">{ value.Title }</strong> 
                   </div>
                   <div className="col text-right">
-                    {/* <a className="btn btn-info font-weight-bolder font-size-sm mr-3">editar</a> */}
-                    <a className="btn btn-danger font-weight-bolder font-size-sm mr-3">eliminar</a>
+                    <a className="btn btn-info font-weight-bolder font-size-sm mr-3"
+                      onClick={ () => handleUpdate(value) }
+                    >
+                      editar
+                    </a>
+                    <a 
+                      className="btn btn-danger font-weight-bolder font-size-sm mr-3"
+                      onClick={ () => handleDelete(value) }
+                    >
+                      eliminar
+                    </a>
                   </div>
                 </div>
               </div>
@@ -66,10 +87,26 @@ export default function Announcements() {
         </div>
       ))}
       
-      <CreateAnnDialog
-        open={openCreateDialog}
-        handleClose={() => setOpenCreateDialog(false)}
-      />
+      { 
+        openCreateDialog &&
+        <CreateAnnDialog
+          open={ openCreateDialog }
+          handleClose={ () => setOpenCreateDialog(false) }
+        /> 
+      }
+
+      {
+        openUpdateDialog &&
+        <UpdateAnnDialog
+          open={ openUpdateDialog }
+          handleClose={ () => setOpenUpdateDialog(false) }
+          announcement={ annValue }
+        />
+      }
+
+      
     </div>
   );
 }
+
+export default Announcements;

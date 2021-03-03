@@ -59,15 +59,16 @@ const getCourseData = id => (dispatch, getState) => {
   });
 };
 
-const getAnnouncementsList = () => dispatch => dispatch(annRedux.actions.getAnnouncementsList());
-
 export const actions = {
   setCurrentCourse,
   getCoursesList,
   getCourseData,
+};
 
-  // Announcements 
-  getAnnouncementsList,
+export const getters = {
+  getCurrentCourse: () => () => {
+    
+  }
 };
 
 export const coursesSlice = createSlice({

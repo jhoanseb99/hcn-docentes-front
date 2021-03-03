@@ -1,5 +1,9 @@
 import React from "react";
-import {Redirect, Switch, Route} from "react-router-dom";
+import { Redirect, Switch, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { actions as ccasesRedux } from "./modules/ClinicalCases/_redux/ccasesRedux"; 
+import { actions as hcnRedux } from "./modules/HCN/_redux/hcnRedux"; 
 import Home from "./pages/home";
 
 const CoursesRoute = React.lazy(() =>
@@ -7,6 +11,13 @@ const CoursesRoute = React.lazy(() =>
 );
 
 export default function BasePage() {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(ccasesRedux.getCCasesList());
+    dispatch(hcnRedux.getHcnList());
+  }, []);
+
   return (
     <React.Suspense fallback={<h1>loading page...</h1>}>
       <Switch>

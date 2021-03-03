@@ -1,7 +1,7 @@
 import React from "react";
 
 function BaseSection(props) {
-  const { title, children, toolbar, ...others } = props;
+  const { title, children, toolbar } = props;
   return (
     <div className="container">
       <div className="row pb-5">

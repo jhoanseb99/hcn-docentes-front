@@ -2,7 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
-import CreateActivitieDialog from "../modules/Activities/components/CreateActivitieDialog.jsx";
+import CreateActivityDialog from "../modules/Activities/components/CreateActivityDialog.jsx";
+import UpdateActivityDialog from "../modules/Activities/components/UpdateActivityDialog.jsx";
 import { actions } from "../modules/Activities/_redux/activitiesRedux"; 
 
 export default function Activities() {
@@ -10,10 +11,21 @@ export default function Activities() {
   const dispatch = useDispatch();
 
   const [ openCreateDialog, setOpenCreateDialog ] = React.useState(false);
-  
+  const [ openUpdateDialog, setOpenUpdateDialog ] = React.useState(false);
+  const [ activityValue, setActivityValue ] = React.useState(undefined);
+
   React.useEffect(() => {
     dispatch(actions.getActivitiesList());
   }, [dispatch]);
+
+  const handleDelete = ({ ID }) => {
+    dispatch(actions.deleteActivity(ID));
+  };
+  
+  const handleUpdate = (ann) => {
+    setActivityValue(ann);
+    setOpenUpdateDialog(true);
+  }
 
   return(
     <div className="container">
@@ -49,8 +61,17 @@ export default function Activities() {
                     <strong className="align-self-center">{ value.Title }</strong> 
                   </div>
                   <div className="col text-right">
-                    {/* <a className="btn btn-info font-weight-bolder font-size-sm mr-3">editar</a> */}
-                    <a className="btn btn-danger font-weight-bolder font-size-sm mr-3">eliminar</a>
+                    <a className="btn btn-info font-weight-bolder font-size-sm mr-3"
+                      onClick={ () => handleUpdate(value) }
+                    >
+                      editar
+                    </a>
+                    <a 
+                      className="btn btn-danger font-weight-bolder font-size-sm mr-3"
+                      onClick={ () => handleDelete(value) }
+                    >
+                      eliminar
+                    </a>
                   </div>
                 </div>
               </div>
@@ -70,10 +91,23 @@ export default function Activities() {
           </div> 
         </div>
       ))}
-      <CreateActivitieDialog 
-        open={openCreateDialog}
-        handleClose={() => setOpenCreateDialog(false)}
-      />
+      
+      { 
+        openCreateDialog &&
+        <CreateActivityDialog
+          open={openCreateDialog}
+          handleClose={() => setOpenCreateDialog(false)}
+        />
+      }
+
+      { 
+        openUpdateDialog &&
+        <UpdateActivityDialog
+          open={openUpdateDialog}
+          handleClose={() => setOpenUpdateDialog(false)}
+          activity={activityValue}
+        />
+      }
 
     </div>
   );

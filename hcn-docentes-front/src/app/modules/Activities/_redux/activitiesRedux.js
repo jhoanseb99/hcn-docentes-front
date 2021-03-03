@@ -12,17 +12,15 @@ const actionTypes = {
   set_list: "SET_LIST"
 };
 
-// setter - table
 const setList = list => dispatch => {
   dispatch(activitiesSlice.actions.setList({ type: actionTypes.set_list, list }));
 };
 
-
-/* API - get all activies list */
 const getActivitiesList = () => (dispatch, getState) => {
-  return requestFromServer.getAllActivities()
+  const CourseID = getState().courses.currentCourse.id;
+  return requestFromServer.getAllActivities({ CourseID })
   .then(data => {
-    dispatch(activitiesSlice.actions.setList({ type: actionTypes.set_list, list: data }));
+    dispatch(activitiesSlice.actions.setList({ type: actionTypes.set_list, list: data.filter(value => value.CourseID === CourseID) }));
   })
   .catch(err => {
     console.log(err);
@@ -30,9 +28,45 @@ const getActivitiesList = () => (dispatch, getState) => {
   });
 };
 
+const updateActivity = props => (dispatch, getState) => {
+  const CourseID = getState().courses.currentCourse.id;
+  return requestFromServer.updateActivity({ ...props, CourseID })
+  .then(() => {
+    dispatch(getActivitiesList());
+  })
+  .catch(err => {
+    console.log(err);
+  });
+};
+
+const createActivity = props => (dispatch, getState) => {
+  console.log("creating")
+  const CourseID = getState().courses.currentCourse.id;
+  return requestFromServer.createActivity({ ...props, CourseID })
+  .then(() => {
+    dispatch(getActivitiesList());
+  })
+  .catch(err => {
+    console.log(err);
+  });
+};
+
+const deleteActivity = id => (dispatch, getState) => {
+  return requestFromServer.deleteActivity(id)
+  .then(() => {
+    dispatch(getActivitiesList());
+  })
+  .catch(err => {
+    console.log(err);
+  });
+};
+
 export const actions = {
   setList,
   getActivitiesList,
+  updateActivity,
+  createActivity,
+  deleteActivity,
 };
 
 export const activitiesSlice = createSlice({

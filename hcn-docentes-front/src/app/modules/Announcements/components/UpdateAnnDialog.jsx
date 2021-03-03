@@ -35,15 +35,16 @@ function UpdateAnnDialog({ open, handleClose, announcement }) {
     setInputData({ ...inputs_data, [name]: value })
   };
 
-  const handleCreate = () => {
+  const handleUpdate = () => {
     if(!validateInputs()) return;
-    dispatch(actions.updateAnnouncement({ ...announcement, ...inputs_data }));
+    dispatch(actions.updateAnnouncement({ ...announcement, ...inputs_data }))
+    .then(() => handleClose());
   };
 
   const actionButtons = [
     {
       content: "Actualizar anuncio",
-      onClick: () => handleCreate()
+      onClick: () => handleUpdate()
     },
     {
       content: "Cancelar",

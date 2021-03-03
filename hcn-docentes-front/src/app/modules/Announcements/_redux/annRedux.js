@@ -25,7 +25,9 @@ const getAnnouncementsList = () => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
   return requestFromServer.getAllAnnouncements({ CourseID })
   .then(data => {
-    dispatch(annSlice.actions.setList({ type: actionTypes.set_list, list: data.filter(value => value.CourseID === CourseID) }));
+    dispatch(annSlice.actions.setList({
+      type: actionTypes.set_list, list: data.filter(value => value.CourseID === CourseID)
+    }));
   })
   .catch(err => {
     console.log(err);

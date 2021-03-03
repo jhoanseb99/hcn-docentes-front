@@ -29,7 +29,7 @@ function CCasesPage() {
   };
 
   const handleDelete = ({ ID }) => {
-    dispatch(actions.deleteCCase(ID));
+    dispatch(actions.deleteCCaseByCourse(ID));
   };
 
   const handleRemove = ({ ID }) => {

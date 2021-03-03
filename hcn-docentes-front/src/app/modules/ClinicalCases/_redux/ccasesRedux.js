@@ -76,7 +76,7 @@ const updateCCase = props => (dispatch, getState) => {
   });
 };
 
-const deleteCCase = id => (dispatch, getState) => {
+const deleteCCaseByCourse = id => (dispatch, getState) => {
   return dispatch(removeCCase(id))
   .then(() => requestFromServer.deleteCCase({ ID: id }))
   .then(() => {
@@ -106,7 +106,7 @@ export const actions = {
   createCCase,
   updateCCase,
   removeCCase,
-  deleteCCase
+  deleteCCaseByCourse
 };
 
 export const ccasesSlice = createSlice({

@@ -1,7 +1,15 @@
 @import "./header.css";
 @import "./subheader.css";
 @import "./aside.css";
+@import "./authpage.css";
 
+.content {
+  margin-left: 230px;
+  margin-top: 40px;
+  margin-right: 30px;
+  height: 100%;
+  width: 100%;
+}
 
 .custom-card {
   box-shadow: 0px 0px 6px #0000001A;

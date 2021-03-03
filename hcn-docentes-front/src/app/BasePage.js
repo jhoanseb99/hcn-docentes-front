@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { actions as ccasesRedux } from "./modules/ClinicalCases/_redux/ccasesRedux"; 
 import { actions as hcnRedux } from "./modules/HCN/_redux/hcnRedux"; 
-import Home from "./pages/home";
+import Home from "./pages/Home.jsx";
 
 const CoursesRoute = React.lazy(() =>
   import("./modules/Courses/CoursesRoute")

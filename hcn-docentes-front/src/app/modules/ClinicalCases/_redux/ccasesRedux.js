@@ -18,7 +18,9 @@ const actionTypes = {
 const getCCasesList = () => (dispatch, getState) => {
   return requestFromServer.getAllCCases()
   .then(data => {
-    dispatch(ccasesSlice.actions.setList({ type: actionTypes.set_list, list: data }));
+    dispatch(ccasesSlice.actions.setList(
+      { type: actionTypes.set_list, list: data.filter(value => value.TeacherID === 50001) }
+    ));
   })
   .catch(err => {
     console.log(err);
@@ -56,7 +58,7 @@ const addCCaseToCourse = id => (dispatch, getState) => {
 };
 
 const createCCase = props => (dispatch, getState) => {
-  return requestFromServer.createCCase({ ...props, TeacherID: 1 })
+  return requestFromServer.createCCase({ ...props, TeacherID: 50001 })
   .then(() => {
     dispatch(getCCasesList());
   })
@@ -66,7 +68,7 @@ const createCCase = props => (dispatch, getState) => {
 };
 
 const updateCCase = props => (dispatch, getState) => {
-  return requestFromServer.updateCCase({ ...props, TeacherID: 1 })
+  return requestFromServer.updateCCase({ ...props, TeacherID: 50001 })
   .then(() => {
     dispatch(getCCasesList());
     dispatch(getCCasesListByCourse());

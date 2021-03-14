@@ -5,6 +5,7 @@ import moment from "moment";
 import CreateActivityDialog from "../modules/Activities/components/CreateActivityDialog.jsx";
 import UpdateActivityDialog from "../modules/Activities/components/UpdateActivityDialog.jsx";
 import { actions } from "../modules/Activities/_redux/activitiesRedux"; 
+import BaseCardSection from "../components/UI/BaseCardSection.jsx";
 
 export default function Activities() {
   const { activitieslist } = useSelector(state => state.activities);
@@ -28,69 +29,68 @@ export default function Activities() {
   }
 
   return(
-    <div className="container">
-
-      {/* titulo */}
-      <div className="row pb-5">
-        <div className="col">
-          <h3 className="text-dark">Actividades</h3>  
-        </div>
-        <div className="col text-right">
-          <div className="align-self-center ml-3">
-            <a 
-              className="btn btn-primary btn-circle font-weight-bolder"
-              onClick={() => setOpenCreateDialog(true)}
-            >
-              +
-            </a> 
-          </div>
-        </div>
-      </div>
-
-      {/* anuncios */}
-      {activitieslist.map((value, index) => (
-        <div key={index} className="row">
-          {/* Card */}
-          <div className="card custom-card p-3 mb-5 bg-white rounded">
-            {/* Card::body */}
-            <div className="card-body pt-3">
-              {/* Card::body::title */}
-              <div className="card-title">
-                <div className="row">
-                  <div className="col">
-                    <strong className="align-self-center">{ value.Title }</strong> 
-                  </div>
-                  <div className="col text-right">
-                    <a className="btn btn-info font-weight-bolder font-size-sm mr-3"
-                      onClick={ () => handleUpdate(value) }
-                    >
-                      editar
-                    </a>
-                    <a 
-                      className="btn btn-danger font-weight-bolder font-size-sm mr-3"
-                      onClick={ () => handleDelete(value) }
-                    >
-                      eliminar
-                    </a>
+    <BaseCardSection title="Actividades"
+      toolbar={[
+        {
+          className: "btn btn-primary btn-circle font-weight-bolder",
+          onClick: () => setOpenCreateDialog(true),
+          title: "+"
+        }
+      ]}
+      style={{backgroundColor: "#f3f6f9"}}
+    >
+      <div className="container-fluid">
+        {/* anuncios */}
+        {activitieslist.map((value, index) => (
+          <div key={index} className="row">
+            {/* Card */}
+            <div className="card custom-card p-3 mb-5 bg-white rounded">
+              {/* Card::body */}
+              <div className="card-body pt-3">
+                {/* Card::body::title */}
+                <div className="card-title">
+                  <div className="row">
+                    <div className="col">
+                      <strong className="align-self-center">{ value.Title }</strong> 
+                    </div>
+                    <div className="col text-right">
+                      { value.Type === "Calificable" &&
+                        <a className="btn btn-primary font-weight-bolder font-size-sm mr-3"
+                        >
+                          Calificar
+                        </a>
+                      }
+                      <a className="btn btn-info font-weight-bolder font-size-sm mr-3"
+                        onClick={ () => handleUpdate(value) }
+                      >
+                        editar
+                      </a>
+                      <a 
+                        className="btn btn-danger font-weight-bolder font-size-sm mr-3"
+                        onClick={ () => handleDelete(value) }
+                      >
+                        eliminar
+                      </a>
+                    </div>
                   </div>
                 </div>
+                {/* Card::body::info */}
+                <div className="card-body p-0">
+                  { value.Description }
+                </div>
+                <div className="card-body p-0 pt-2">
+                  <small className="text-muted d-block">
+                    <strong>Fecha de publicación:</strong> { moment(value.CreationDate).format("DD-MM-YYYY") }
+                  </small>
+                  <small className="text-muted d-block">
+                    <strong>Fecha de entrega:</strong> { moment(value.LimitDate).format("DD-MM-YYYY") }
+                  </small>
+                </div>
               </div>
-              {/* Card::body::info */}
-              <div className="card-body p-0">
-                { value.Description }
-              </div>
-              <div className="card-body p-0 pt-2">
-                <small className="text-muted d-block">
-                  <strong>Fecha de publicación:</strong> { moment(value.CreationDate).format("DD-MM-YYYY") }
-                </small>
-                <small className="text-muted d-block">
-                  <strong>Fecha de entrega:</strong> { moment(value.LimitDate).format("DD-MM-YYYY") }
-                </small>
-              </div>
-            </div>
-          </div> 
-        </div>
-      ))}
+            </div> 
+          </div>
+        ))}
+      </div>
       
       { 
         openCreateDialog &&
@@ -109,6 +109,6 @@ export default function Activities() {
         />
       }
 
-    </div>
+    </BaseCardSection>
   );
 }

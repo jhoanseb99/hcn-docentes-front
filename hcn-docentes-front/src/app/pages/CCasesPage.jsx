@@ -7,6 +7,7 @@ import { actions } from "../modules/ClinicalCases/_redux/ccasesRedux";
 import CreateCCaseDialog from "../modules/ClinicalCases/components/CreateCCaseDialog.jsx";
 import AddCCaseDialog from "../modules/ClinicalCases/components/AddCCaseDialog";
 import UpdateCCaseDialog from "../modules/ClinicalCases/components/UpdateCCaseDialog";
+import BaseCardSection from "../components/UI/BaseCardSection";
 
 function CCasesPage() {
   const { ccasesListByCourse } = useSelector(state => state.clinicalCases);
@@ -37,32 +38,23 @@ function CCasesPage() {
   };
 
   return (
-    <div className="container">
-
-      {/* Header */}
-      <div className="row pb-5">
-        <div className="col">
-          <h3 className="text-dark">Casos Clínicos</h3>
-        </div>
-        <div className="col text-right">
-          <div className="align-self-center ml-3">
-            <a
-              className="btn btn-primary btn-circle font-weight-bolder"
-              onClick={() => setOpenAddDialog(true)}
-            >
-              Agregar
-            </a>
-            <a
-              className="btn btn-primary btn-circle font-weight-bolder ml-2"
-              onClick={() => setOpenCreateDialog(true)}
-            >
-              +
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* anuncios */}
+    <BaseCardSection title="Casos Clínicos"
+      toolbar={[
+        {
+          title: "Agregar",
+          className: "btn btn-primary btn-circle font-weight-bolder",
+          onClick: () => setOpenAddDialog(true)
+        },
+        {
+          title: "+",
+          className: "btn btn-primary btn-circle font-weight-bolder ml-2",
+          onClick: () => setOpenCreateDialog(true)
+        }
+      ]}
+      style={{backgroundColor: "#f3f6f9"}}
+    >
+      
+      <div className="container-fluid">
       {ccasesListByCourse.map((value, index) => (
         <div key={index} className="row">
           {/* Card */}
@@ -76,11 +68,11 @@ function CCasesPage() {
                     <strong className="align-self-center">{ value.Title }</strong>
                   </div>
                   <div className="col text-right">
-                    {/*<a className="btn btn-info font-weight-bolder font-size-sm mr-3"
-                      onClick={() => {history.push(`clinical-cases/${value.ID}`)}}
+                    <a className="btn btn-primary font-weight-bolder font-size-sm mr-3"
+                      onClick={() => {history.push(`/clinical-cases/${value.ID}`)}}
                     >
                       ver
-                    </a>*/}
+                    </a>
                     <a className="btn btn-info font-weight-bolder font-size-sm mr-3"
                       onClick={ () => handleUpdate(value) }
                     >
@@ -110,12 +102,12 @@ function CCasesPage() {
               </div>
               <div className="card-body p-0 pt-2">
                 <strong>Contiene:</strong>
-                <label htmlFor="labelMedia">{ value.Media }</label>
               </div>
             </div>
           </div>
         </div>
       ))}
+      </div>
 
       {
         openCreateDialog &&
@@ -133,7 +125,7 @@ function CCasesPage() {
         />
       }
 
-{
+      {
         openUpdateDialog &&
         <UpdateCCaseDialog 
           open={openUpdateDialog}
@@ -141,7 +133,7 @@ function CCasesPage() {
           clinical_case={ccaseValue}
         />
       }
-    </div>
+    </BaseCardSection>
   );
 }
 

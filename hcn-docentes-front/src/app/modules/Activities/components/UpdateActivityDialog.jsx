@@ -114,7 +114,7 @@ function UpdateActivityDialog({ open, handleClose, activity }) {
         <div className="form-group">
           <label htmlFor="LimitDate">Fecha de entrega</label>
           <input  
-            type="date"
+            type="datetime-local"
             name="LimitDate"
             className="form-control"
             value={inputs_data.LimitDate}

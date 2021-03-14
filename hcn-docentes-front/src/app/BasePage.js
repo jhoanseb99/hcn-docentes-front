@@ -10,6 +10,10 @@ const CoursesRoute = React.lazy(() =>
   import("./modules/Courses/CoursesRoute")
 );
 
+const CCasesRoute = React.lazy(() =>
+  import("./modules/ClinicalCases/CCasesRoute.jsx")
+);
+
 export default function BasePage() {
   const dispatch = useDispatch();
 
@@ -24,6 +28,7 @@ export default function BasePage() {
         <Redirect exact={true} from="/" to="/courses/all" />
         <Route exact={true} path="/home" component={Home} />
         <Route path="/courses" component={CoursesRoute} />
+        <Route path="/clinical-cases" component={CCasesRoute} />
         <Redirect to="/error/404"/>
       </Switch>
     </React.Suspense>

@@ -26,7 +26,10 @@ const getAnnouncementsList = () => (dispatch, getState) => {
   return requestFromServer.getAllAnnouncements({ CourseID })
   .then(data => {
     dispatch(annSlice.actions.setList({
-      type: actionTypes.set_list, list: data.filter(value => value.CourseID === CourseID)
+      type: actionTypes.set_list, 
+      list: data
+        .filter(value => value.CourseID === CourseID)
+        .sort((a, b) => new Date(b.CreationDate) - new Date(a.CreationDate))
     }));
   })
   .catch(err => {

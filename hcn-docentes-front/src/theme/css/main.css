@@ -4,19 +4,19 @@
 @import "./authpage.css";
 
 .content {
-  margin-left: 230px;
-  margin-top: 40px;
-  margin-right: 30px;
-  height: 100%;
-  width: 100%;
+  margin-left: 200px;
+  padding: 40px 30px;
+  height: 100vh;
+  width: 100vw;
 }
 
 .custom-card {
   box-shadow: 0px 0px 6px #0000001A;
   border: 0px;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   border-radius: 6px;
   height: auto;
   width: 100%;
   color: black;
+  min-height: 200px;
 }

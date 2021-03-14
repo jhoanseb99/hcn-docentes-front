@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initLayoutState = {
   config: {
-    aside: false,
+    aside: true,
   },
 };
 

@@ -19,13 +19,18 @@ const setList = list => dispatch => {
 const getActivitiesList = () => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
   return requestFromServer.getAllActivities({ CourseID })
-  .then(data => {
-    dispatch(activitiesSlice.actions.setList({ type: actionTypes.set_list, list: data.filter(value => value.CourseID === CourseID) }));
-  })
-  .catch(err => {
-    console.log(err);
-    dispatch(activitiesSlice.actions.setList({ type: actionTypes.set_list, list: ACTIVITIES }));
-  });
+    .then(data => {
+      dispatch(activitiesSlice.actions.setList({ 
+        type: actionTypes.set_list, 
+        list: data
+          .filter(value => value.CourseID === CourseID)
+          .sort((a, b) => new Date(b.CreationDate) - new Date(a.CreationDate))
+      }));
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch(activitiesSlice.actions.setList({ type: actionTypes.set_list, list: ACTIVITIES }));
+    });
 };
 
 const updateActivity = props => (dispatch, getState) => {

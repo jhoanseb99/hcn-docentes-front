@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Aside from "./Aside";
-import Topbar from "./Topbar";
+import CustomNavbar from "./CustomNavbar";
 
 export function Layout({ children }) {
   const { layoutProps } = useSelector(
@@ -12,7 +12,7 @@ export function Layout({ children }) {
 
   return (
     <div className="d-flex flex-column">
-      <Topbar />
+      <CustomNavbar />
       <div className="d-flex flex-row">
         { layoutProps.aside && <Aside /> }
         <div className="content">

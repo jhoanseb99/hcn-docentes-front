@@ -4,11 +4,13 @@ import { useHistory, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChalkboardTeacher } from "@fortawesome/free-solid-svg-icons";
 
+import BaseSection from "../components/UI/BaseSection";
+
 import { actions } from "../modules/Courses/_redux/coursesRedux";
 
 function getCardsList(list, size = 3) {
   let ans = [];
-  for(let i=0; i < Math.ceil(list.length / size); i++) {
+  for(let i=0; i < list.length; i+=size) {
     ans.push(list.slice(i, i + size));
   }
   return ans;
@@ -17,7 +19,6 @@ function getCardsList(list, size = 3) {
 export default function CoursesPage() {
   const { coursesList } = useSelector(state => state.courses);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   React.useEffect(() => {
     dispatch(actions.getCoursesList());
@@ -28,12 +29,7 @@ export default function CoursesPage() {
   };
 
   return (
-    <div className="container">
-      {/* title */}
-      <div className="row pb-5">
-        <h3 className="text-dark">Cursos</h3>
-      </div>
-
+    <BaseSection title="Cursos">
       {/* Courses */}
       {getCardsList(coursesList).map((row, i) => (
         <div key={i} className="row my-3">
@@ -53,7 +49,6 @@ export default function CoursesPage() {
           ))}
         </div>
       ))}
-
-    </div>
+    </BaseSection>
   );
 }

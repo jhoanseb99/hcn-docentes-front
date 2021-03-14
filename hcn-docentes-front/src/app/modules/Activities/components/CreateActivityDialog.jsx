@@ -114,7 +114,7 @@ function CreateActivityDialog({ open, handleClose }) {
         <div className="form-group">
           <label htmlFor="LimitDate">Fecha de entrega</label>
           <input  
-            type="date"
+            type="datetime-local"
             name="LimitDate"
             className="form-control"
             value={inputs_data.LimitDate}
@@ -123,34 +123,65 @@ function CreateActivityDialog({ open, handleClose }) {
         </div>
         <div className="form-group">
           <label htmlFor="HCNID">Historia Clínica Nutricional asociada</label>
-          <select 
-            name="HCNID" 
-            id="HCNID" 
-            className="form-control"
-            value={inputs_data.HCNID}
-            onChange={handleInputsChange}
-          >
-            <option value="">Seleccionar</option>
-            {hcnList.map(({ ID }) => (
-              <option value={ ID } key= { ID }>{ ID }</option>
-            ))}
-          </select>
+          <div className="row">
+            <div className="col-10">
+              <select 
+                name="HCNID" 
+                id="HCNID" 
+                className="form-control"
+                value={inputs_data.HCNID}
+                onChange={handleInputsChange}
+              >
+                <option value="">Seleccionar</option>
+                {hcnList.map(({ ID }) => (
+                  <option value={ ID } key= { ID }>{ ID }</option>
+                ))}
+              </select>
+            </div>
+            <div className="col-2 text-right">
+              <button className="btn btn-primary" 
+                onClick={(event) => {
+                  event.preventDefault(); 
+                  //window.open(`/clinical-cases/${}`);
+                }} 
+              >
+                Ver
+              </button>
+            </div>
+          </div>
+          
         </div>
         <div className="form-group">
           <label htmlFor="ClinicalCaseID">Caso Clínico asociado</label>
-          <select 
-            name="ClinicalCaseID" 
-            id="ClinicalCaseID" 
-            className="form-control"
-            value={inputs_data.ClinicalCaseID}
-            onChange={handleInputsChange}
-          >
-            <option value="">Seleccionar</option>
-            {ccasesList.map(({ ID, Title }) => (
-              <option value={ ID } key={ ID }>{ Title }</option>
-            ))}
-            
-          </select>
+          <div className="row">
+            <div className="col-10">
+              <select 
+                name="ClinicalCaseID" 
+                id="ClinicalCaseID" 
+                className="form-control"
+                value={inputs_data.ClinicalCaseID}
+                onChange={handleInputsChange}
+              >
+                <option value="">Seleccionar</option>
+                {ccasesList.map(({ ID, Title }) => (
+                  <option value={ ID } key={ ID }>{ Title }</option>
+                ))}
+                
+              </select>
+            </div>
+            <div className="col-2 text-right">
+              <button className="btn btn-primary" 
+                onClick={(event) => {
+                  event.preventDefault(); 
+                  if(inputs_data.ClinicalCaseID !== "") 
+                    window.open(`/clinical-cases/${inputs_data.ClinicalCaseID}`);
+                }} 
+              >
+                Ver
+              </button>
+            </div>
+          </div>
+          
         </div>
         <div className="form-group">
           <label htmlFor="Difficulty">Dificultad</label>

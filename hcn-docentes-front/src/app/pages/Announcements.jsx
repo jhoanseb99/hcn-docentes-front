@@ -5,6 +5,7 @@ import moment from "moment";
 import CreateAnnDialog from "../modules/Announcements/components/CreateAnnDialog.jsx";
 import { actions } from "../modules/Announcements/_redux/annRedux";
 import UpdateAnnDialog from "../modules/Announcements/components/UpdateAnnDialog.jsx";
+import BaseCardSection from "../components/UI/BaseCardSection.jsx";
 
 function Announcements() {
   const { announcementslist } = useSelector(state => state.announcements);
@@ -29,64 +30,59 @@ function Announcements() {
   }
   
   return (
-    <div className="container">
-      {/* titulo */}
-      <div className="row pb-5">
-        <div className="col">
-          <h3 className="text-dark">Anuncios</h3>  
-        </div>
-        <div className="col text-right">
-          <div className="align-self-center ml-3">
-            <a 
-              className="btn btn-primary btn-circle font-weight-bolder"
-              onClick={ () => setOpenCreateDialog(true) }
-            >
-              +
-            </a> 
-          </div>
-        </div>
-      </div>
-      {/* anuncios */}
-      {announcementslist.map((value, index) => (
-        <div key={index} className="row">
-          {/* Card */}
-          <div className="card custom-card p-3 mb-5 bg-white rounded">
-            {/* Card::body */}
-            <div className="card-body pt-3">
-              {/* Card::body::title */}
-              <div className="card-title">
-                <div className="row">
-                  <div className="col">
-                    <strong className="align-self-center">{ value.Title }</strong> 
-                  </div>
-                  <div className="col text-right">
-                    <a className="btn btn-info font-weight-bolder font-size-sm mr-3"
-                      onClick={ () => handleUpdate(value) }
-                    >
-                      editar
-                    </a>
-                    <a 
-                      className="btn btn-danger font-weight-bolder font-size-sm mr-3"
-                      onClick={ () => handleDelete(value) }
-                    >
-                      eliminar
-                    </a>
+    <BaseCardSection title="Anuncios"
+      toolbar={[
+        {
+          className: "btn btn-primary btn-circle font-weight-bolder",
+          onClick: () => setOpenCreateDialog(true),
+          title: "+"
+        }
+      ]}
+      style={{backgroundColor: "#f3f6f9"}}
+    >
+      <div className="container-fluid">
+        {/* anuncios */}
+        {announcementslist.map((value, index) => (
+          <div key={index} className="row">
+            {/* Card */}
+            <div className="card custom-card p-3 mb-5 rounded">
+              {/* Card::body */}
+              <div className="card-body pt-3">
+                {/* Card::body::title */}
+                <div className="card-title">
+                  <div className="row">
+                    <div className="col">
+                      <strong className="align-self-center">{ value.Title }</strong> 
+                    </div>
+                    <div className="col text-right">
+                      <a className="btn btn-info font-weight-bolder font-size-sm mr-3"
+                        onClick={ () => handleUpdate(value) }
+                      >
+                        editar
+                      </a>
+                      <a 
+                        className="btn btn-danger font-weight-bolder font-size-sm mr-3"
+                        onClick={ () => handleDelete(value) }
+                      >
+                        eliminar
+                      </a>
+                    </div>
                   </div>
                 </div>
+                {/* Card::body::info */}
+                <div className="card-body p-0">
+                  { value.Description }
+                </div>
+                <div className="card-body p-0 pt-2">
+                  <small className="text-muted font-weight-bold d-block">
+                    { moment(value.CreationDate).format("DD-MM-YYYY") }
+                  </small>
+                </div>
               </div>
-              {/* Card::body::info */}
-              <div className="card-body p-0">
-                { value.Description }
-              </div>
-              <div className="card-body p-0 pt-2">
-                <small className="text-muted font-weight-bold d-block">
-                  { moment(value.CreationDate).format("DD-MM-YYYY") }
-                </small>
-              </div>
-            </div>
-          </div> 
-        </div>
-      ))}
+            </div> 
+          </div>
+        ))}
+      </div>
       
       { 
         openCreateDialog &&
@@ -104,9 +100,7 @@ function Announcements() {
           announcement={ annValue }
         />
       }
-
-      
-    </div>
+    </BaseCardSection>
   );
 }
 

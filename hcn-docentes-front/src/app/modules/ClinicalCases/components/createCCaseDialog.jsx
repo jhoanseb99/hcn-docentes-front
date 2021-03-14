@@ -9,24 +9,40 @@ function CreateCCaseDialog({ open, handleClose }) {
   const initInputData = {
     Title: "",
     Description: "",
-    Media: ""
+    Media: null,
   };
 
   const [ inputs_data, setInputData ] = React.useState(initInputData);
 
-  const handleInputsChange = event => {
-    const { name, value } = event.target;
-    setInputData({
-      ...inputs_data,
-      [name]: value
-    })
+  const handleInputsChange = async event => {
+    if(event.target.type === "file") {
+      let blobPDF = new Blob([event.target.files[0]], {type: 'application/pdf'});
+      let reader = new FileReader();
+      reader.readAsDataURL(blobPDF);
+      reader.onloadend = () => {
+         let value = reader.result.split(',')[1];
+         setInputData({
+          ...inputs_data,
+          [event.target.name]: value
+        });
+      };
+    }
+    else {
+      const { name, value } = event.target;
+      setInputData({
+        ...inputs_data,
+        [name]: value
+      });
+    }
+
+    
   };
 
   const validateInputs = () => {
     let to_validate = Object.keys(initInputData);
     let [ i, ok ] = [ 0, true ];
     while(i < to_validate.length && ok) {
-      ok = ok && inputs_data[to_validate[i]].length;
+      ok = ok && inputs_data[to_validate[i]] && inputs_data[to_validate[i]].length;
       i++;
     }
     return ok;
@@ -86,7 +102,6 @@ function CreateCCaseDialog({ open, handleClose }) {
             type="file"
             name="Media"
             className="ml-2"
-            value={inputs_data.Media}
             onChange={handleInputsChange}
           />
         </div>

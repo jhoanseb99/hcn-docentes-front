@@ -9,9 +9,7 @@ import reportWebVitals from './app/reportWebVitals';
 const { PUBLIC_URL } = process.env;
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App store={store} persistor={persistor} basename={PUBLIC_URL} />
-  </React.StrictMode>,
+    <App store={store} persistor={persistor} basename={PUBLIC_URL} />,
   document.getElementById('root')
 );
 

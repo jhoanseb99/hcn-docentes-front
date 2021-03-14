@@ -1,19 +1,27 @@
 import React from "react";
 
+/**
+ * 
+ * @param {Object} props
+ * @param {String} props.title
+ * @param {Array}  props.toolbar
+ */
 function BaseSection(props) {
-  const { title, children, toolbar } = props;
+  const { title, toolbar, children } = props;
   return (
-    <div className="container">
+    <div className="container-fluid">
+      {/* Header */}
       <div className="row pb-5">
         <div className="col">
           <h3 className="text-dark">{ title }</h3>  
         </div>
-        <div className="col text-right">
-          <div className="align-self-center ml-3">
-            <a className="btn btn-primary btn-circle font-weight-bolder">Agregar</a> 
-            <a className="btn btn-primary btn-circle font-weight-bolder ml-2">+</a> 
+        { toolbar &&
+          <div className="col text-right">
+            {toolbar.map(({ title, ...props }, index) => (
+              <button { ...props } key={ index }>{ title }</button>
+            ))}
           </div>
-        </div>
+        }
       </div>
 
       { children }

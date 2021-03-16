@@ -1,5 +1,5 @@
 import React from "react";
-import {toAbsoluteUrl} from "../../helpers";
+import { toAbsoluteUrl } from "../../helpers";
 import Dropdown from "react-bootstrap/Dropdown";
 
 export default function Header() {

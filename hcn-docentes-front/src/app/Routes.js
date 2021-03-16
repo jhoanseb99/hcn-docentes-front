@@ -16,17 +16,17 @@ export default function Routes() {
 
   return (
     <Switch>
-      {/*!isAuthorized ? (
+      { !isAuthorized ? (
         <Route>
           <AuthPage />
         </Route>
       ) : (
         <Redirect from="/auth" to="/" />
-      )*/}
+      ) }
 
       <Route path="/error" component={ErrorsPage}/>
 
-      {isAuthorized ? (
+      { !isAuthorized ? (
         /*Redirect to `/auth` when user is not authorized*/
         <Redirect to="/auth/login" />
       ) : (

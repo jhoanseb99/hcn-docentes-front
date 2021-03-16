@@ -1,5 +1,9 @@
 import { URL } from ".";
 
+/**
+ * 
+ * @param {string} path 
+ */
 function makeRequest({ path, method, headers, ...others }) {
   const timeout = 4000;
   const controller = new AbortController();

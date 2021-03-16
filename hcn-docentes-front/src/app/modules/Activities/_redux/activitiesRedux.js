@@ -23,7 +23,7 @@ const getActivitiesList = () => (dispatch, getState) => {
       dispatch(activitiesSlice.actions.setList({ 
         type: actionTypes.set_list, 
         list: data
-          .filter(value => value.CourseID === CourseID)
+          .filter(value => (value.CourseID === CourseID && value.TeacherID === 50001))
           .sort((a, b) => new Date(b.CreationDate) - new Date(a.CreationDate))
       }));
     })

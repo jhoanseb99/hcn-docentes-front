@@ -37,7 +37,7 @@ function ClinicalCasesDetails(props) {
             type="text"
             name="Title"
             className="form-control"
-            value={ ccase.Title }
+            defaultValue={ ccase.Title }
           />
         </div>
         <div className="form-group">
@@ -47,7 +47,7 @@ function ClinicalCasesDetails(props) {
             name="Description"
             className="form-control"
             style={{minHeight: "100px"}}
-            value={ ccase.Description }
+            defaultValue={ ccase.Description }
           />
         </div>
         <div className="form-group">

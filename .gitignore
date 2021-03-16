@@ -104,3 +104,5 @@ dist
 .tern-port
 
 .history/
+# Local Netlify folder
+.netlify

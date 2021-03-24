@@ -8,6 +8,8 @@ export GOPATH=$HOME/Projects/ADMFactory/Golang
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 cd hcn/
+export PATH=$PATH:/usr/local/go/bin
+sudo systemctl start mongod
 go run main.go
 
 http://104.44.129.29:3600/

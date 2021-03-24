@@ -1,13 +1,14 @@
 import React from "react";
 import { Redirect, Switch, Route } from "react-router-dom";
-import Login from "../modules/Auth/components/Login";
+import Login1 from "../modules/Auth/components/Login1";
 
 function AuthPage() {
   return (
     <div 
       className="container-fluid"
       style={{
-        backgroundColor: "#1B7B52",
+        //backgroundColor: "#1B7B52",
+        backgroundColor: "#E5E5E5",
         height: "100vh",
         padding: "0px"
       }}
@@ -16,7 +17,7 @@ function AuthPage() {
         {/* col-4 d-flex justify-content-center align-self-center */}
           <div className="d-flex flex-column-fluid flex-center justify-content-center align-self-center h-100">
             <Switch>
-              <Route path="/auth/login" component={Login} />
+              <Route path="/auth/login" component={Login1} />
               <Redirect from="/auth" exact={true} to="/auth/login" />
               <Redirect to="/auth/login" />
             </Switch>

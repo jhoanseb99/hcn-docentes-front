@@ -14,6 +14,10 @@ const CCasesRoute = React.lazy(() =>
   import("./modules/ClinicalCases/CCasesRoute.jsx")
 );
 
+const HcnRoute = React.lazy(() =>
+  import("./modules/HCN/HcnRoute.jsx")
+);
+
 export default function BasePage() {
   const dispatch = useDispatch();
 
@@ -29,6 +33,7 @@ export default function BasePage() {
         <Route exact={true} path="/home" component={Home} />
         <Route path="/courses" component={CoursesRoute} />
         <Route path="/clinical-cases" component={CCasesRoute} />
+        <Route path="/hcn" component={HcnRoute} />
         <Redirect to="/error/404"/>
       </Switch>
     </React.Suspense>

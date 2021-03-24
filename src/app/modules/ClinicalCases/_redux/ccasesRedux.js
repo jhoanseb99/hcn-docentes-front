@@ -40,8 +40,9 @@ const getCCasesListByCourse = () => (dispatch, getState) => {
   })
   .catch(err => {
     console.log(err);
-    dispatch(ccasesSlice.actions.setListByCourse({ 
-      type: actionTypes.set_list, list: CCASES.filter(value => value.CourseID === CourseID) 
+    dispatch(ccasesSlice.actions.sortListByCourse({ 
+      type: actionTypes.set_list, 
+      sort_by: (a, b) => new Date(b.CreationDate) - new Date(a.CreationDate)
     }));
   });
 };
@@ -126,6 +127,10 @@ export const ccasesSlice = createSlice({
     addListByCourse: (state, action) => {
       const { value } = action.payload;
       state.ccasesListByCourse.push(value);
+    },
+    sortListByCourse: (state, action) => {
+      const { sort_by } = action.payload;
+      state.ccasesListByCourse.sort(sort_by);
     },
   }
 });

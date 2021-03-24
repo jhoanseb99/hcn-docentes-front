@@ -15,7 +15,7 @@ const actionTypes = {
   set_list_by_course: "SET_LIST_BY_COURSE",
 };
 
-const getHcnList = () => (dispatch, getState) => {
+const getHcnList = () => async (dispatch, getState) => {
   return requestFromServer.getAllHcn()
   .then(data => {
     dispatch(hcnSlice.actions.setList({ type: actionTypes.set_list, list: data }));
@@ -26,12 +26,47 @@ const getHcnList = () => (dispatch, getState) => {
   });
 };
 
-const getHcnListByCourse = () => (dispatch, getState) => {
+const getHcnListByCourse = () => async (dispatch, getState) => {
+  const CourseID = getState().courses.currentCourse.id;
+  return requestFromServer.getAllHcnByCourse({ id: CourseID })
+  .then(data => {
+    dispatch(hcnSlice.actions.setListByCourse({ type: actionTypes.set_list, list: data }))
+  })
+  .catch(err => {
+    console.log(err);
+  });
+};
+
+const getHcn = () => (dispatch, getState) => {
+};
+
+const createHcn = props => (dispatch, getState) => {
+  return requestFromServer.createHcn(props)
+  .then(() => {
+    dispatch(getHcnListByCourse());
+  })
+  .catch(err => {
+    console.log(err);
+  });
+};
+
+const addHcnToCourse = id => async (dispatch, getState) => {
+  const CourseID = getState().courses.currentCourse.id;
+  return requestFromServer.addHcnToCourse({ HCNID: id, CourseID })
+  .then(() => {
+    dispatch(getHcnListByCourse());
+  })
+  .catch(err => {
+    console.log(err);
+  });
 };
 
 export const actions = {
   getHcnList,
   getHcnListByCourse,
+  getHcn,
+  createHcn,
+  addHcnToCourse
 };
 
 export const hcnSlice = createSlice({

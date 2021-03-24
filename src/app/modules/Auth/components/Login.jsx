@@ -38,7 +38,8 @@ function Login() {
             dispatch(authActions.login(token));
             dispatch(authActions.fulfillUser(user));
           })
-          .catch(() => {
+          .catch(err => {
+            console.log(err);
             setLoading(false);
             setSubmitting(false);
             setStatus("Usuario o contraseña incorrectos");
@@ -50,9 +51,13 @@ function Login() {
   return (
     <div className="align-self-center text-center">
       <img alt="HCN logo" src={toAbsoluteUrl("/media/logos/menta4.png")} width="100" height="100" />
-      <form
-        onSubmit={formik.handleSubmit}
-      >
+      <form onSubmit={formik.handleSubmit}>
+        {
+          formik.status &&
+          <div className="mb-10 alert alert-custom alert-light-danger alert-dismissible">
+            <div className="alert-text font-weight-bold">{formik.status}</div>
+          </div>
+        }
         <input
           type="text"
           id="username"

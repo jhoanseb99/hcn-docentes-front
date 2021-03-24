@@ -1,11 +1,13 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { toAbsoluteUrl } from "../../helpers";
 import { actions as authActions } from "../../../app/modules/Auth/_redux/authRedux";
 
 function CustomNavbar() {
+  const { user } = useSelector(state => state.auth);
   const dispatch = useDispatch();
+  
   const handleLogout = () => dispatch(authActions.logout());
 
   return (
@@ -17,8 +19,8 @@ function CustomNavbar() {
       <Nav className="mr-auto">
         <Nav.Link href="/courses">Mis cursos</Nav.Link>
       </Nav>
-      <Navbar.Collapse className="justify-content-end">
-        <NavDropdown title="Benito Fernandez" id="collasible-nav-dropdown">
+      <Navbar.Collapse className="justify-content-end navbar-dropdown">
+        <NavDropdown title={user.Name} id="collasible-nav-dropdown">
           <NavDropdown.Divider />
           <NavDropdown.Item>
              <button className="btn btn-danger" onClick={handleLogout}>Cerrar sesión</button>

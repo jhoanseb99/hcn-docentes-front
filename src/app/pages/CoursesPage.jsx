@@ -34,7 +34,7 @@ export default function CoursesPage() {
       {getCardsList(coursesList).map((row, i) => (
         <div key={i} className="row my-3">
           {row.map((value, j) => (
-            <div key={j} className="col">
+            <div key={j} className={`col-${Math.ceil(12 / 3)}`}>
               <NavLink to="/courses" >
                 <div className="card custom-card" style={{height: "150px"}} onClick={() => handleCourse(value.ID)}>
                   <div className="d-flex card-body justify-content-center align-items-center">

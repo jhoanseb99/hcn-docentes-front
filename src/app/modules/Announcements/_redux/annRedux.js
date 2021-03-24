@@ -28,7 +28,7 @@ const getAnnouncementsList = () => (dispatch, getState) => {
     dispatch(annSlice.actions.setList({
       type: actionTypes.set_list, 
       list: data
-        .filter(value => (value.CourseID === CourseID && value.TeacherID === 50001))
+        .filter(value => (value.CourseID === CourseID))
         .sort((a, b) => new Date(b.CreationDate) - new Date(a.CreationDate))
     }));
   })

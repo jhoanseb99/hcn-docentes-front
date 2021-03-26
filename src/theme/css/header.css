@@ -16,9 +16,9 @@
 }
 
 .header {
-  position: sticky;
+  /* position: sticky; */
   top: 0;
-  min-height: 4rem;
+  min-height: 5rem;
 }
 
 .navbar-dropdown a {

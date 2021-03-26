@@ -3,10 +3,8 @@ import React from "react";
 function getCardsList(list, size = 3) {
   let ans = [];
   for(let i=0; i < list.length; i+=size) {
-    console.log(i,Math.ceil(list.length / size), i+size);
     ans.push(list.slice(i, i + size));
   }
-  console.log(ans)
   return ans;
 } 
 

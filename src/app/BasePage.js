@@ -1,10 +1,11 @@
 import React from "react";
-import { Redirect, Switch, Route } from "react-router-dom";
+import { Redirect, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
+import { ContentRoute } from "../theme/helpers";
+import Home from "./pages/Home.jsx";
+import CoursesPage from "./pages/CoursesPage";
 import { actions as ccasesRedux } from "./modules/ClinicalCases/_redux/ccasesRedux"; 
 import { actions as hcnRedux } from "./modules/HCN/_redux/hcnRedux"; 
-import Home from "./pages/Home.jsx";
 
 const CoursesRoute = React.lazy(() =>
   import("./modules/Courses/CoursesRoute")
@@ -30,10 +31,14 @@ export default function BasePage() {
     <React.Suspense fallback={<h1>loading page...</h1>}>
       <Switch>
         <Redirect exact={true} from="/" to="/courses/all" />
-        <Route exact={true} path="/home" component={Home} />
-        <Route path="/courses" component={CoursesRoute} />
-        <Route path="/clinical-cases" component={CCasesRoute} />
-        <Route path="/hcn" component={HcnRoute} />
+        
+        <ContentRoute exact={true} path="/home" component={Home} />
+        <ContentRoute path="/clinical-cases" component={CCasesRoute} />
+        <ContentRoute path="/hcn" component={HcnRoute} />
+
+        <ContentRoute exact={true} path="/courses/all" component={CoursesPage} />
+        <ContentRoute path="/courses" aside={true} component={CoursesRoute} />
+        
         <Redirect to="/error/404"/>
       </Switch>
     </React.Suspense>

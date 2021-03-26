@@ -4,10 +4,17 @@
 @import "./authpage.css";
 
 .content {
-  margin-left: 200px;
   padding: 40px 30px;
   height: 100vh;
   width: 100vw;
+}
+
+.page {
+  margin-top: 5rem;
+}
+
+.with-aside {
+  margin-left: 200px;
 }
 
 .custom-card {

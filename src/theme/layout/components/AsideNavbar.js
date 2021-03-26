@@ -3,7 +3,7 @@ import {NavLink}  from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBullhorn, faBriefcase, faClinicMedical, faNotesMedical } from "@fortawesome/free-solid-svg-icons";
 
-function Aside() {
+function AsideNavbar() {
   const menuItem = (icon, children) => (
     <div>
       <div className="col">
@@ -47,4 +47,4 @@ function Aside() {
   );
 }
 
-export default Aside;
+export default AsideNavbar;

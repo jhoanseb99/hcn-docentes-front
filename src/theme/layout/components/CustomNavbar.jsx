@@ -11,7 +11,7 @@ function CustomNavbar() {
   const handleLogout = () => dispatch(authActions.logout());
 
   return (
-    <Navbar bg="dark" variant="dark" className="header fixed-top">
+    <Navbar bg="dark" variant="dark" className="header navbar-default navbar-fixed-top fixed-top">
       <Navbar.Brand href="/home">
         <img className="logo" src={toAbsoluteUrl("/media/logos/logo_v1.png")}/>{' '}
         Historias Clínicas Nutricionales

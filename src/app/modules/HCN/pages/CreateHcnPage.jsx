@@ -1,10 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useHistory, NavLink } from "react-router-dom";
 import { actions as hcnRedux } from "../_redux/hcnRedux";
 import BaseCardSection from "../../../components/UI/BaseCardSection";
 
 function CreateHcnPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [ hcn, setHcn ] = React.useState({
     GeneralData: {},
@@ -33,7 +35,8 @@ function CreateHcnPage() {
 
   const saveHCN = event => {
     event.preventDefault(); 
-    dispatch(hcnRedux.createHcn({ GeneralData: general_data, TeacherID: 50001 }));
+    dispatch(hcnRedux.createHcn({ GeneralData: general_data, TeacherID: 50001 }))
+      .then(() => history.push("/courses/clinical-cases"))
   };
 
   return (
@@ -90,7 +93,7 @@ function CreateHcnPage() {
             onChange={handleChange}
           />
         </div>
-        <button type="submit" className="btn btn-primary">Crear hcn</button>
+        <button type="submit" className="btn btn-primary">Crear</button>
       </form>
     </BaseCardSection>
   );

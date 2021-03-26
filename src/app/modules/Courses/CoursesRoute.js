@@ -6,10 +6,8 @@ import { actions } from "../Courses/_redux/coursesRedux";
 
 import Activities from "../../pages/Activities.jsx";
 import Announcements from "../../pages/Announcements.jsx";
-import CoursesPage from "../../pages/CoursesPage.jsx";
 import CCasesPage from "../../pages/CCasesPage.jsx";
 import HcnPage from "../../pages/HcnPage.jsx";
-import ClinicalCasesDetails from "../ClinicalCases/pages/ClinicalCasesDetails";
 
 export default function CoursesRoute() {
   const { currentCourse } = useSelector(state => state.courses);
@@ -24,7 +22,6 @@ export default function CoursesRoute() {
   return (
     <Switch>
       <Redirect exact={true} from="/courses" to="/courses/announcements" />
-      <Route exact={true} path="/courses/all" component={CoursesPage} />
       {currentCourse.id ? (
         <>
         <Route exact={true} path="/courses/activities" component={Activities} />

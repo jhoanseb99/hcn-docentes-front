@@ -19,10 +19,12 @@ function Login() {
   const LoginSchema = Yup.object().shape({
     username: Yup.string()
       .min(3, "Mínimo 3 carácteres")
-      .max(50, "Máximo 50 carácteres"),
+      .max(50, "Máximo 50 carácteres")
+      .required("Campo requerido"),
     password: Yup.string()
       .min(3, "Mínimo 3 carácteres")
-      .max(50, "Máximo 50 carácteres"),
+      .max(50, "Máximo 50 carácteres")
+      .required("Campo requerido"),
   });
 
   const formik = useFormik({
@@ -34,12 +36,12 @@ function Login() {
         login(values.username, values.password)
           .then(response => {
             setLoading(false);
+            setSubmitting(false);
             const { token, user } = response;
             dispatch(authActions.login(token));
             dispatch(authActions.fulfillUser(user));
           })
-          .catch(err => {
-            console.log(err);
+          .catch(() => {
             setLoading(false);
             setSubmitting(false);
             setStatus("Usuario o contraseña incorrectos");
@@ -49,39 +51,71 @@ function Login() {
   });
 
   return (
-    <div className="align-self-center text-center">
-      <img alt="HCN logo" src={toAbsoluteUrl("/media/logos/menta4.png")} width="100" height="100" />
-      <form onSubmit={formik.handleSubmit}>
-        {
-          formik.status &&
-          <div className="mb-10 alert alert-custom alert-light-danger alert-dismissible">
-            <div className="alert-text font-weight-bold">{formik.status}</div>
-          </div>
-        }
-        <input
-          type="text"
-          id="username"
-          name="username"
-          className="form-control mt-4"
-          placeholder="Nombre de usuario"
-          {...formik.getFieldProps("username")}
+    <div className="align-self-center">
+      <div className="card col-12" style={{borderTop:"5px solid #1B7B52"}}>
+        <img
+          style={{
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+          alt="HCN logo" 
+          src={toAbsoluteUrl("/media/logos/menta4.png")} 
+          width="100" 
+          height="100" 
         />
-        <input
-          type="password"
-          id="password"
-          name="password"
-          className="form-control mt-2"
-          placeholder="Contraseña"
-          {...formik.getFieldProps("password")}
-        />
-        <button
-          type="submit"
-          className="btn btn-secondary font-weight-bold my-3"
-        >
-          <span>Iniciar sesión</span>
-          {loading && <CircularProgress className="ml-2" size={10} color="inherit" />}
-        </button>
-      </form>
+        <div className="card-body">
+          <form 
+            onSubmit={formik.handleSubmit} 
+            className={`${!formik.isSubmitting ? "needs-validation" : "was-validated"}`}
+            noValidate
+          >
+            {formik.status &&
+              <div className="mb-10 alert alert-danger alert-dismissible">
+                <div className="
+                font-weight-bold">{formik.status}</div>
+              </div>
+            }
+            <label htmlFor="username">Nombre de usuario</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              className="form-control"
+              placeholder="Nombre de usuario"
+              {...formik.getFieldProps("username")}
+            />
+            {formik.touched.username && formik.errors.username ? (
+              <small>{formik.errors.email}</small>
+            ) : null}
+
+            <label htmlFor="username" className="mt-2">Contraseña</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              className="form-control"
+              placeholder="Contraseña"
+              {...formik.getFieldProps("password")}
+            />
+            {formik.touched.password && formik.errors.password ? (
+              <div className="fv-plugins-message-container">
+                <div className="fv-help-block">{formik.errors.password}</div>
+              </div>
+            ) : null}
+
+            <button
+              type="submit"
+              className="btn btn-secondary font-weight-bold my-3"
+              disabled={formik.isSubmitting}
+              style={{backgroundColor: "#343a40"}}
+            >
+              <span>Iniciar sesión</span>
+              {loading && <CircularProgress className="ml-2" size={10} color="inherit" />}
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );  
 }

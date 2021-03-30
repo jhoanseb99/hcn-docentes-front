@@ -1,22 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChalkboardTeacher } from "@fortawesome/free-solid-svg-icons";
 
 import BaseSection from "../components/UI/BaseSection";
 
 import { actions } from "../modules/Courses/_redux/coursesRedux";
+import CardGridContainer from "../components/UI/CardGridContainer";
 
-function getCardsList(list, size = 3) {
-  let ans = [];
-  for(let i=0; i < list.length; i+=size) {
-    ans.push(list.slice(i, i + size));
-  }
-  return ans;
-} 
-
-export default function CoursesPage() {
+function CoursesPage() {
   const { coursesList } = useSelector(state => state.courses);
   const dispatch = useDispatch();
 
@@ -31,24 +24,22 @@ export default function CoursesPage() {
   return (
     <BaseSection title="Cursos">
       {/* Courses */}
-      {getCardsList(coursesList).map((row, i) => (
-        <div key={i} className="row my-3">
-          {row.map((value, j) => (
-            <div key={j} className={`col-${Math.ceil(12 / 3)}`}>
-              <NavLink to="/courses" >
-                <div className="card custom-card" style={{height: "150px"}} onClick={() => handleCourse(value.ID)}>
-                  <div className="d-flex card-body justify-content-center align-items-center">
-                    <div className="d-flex flex-column align-items-center">
-                      <FontAwesomeIcon icon={faChalkboardTeacher} size="3x" />
-                      <span className="mt-1">{ value.Name }</span>
-                    </div>
-                  </div>
+      <CardGridContainer data={coursesList}>
+        { course => (
+          <NavLink to="/courses">
+            <div className="card custom-card" style={{height: "150px"}} onClick={() => handleCourse(course.ID)}>
+              <div className="d-flex card-body justify-content-center align-items-center">
+                <div className="d-flex flex-column align-items-center">
+                  <FontAwesomeIcon icon={faChalkboardTeacher} size="3x" />
+                  <span className="mt-1">{ course.Name }</span>
                 </div>
-              </NavLink>
+              </div>
             </div>
-          ))}
-        </div>
-      ))}
+          </NavLink>
+        )}
+      </CardGridContainer>
     </BaseSection>
   );
 }
+
+export default CoursesPage;

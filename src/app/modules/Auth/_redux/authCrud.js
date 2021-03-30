@@ -33,6 +33,6 @@ export async function login(username, password) {
       });  
   
     default:
-      return new Promise((resolve, reject) => {console.log("aqui"); resolve("Rechazado")});
+      return new Promise((resolve, reject) => {console.log("aqui"); reject("Rechazado")});
   }
 }

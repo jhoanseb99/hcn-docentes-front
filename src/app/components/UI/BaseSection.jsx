@@ -11,7 +11,7 @@ function BaseSection(props) {
   return (
     <div className="container-fluid">
       {/* Header */}
-      <div className="row pb-5">
+      <div className="row pb-3">
         <div className="col">
           <h3 className="text-dark">{ title }</h3>  
         </div>

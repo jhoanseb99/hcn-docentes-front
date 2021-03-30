@@ -9,18 +9,17 @@ function getCardsList(list, size = 3) {
 } 
 
 /**
- * 
- * @param {Object} props 
+ * Base of a grid container
  * @param {Array} props.data
  */
 function CardGridContainer(props) {
-  const { data } = props;
+  const { data, size = 3, children } = props;
   return (
-    getCardsList(data).map((row, i) => (
+    getCardsList(data, size).map((row, i) => (
       <div key={i} className="row my-3">
         {row.map((value, j) => (
-          <div key={j} className="col">
-            {value}
+          <div key={j} className={`col-${Math.ceil(12 / size)}`}>
+            {children(value)}
           </div>
         ))}
       </div>

@@ -4,14 +4,7 @@ import { useHistory, NavLink } from "react-router-dom";
 import { actions as hcnRedux } from "../modules/HCN/_redux/hcnRedux";
 import BaseSection from "../components/UI/BaseSection";
 import AddHcnDialog from "../modules/HCN/components/AddHcnDialog.jsx"
-
-function getCardsList(list, size = 3) {
-  let ans = [];
-  for(let i=0; i < list.length; i+=size) {
-    ans.push(list.slice(i, i + size));
-  }
-  return ans;
-} 
+import CardGridContainer from "../components/UI/CardGridContainer";
 
 function HcnPage() {
   const { hcnListByCourse } = useSelector(state => state.hcn);
@@ -40,23 +33,19 @@ function HcnPage() {
         }
       ]}
     >
-      {getCardsList(hcnListByCourse).map((row, i) => (
-        <div key={i} className="row my-3">
-          {row.map((value, j) => (
-            <div key={j} className={`col-${Math.ceil(12 / 3)}`}>
-              <NavLink to="#" >
-                <div className="card custom-card" style={{height: "150px"}}>
-                  <div className="d-flex card-body justify-content-center align-items-center">
-                    <div className="d-flex flex-column align-items-center">
-                      <span className="mt-1">{ value.HCNID }</span>
-                    </div>
-                  </div>
+      <CardGridContainer data={hcnListByCourse}>
+        { hcn => (
+          <NavLink to="#" >
+            <div className="card custom-card" style={{height: "150px"}}>
+              <div className="d-flex card-body justify-content-center align-items-center">
+                <div className="d-flex flex-column align-items-center">
+                  <span className="mt-1">{ hcn.HCNID }</span>
                 </div>
-              </NavLink>
+              </div>
             </div>
-          ))}
-        </div>
-      ))}
+          </NavLink>
+        )}
+      </CardGridContainer>
 
       {
         openAddDialog &&

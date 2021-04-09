@@ -7,6 +7,8 @@ import UpdateActivityDialog from "../modules/Activities/components/UpdateActivit
 import { actions } from "../modules/Activities/_redux/activitiesRedux"; 
 import BaseCardSection from "../components/UI/BaseCardSection.jsx";
 
+//import EditIcon from '@material-ui/icons/Edit';
+
 export default function Activities() {
   const { activitieslist } = useSelector(state => state.activities);
   const dispatch = useDispatch();

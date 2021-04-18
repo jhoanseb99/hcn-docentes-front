@@ -23,7 +23,7 @@ const setList = list => dispatch => {
 
 const getAnnouncementsList = () => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.getAllAnnouncements({ CourseID })
+  return requestFromServer.getAllAnnouncements({ CourseID }, getState().auth.authToken)
   .then(data => {
     dispatch(annSlice.actions.setList({
       type: actionTypes.set_list, 
@@ -42,7 +42,7 @@ const getAnnouncementsList = () => (dispatch, getState) => {
 
 const updateAnnouncement = props => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.updateAnnouncement({ ...props, CourseID })
+  return requestFromServer.updateAnnouncement({ ...props, CourseID }, getState().auth.authToken)
   .then(() => {
     dispatch(getAnnouncementsList());
   })
@@ -53,7 +53,7 @@ const updateAnnouncement = props => (dispatch, getState) => {
 
 const createAnnouncement = props => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.createAnnouncement({ ...props, CourseID })
+  return requestFromServer.createAnnouncement({ ...props, CourseID }, getState().auth.authToken)
   .then(() => {
     dispatch(getAnnouncementsList());
   })
@@ -63,7 +63,7 @@ const createAnnouncement = props => (dispatch, getState) => {
 };
 
 const deleteAnnouncement = id => (dispatch, getState) => {
-  return requestFromServer.deleteAnnouncement(id)
+  return requestFromServer.deleteAnnouncement(id, getState().auth.authToken)
   .then(() => {
     dispatch(getAnnouncementsList());
   })

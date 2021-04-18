@@ -18,7 +18,7 @@ const setList = list => dispatch => {
 
 const getActivitiesList = () => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.getAllActivities({ CourseID })
+  return requestFromServer.getAllActivities({ CourseID }, getState().auth.authToken)
     .then(data => {
       dispatch(activitiesSlice.actions.setList({ 
         type: actionTypes.set_list, 
@@ -35,7 +35,7 @@ const getActivitiesList = () => (dispatch, getState) => {
 
 const updateActivity = props => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.updateActivity({ ...props, CourseID })
+  return requestFromServer.updateActivity({ ...props, CourseID }, getState().auth.authToken)
   .then(() => {
     dispatch(getActivitiesList());
   })
@@ -47,7 +47,7 @@ const updateActivity = props => (dispatch, getState) => {
 const createActivity = props => (dispatch, getState) => {
   console.log("creating")
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.createActivity({ ...props, CourseID })
+  return requestFromServer.createActivity({ ...props, CourseID }, getState().auth.authToken)
   .then(() => {
     dispatch(getActivitiesList());
   })
@@ -57,7 +57,7 @@ const createActivity = props => (dispatch, getState) => {
 };
 
 const deleteActivity = id => (dispatch, getState) => {
-  return requestFromServer.deleteActivity({ ID: id })
+  return requestFromServer.deleteActivity({ ID: id }, getState().auth.authToken)
   .then(() => {
     dispatch(getActivitiesList());
   })

@@ -2,19 +2,19 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { toAbsoluteUrl } from "../../../../theme/helpers";
+import { toAbsoluteUrl } from "theme/helpers";
 import { CircularProgress } from "@material-ui/core";
 import { login } from "../_redux/authCrud";
 import { actions as authActions } from "../_redux/authRedux";
 
 const initialValues = {
   username: "",
-  password: ""
+  password: "",
 };
 
 function Login() {
   const dispatch = useDispatch();
-  const [ loading, setLoading ] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const LoginSchema = Yup.object().shape({
     username: Yup.string()
@@ -34,10 +34,10 @@ function Login() {
       setLoading(true);
       setTimeout(() => {
         login(values.username, values.password)
-          .then(response => {
+          .then((response) => {
             setLoading(false);
             setSubmitting(false);
-            const { token, user } = response;
+            const { Token: token, ...user } = response;
             dispatch(authActions.login(token));
             dispatch(authActions.fulfillUser(user));
           })
@@ -47,35 +47,41 @@ function Login() {
             setStatus("Usuario o contraseña incorrectos");
           });
       }, 1000);
-    }
+    },
   });
 
   return (
     <div className="align-self-center">
-      <div className="card col-12" style={{borderTop:"5px solid #1B7B52"}}>
+      <div className="card col-12" style={{ borderTop: "5px solid #1B7B52" }}>
         <img
           style={{
             display: "block",
             marginLeft: "auto",
             marginRight: "auto",
           }}
-          alt="HCN logo" 
-          src={toAbsoluteUrl("/media/logos/menta4.png")} 
-          width="100" 
-          height="100" 
+          alt="HCN logo"
+          src={toAbsoluteUrl("/media/logos/menta4.png")}
+          width="100"
+          height="100"
         />
         <div className="card-body">
-          <form 
-            onSubmit={formik.handleSubmit} 
-            className={`${!formik.isSubmitting ? "needs-validation" : "was-validated"}`}
+          <form
+            onSubmit={formik.handleSubmit}
+            className={`${
+              !formik.isSubmitting ? "needs-validation" : "was-validated"
+            }`}
             noValidate
           >
-            {formik.status &&
+            {formik.status && (
               <div className="mb-10 alert alert-danger alert-dismissible">
-                <div className="
-                font-weight-bold">{formik.status}</div>
+                <div
+                  className="
+                font-weight-bold"
+                >
+                  {formik.status}
+                </div>
               </div>
-            }
+            )}
             <label htmlFor="username">Nombre de usuario</label>
             <input
               type="text"
@@ -89,7 +95,9 @@ function Login() {
               <small>{formik.errors.email}</small>
             ) : null}
 
-            <label htmlFor="username" className="mt-2">Contraseña</label>
+            <label htmlFor="username" className="mt-2">
+              Contraseña
+            </label>
             <input
               type="password"
               id="password"
@@ -108,15 +116,17 @@ function Login() {
               type="submit"
               className="btn btn-secondary font-weight-bold my-3"
               disabled={formik.isSubmitting}
-              style={{backgroundColor: "#343a40"}}
+              style={{ backgroundColor: "#343a40" }}
             >
               <span>Iniciar sesión</span>
-              {loading && <CircularProgress className="ml-2" size={10} color="inherit" />}
+              {loading && (
+                <CircularProgress className="ml-2" size={10} color="inherit" />
+              )}
             </button>
           </form>
         </div>
       </div>
     </div>
-  );  
+  );
 }
 export default Login;

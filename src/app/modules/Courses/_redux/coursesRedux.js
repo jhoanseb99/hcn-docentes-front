@@ -29,7 +29,7 @@ const setCurrentCourse = (field, data) => dispatch => {
  * Get all courses list
  */
 const getCoursesList = () => (dispatch, getState) => {
-  return requestFromServer.getAllCourses()
+  return requestFromServer.getAllCourses(getState().auth.authToken)
   .then(data => {
     dispatch(coursesSlice.actions.setCoursesList({ type: actionTypes.set_list, list: data }));
   })
@@ -45,7 +45,7 @@ const getCoursesList = () => (dispatch, getState) => {
  * @param {*} id 
  */
 const getCourseData = id => (dispatch, getState) => {
-  return requestFromServer.getCourse({ id })
+  return requestFromServer.getCourse({ id }, getState().auth.authToken)
   .then(data => {
     dispatch(coursesSlice.actions.setCurrentCourse({ 
       type: actionTypes.set_current_course, field: "data", data 

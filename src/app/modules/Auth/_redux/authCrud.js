@@ -35,4 +35,19 @@ export async function login(username, password) {
     default:
       return new Promise((resolve, reject) => {console.log("aqui"); reject("Rechazado")});
   }
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_LOGIN, 
+      method: "POST",
+      body: JSON.stringify({
+        Username: username, Password: password
+      })
+    })
+    .then(response => {
+      if(!response.ok) throw new Error(response.status);
+      return response.json();
+    })
+    .then(response => resolve(response))
+    .catch(err => reject(err.message)); 
+  });
 }

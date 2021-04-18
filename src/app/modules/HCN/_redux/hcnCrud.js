@@ -6,12 +6,14 @@ import { PATH_COURSES } from "../../Courses/_redux/coursesCrud";
 export const PATH_HCN = "/HCN";
 
 export const PATH_GET_ALL_HCN = PATH_HCN + "/GetAllHCN";
-export const PATH_GET_HCN = PATH_HCN + "/GetHCN";
+export const PATH_GET_HCN_INFO = PATH_HCN + "/GetHCN";
 
 export const PATH_GET_ALL_HCN_BY_COURSE = PATH_COURSES + "/GetAllHCN";
 export const PATH_ADD_HCN_TO_COURSE = PATH_COURSES + "/AddHCN";
 
 export const PATH_CREATE_HCN = PATH_HCN + "/CreateHCNMongo";
+export const PATH_GET_HCN = PATH_HCN + "/GetHCNMongo";
+export const PATH_UPDATE_HCN = PATH_HCN + "/UpdateHCNMongo";
 
 export function getAllHcn(params, authToken) {
   return new Promise((resolve, reject) => {
@@ -29,10 +31,10 @@ export function getAllHcn(params, authToken) {
   });
 }
 
-export function getHcn(params, authToken) {
+export function getHcnInfo(params, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_GET_HCN + getQueryParams(params), 
+      path: PATH_GET_HCN_INFO + getQueryParams(params), 
       method: "GET",
       headers: new Headers(),
     })
@@ -98,4 +100,39 @@ export function createHcn(props, authToken) {
     .catch(err => reject(err.message)); 
   });
 }
+
+export function updateHcn(props, authToken) {
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_UPDATE_HCN, 
+      method: "POST",
+      headers: new Headers(),
+      body: JSON.stringify(props)
+    })
+    .then(response => {
+      if(!response.ok) throw new Error(response.status);
+      return response.json();
+    })
+    .then(response => resolve(response))
+    .catch(err => reject(err.message)); 
+  });
+}
+
+export function getHcn(params, authToken) {
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_GET_HCN + getQueryParams(params),
+      method: "GET",
+      headers: new Headers()
+    })
+    .then(response => {
+      if(!response.ok) throw new Error(response.status);
+      return response.json();
+    })
+    .then(response => resolve(response))
+    .catch(err => reject(err.message)); 
+  });
+}
+
+
 

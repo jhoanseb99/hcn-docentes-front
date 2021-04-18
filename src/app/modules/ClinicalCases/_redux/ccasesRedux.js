@@ -16,7 +16,7 @@ const actionTypes = {
 };
 
 const getCCasesList = () => (dispatch, getState) => {
-  return requestFromServer.getAllCCases()
+  return requestFromServer.getAllCCases(getState().auth.authToken)
   .then(data => {
     dispatch(ccasesSlice.actions.setList(
       { type: actionTypes.set_list, list: data.filter(value => value.TeacherID === 50001) }
@@ -30,7 +30,7 @@ const getCCasesList = () => (dispatch, getState) => {
 
 const getCCasesListByCourse = () => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.getAllCCasesByCourse({ id: CourseID })
+  return requestFromServer.getAllCCasesByCourse({ id: CourseID }, getState().auth.authToken)
   .then(async data => {
     dispatch(ccasesSlice.actions.setListByCourse({ type: actionTypes.set_list, list: [] }));
     await Promise.all(data.map(async value => {
@@ -49,7 +49,7 @@ const getCCasesListByCourse = () => (dispatch, getState) => {
 
 const addCCaseToCourse = id => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.addCCaseToCourse({ ClinicalCaseID: id, CourseID })
+  return requestFromServer.addCCaseToCourse({ ClinicalCaseID: id, CourseID }, getState().auth.authToken)
   .then(() => {
     dispatch(getCCasesListByCourse());
   })
@@ -59,7 +59,7 @@ const addCCaseToCourse = id => (dispatch, getState) => {
 };
 
 const createCCase = props => (dispatch, getState) => {
-  return requestFromServer.createCCase({ ...props, TeacherID: 50001 })
+  return requestFromServer.createCCase({ ...props, TeacherID: 50001 }, getState().auth.authToken)
   .then(() => {
     dispatch(getCCasesList());
   })
@@ -69,7 +69,7 @@ const createCCase = props => (dispatch, getState) => {
 };
 
 const updateCCase = props => (dispatch, getState) => {
-  return requestFromServer.updateCCase({ ...props, TeacherID: 50001 })
+  return requestFromServer.updateCCase({ ...props, TeacherID: 50001 }, getState().auth.authToken)
   .then(() => {
     dispatch(getCCasesList());
     dispatch(getCCasesListByCourse());
@@ -81,7 +81,7 @@ const updateCCase = props => (dispatch, getState) => {
 
 const deleteCCaseByCourse = id => (dispatch, getState) => {
   return dispatch(removeCCase(id))
-  .then(() => requestFromServer.deleteCCase({ ID: id }))
+  .then(() => requestFromServer.deleteCCase({ ID: id }, getState().auth.authToken))
   .then(() => {
     dispatch(getCCasesList());
     dispatch(getCCasesListByCourse());
@@ -93,7 +93,7 @@ const deleteCCaseByCourse = id => (dispatch, getState) => {
 
 const removeCCase = id => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.removeCCaseToCourse({ ClinicalCaseID: id, CourseID })
+  return requestFromServer.removeCCaseToCourse({ ClinicalCaseID: id, CourseID }, getState().auth.authToken)
   .then(() => {
     dispatch(getCCasesListByCourse());
   })

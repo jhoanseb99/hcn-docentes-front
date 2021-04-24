@@ -8,20 +8,15 @@ import GeneralDataForm from "../utils/GeneralDataForm";
 import PatientDataForm from "../utils/PatientDataForm";
 import AnthropometryDataForm from "../utils/AnthropometryDataForm";
 
-const initialHcnStruct = {
-  GeneralData: {},
-  PatientData: {},
-  ConsultationReason: {},
-  Anthropometry: {},
-  Biochemistry: [],
-  Interpretation: {},
+const modeTypes = {
+  create: "create",
+  update: "update",
+  feedback: "feedback",
 };
-
-const initialValues = initialHcnValues;
 
 const getDisplayObject = () => {
   let ans = {};
-  for (const key in initialValues) {
+  for (const key in initialHcnValues) {
     ans[key] = { Feedback: false };
   }
   return ans;
@@ -47,8 +42,31 @@ const getJSON = (data) => {
   return ans;
 };
 
+const jsonToInputs = (data) => {
+  if (!data) return null;
+  const ans = {};
+  let keys = Object.keys(data);
+  while (keys.length !== 0) {
+    const key = keys.pop();
+    if (key[0] !== "_") {
+      const key_list = key.split("_");
+      let children = data;
+      key_list.forEach((value) => {
+        children = children[value];
+      });
+      if (typeof children === "object") {
+        Object.keys(children).forEach((value) => {
+          keys.push(`${key}_${value}`);
+        });
+      } else if (children) ans[key] = children;
+    }
+  }
+  console.log(ans);
+  return ans;
+};
+
 function HcnForm(props) {
-  const { handleSubmit, handleReturn } = props;
+  const { handleSubmit, handleReturn, data, isUpdate = false } = props;
 
   const [displayFields, setDisplayFields] = React.useState(getDisplayObject());
   const isFeedback = false;
@@ -58,7 +76,7 @@ function HcnForm(props) {
   });
 
   const formik = useFormik({
-    initialValues,
+    initialValues: jsonToInputs(data) || initialHcnValues,
     //validationSchema: hcnSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
       console.log(values);
@@ -173,11 +191,11 @@ function HcnForm(props) {
         ) : null}
       </div>
       <button type="submit" className="btn btn-primary">
-        Crear
+        {!isUpdate ? "Crear" : "Actualizar"}
       </button>
-      <button className="btn btn-secondary ml-2" onClick={handleReturn}>
+      {/* <button className="btn btn-secondary ml-2" onClick={handleReturn}>
         Volver
-      </button>
+      </button> */}
     </form>
   );
 }

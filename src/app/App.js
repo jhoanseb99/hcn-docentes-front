@@ -7,7 +7,6 @@ import Routes from "./Routes";
 import './App.css';
 
 function App({ store, persistor, basename }) {
-  console.log(basename);
   return (
     /* Provide Redux store */
     <Provider store={store}>

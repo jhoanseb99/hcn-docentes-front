@@ -10,7 +10,7 @@ import { actions } from "../modules/Courses/_redux/coursesRedux";
 import CardGridContainer from "../components/UI/CardGridContainer";
 
 function CoursesPage() {
-  const { coursesList } = useSelector(state => state.courses);
+  const { coursesList } = useSelector((state) => state.courses);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -25,13 +25,17 @@ function CoursesPage() {
     <BaseSection title="Cursos">
       {/* Courses */}
       <CardGridContainer data={coursesList}>
-        { course => (
+        {(course) => (
           <NavLink to="/courses">
-            <div className="card custom-card" style={{height: "150px"}} onClick={() => handleCourse(course.ID)}>
+            <div
+              className="card custom-card"
+              style={{ height: "150px" }}
+              onClick={() => handleCourse(course.ID)}
+            >
               <div className="d-flex card-body justify-content-center align-items-center">
                 <div className="d-flex flex-column align-items-center">
                   <FontAwesomeIcon icon={faChalkboardTeacher} size="3x" />
-                  <span className="mt-1">{ course.Name }</span>
+                  <span className="mt-1">{course.Name}</span>
                 </div>
               </div>
             </div>

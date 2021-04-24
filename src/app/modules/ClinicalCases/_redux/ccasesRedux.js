@@ -16,10 +16,11 @@ const actionTypes = {
 };
 
 const getCCasesList = () => (dispatch, getState) => {
-  return requestFromServer.getAllCCases(getState().auth.authToken)
+  const userId = getState().auth.user.ID;
+  return requestFromServer.getAllCCases(undefined, getState().auth.authToken)
   .then(data => {
     dispatch(ccasesSlice.actions.setList(
-      { type: actionTypes.set_list, list: data.filter(value => value.TeacherID === 50001) }
+      { type: actionTypes.set_list, list: data.filter(value => value.TeacherID === userId) }
     ));
   })
   .catch(err => {
@@ -59,7 +60,8 @@ const addCCaseToCourse = id => (dispatch, getState) => {
 };
 
 const createCCase = props => (dispatch, getState) => {
-  return requestFromServer.createCCase({ ...props, TeacherID: 50001 }, getState().auth.authToken)
+  const userId = getState().auth.user.ID;
+  return requestFromServer.createCCase({ ...props, TeacherID: userId }, getState().auth.authToken)
   .then(() => {
     dispatch(getCCasesList());
   })
@@ -69,7 +71,8 @@ const createCCase = props => (dispatch, getState) => {
 };
 
 const updateCCase = props => (dispatch, getState) => {
-  return requestFromServer.updateCCase({ ...props, TeacherID: 50001 }, getState().auth.authToken)
+  const userId = getState().auth.user.ID;
+  return requestFromServer.updateCCase({ ...props, TeacherID: userId }, getState().auth.authToken)
   .then(() => {
     dispatch(getCCasesList());
     dispatch(getCCasesListByCourse());

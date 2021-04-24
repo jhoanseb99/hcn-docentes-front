@@ -9,6 +9,7 @@ import CreateAnnDialog from "app/modules/Announcements/components/CreateAnnDialo
 import { actions } from "../modules/Announcements/_redux/annRedux";
 import UpdateAnnDialog from "app/modules/Announcements/components/UpdateAnnDialog.jsx";
 import BaseCardSection from "app/components/UI/BaseCardSection.jsx";
+import BaseDialog from "app/components/UI/BaseDialog";
 
 function Announcements() {
   const { announcementslist } = useSelector((state) => state.announcements);
@@ -16,20 +17,26 @@ function Announcements() {
 
   const [openCreateDialog, setOpenCreateDialog] = React.useState(false);
   const [openUpdateDialog, setOpenUpdateDialog] = React.useState(false);
+  const [confirmDelete, setConfirmDelete] = React.useState(false);
   const [annValue, setAnnValue] = React.useState(undefined);
 
   React.useEffect(() => {
     dispatch(actions.getAnnouncementsList());
   }, [dispatch]);
 
-  const handleDelete = ({ ID }) => {
+  const dispatchDelete = ({ ID }) => {
     dispatch(actions.deleteAnnouncement(ID)).then(() =>
-      dispatch(actions.getAnnouncementsList())
+      setConfirmDelete(false)
     );
   };
 
-  const handleUpdate = (ann) => {
-    setAnnValue(ann);
+  const handleDelete = (values) => {
+    setAnnValue(values);
+    setConfirmDelete(true);
+  };
+
+  const handleUpdate = (values) => {
+    setAnnValue(values);
     setOpenUpdateDialog(true);
   };
 
@@ -105,6 +112,27 @@ function Announcements() {
           handleClose={() => setOpenUpdateDialog(false)}
           announcement={annValue}
         />
+      )}
+
+      {confirmDelete && (
+        <BaseDialog
+          open={confirmDelete}
+          onClose={() => setConfirmDelete(false)}
+          actions={[
+            {
+              content: "Confirmar",
+              onClick: () => dispatchDelete(annValue),
+              color: "primary",
+            },
+            {
+              content: "Cancelar",
+              onClick: () => setConfirmDelete(false),
+              className: "btn btn-secondary",
+            },
+          ]}
+        >
+          ¿Desea eliminar el anuncio?
+        </BaseDialog>
       )}
     </BaseCardSection>
   );

@@ -8,73 +8,78 @@ import { ANNOUNCEMENTS } from "../../../const/data";
 const initAnnState = {
   announcementslist: [],
   annState: {
-    loading: false
-  }
+    loading: false,
+  },
 };
 
 const actionTypes = {
-  set_list: "SET_LIST"
+  set_list: "SET_LIST",
 };
 
-
-const setList = list => dispatch => {
+const setList = (list) => (dispatch) => {
   dispatch(annSlice.actions.setList({ type: actionTypes.set_list, list }));
 };
 
 const getAnnouncementsList = () => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.getAllAnnouncements({ CourseID }, getState().auth.authToken)
-  .then(data => {
-    dispatch(annSlice.actions.setList({
-      type: actionTypes.set_list, 
-      list: data
-        .filter(value => (value.CourseID === CourseID))
-        .sort((a, b) => new Date(b.CreationDate) - new Date(a.CreationDate))
-    }));
-  })
-  .catch(err => {
-    console.log(err);
-    dispatch(annSlice.actions.setList({ 
-      type: actionTypes.set_list, list: ANNOUNCEMENTS.filter(value => value.CourseID === CourseID) 
-    }));
-  });
+  return requestFromServer
+    .getAllAnnouncements({ CourseID }, getState().auth.authToken)
+    .then((data) => {
+      dispatch(
+        annSlice.actions.setList({
+          type: actionTypes.set_list,
+          list: data
+            .filter((value) => value.CourseID === CourseID)
+            .sort(
+              (a, b) => new Date(b.CreationDate) - new Date(a.CreationDate)
+            ),
+        })
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(
+        annSlice.actions.setList({
+          type: actionTypes.set_list,
+          list: ANNOUNCEMENTS.filter((value) => value.CourseID === CourseID),
+        })
+      );
+    });
 };
 
-const updateAnnouncement = props => (dispatch, getState) => {
+const updateAnnouncement = (props) => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.updateAnnouncement({ ...props, CourseID }, getState().auth.authToken)
-  .then(() => {
-    dispatch(getAnnouncementsList());
-  })
-  .catch(err => {
-    console.log(err);
-  });
+  return requestFromServer
+    .updateAnnouncement({ ...props, CourseID }, getState().auth.authToken)
+    .then(() => {
+      dispatch(getAnnouncementsList());
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
-const createAnnouncement = props => (dispatch, getState) => {
+const createAnnouncement = (props) => async (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.createAnnouncement({ ...props, CourseID }, getState().auth.authToken)
-  .then(() => {
-    dispatch(getAnnouncementsList());
-  })
-  .catch(err => {
-    console.log(err);
-  });
+  return requestFromServer
+    .createAnnouncement({ ...props, CourseID }, getState().auth.authToken)
+    .then(() => {
+      dispatch(getAnnouncementsList());
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
-const deleteAnnouncement = id => (dispatch, getState) => {
-  return requestFromServer.deleteAnnouncement(id, getState().auth.authToken)
-  .then(() => {
-    dispatch(getAnnouncementsList());
-  })
-  .catch(err => {
-    console.log(err);
-    /*
-    dispatch(annSlice.actions.setList({ 
-      type: actionTypes.set_list, list: ANNOUNCEMENTS.filter(value => value.ID !== id) 
-    }));
-    */
-  });
+const deleteAnnouncement = (id) => async (dispatch, getState) => {
+  return requestFromServer
+    .deleteAnnouncement(id, getState().auth.authToken)
+    .then(() => {
+      dispatch(getAnnouncementsList());
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const actions = {
@@ -93,5 +98,5 @@ export const annSlice = createSlice({
       const { list } = action.payload;
       state.announcementslist = list;
     },
-  }
+  },
 });

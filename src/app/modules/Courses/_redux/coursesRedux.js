@@ -28,10 +28,14 @@ const setCurrentCourse = (field, data) => dispatch => {
 /**
  * Get all courses list
  */
-const getCoursesList = () => (dispatch, getState) => {
-  return requestFromServer.getAllCourses(getState().auth.authToken)
+const getCoursesList = () => async (dispatch, getState) => {
+  const userId = getState().auth.user.ID;
+  return requestFromServer.getAllCourses(undefined, getState().auth.authToken)
   .then(data => {
-    dispatch(coursesSlice.actions.setCoursesList({ type: actionTypes.set_list, list: data }));
+    dispatch(coursesSlice.actions.setCoursesList({ type: actionTypes.set_list, list: data
+      .filter(value => value.TeacherID === userId)
+      .sort((a, b) => new Date(b.CreationDate) - new Date(a.CreationDate)) 
+    }));
   })
   .catch(err => {
     console.log(err);

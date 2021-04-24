@@ -18,12 +18,13 @@ const setList = list => dispatch => {
 
 const getActivitiesList = () => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
+  const userId = getState().auth.user.ID;
   return requestFromServer.getAllActivities({ CourseID }, getState().auth.authToken)
     .then(data => {
       dispatch(activitiesSlice.actions.setList({ 
         type: actionTypes.set_list, 
         list: data
-          .filter(value => (value.CourseID === CourseID && value.TeacherID === 50001))
+          .filter(value => (value.CourseID === CourseID && value.TeacherID === userId))
           .sort((a, b) => new Date(b.CreationDate) - new Date(a.CreationDate))
       }));
     })

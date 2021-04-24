@@ -27,3 +27,22 @@
   color: black;
   min-height: 200px;
 }
+
+.form-control {
+  background-color: #f3f6f9;
+  border-color: #f3f6f9;
+  color: #3f4254;
+  transition: color .15s ease,background-color .15s ease,border-color .15s ease,box-shadow .15s ease;
+}
+
+.form-control::placeholder {
+  color: #BBB5C6;
+}
+
+.form-control:valid {
+  border: 0;
+}
+
+.form-control:invalid {
+  border: 0;
+}

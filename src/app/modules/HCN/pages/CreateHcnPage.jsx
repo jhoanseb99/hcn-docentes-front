@@ -11,7 +11,7 @@ function CreateHcnPage() {
   const history = useHistory();
 
   const saveHCN = (hcn_data) => {
-    dispatch(hcnRedux.createHcn({ ...hcn_data, TeacherID: 50001 })).then(() =>
+    dispatch(hcnRedux.createHcn(hcn_data)).then(() =>
       history.push("/courses/hcn")
     );
   };

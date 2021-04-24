@@ -2,25 +2,29 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import { CircularProgress } from "@material-ui/core";
 import { actions as hcnRedux } from "../_redux/hcnRedux";
 import BaseSection from "app/components/UI/BaseSection";
 import HcnForm from "../components/HcnForm";
-import { getHcn } from "../_redux/hcnCrud";
 
 function UpdateHcnPage(props) {
   const { id } = props.match.params;
+  const [hcn_data, setHcnData] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
   const updateHCN = (hcn_data) => {
-    dispatch(hcnRedux.createHcn({ ...hcn_data, TeacherID: 50001 })).then(() =>
+    dispatch(hcnRedux.updateHcn(hcn_data)).then(() =>
       history.push("/courses/hcn")
     );
   };
 
-  React.useEffect(() => {
-    getHcn({ id }).then((data) => {
-      console.log(data);
+  React.useEffect(async () => {
+    setLoading(true);
+    dispatch(hcnRedux.getHcn({ id })).then((data) => {
+      setHcnData(data);
+      setLoading(false);
     });
   }, [id]);
 
@@ -37,10 +41,15 @@ function UpdateHcnPage(props) {
             />
           )}
         >
-          <HcnForm
-            handleSubmit={updateHCN}
-            handleReturn={() => history.push("/courses/hcn")}
-          />
+          {!loading ? (
+            <HcnForm
+              handleSubmit={updateHCN}
+              handleReturn={() => history.push("/courses/hcn")}
+              data={hcn_data}
+            />
+          ) : (
+            <CircularProgress size={10} color="inherit" />
+          )}
         </BaseSection>
       </div>
     </div>

@@ -6,6 +6,7 @@ import { toAbsoluteUrl } from "theme/helpers";
 import { CircularProgress } from "@material-ui/core";
 import { login } from "../_redux/authCrud";
 import { actions as authActions } from "../_redux/authRedux";
+import { Alert } from "@material-ui/lab";
 
 const initialValues = {
   username: "",
@@ -14,7 +15,6 @@ const initialValues = {
 
 function Login() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = React.useState(false);
 
   const LoginSchema = Yup.object().shape({
     username: Yup.string()
@@ -31,18 +31,15 @@ function Login() {
     initialValues,
     validationSchema: LoginSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
-      setLoading(true);
       setTimeout(() => {
         login(values.username, values.password)
           .then((response) => {
-            setLoading(false);
             setSubmitting(false);
             const { Token: token, ...user } = response;
             dispatch(authActions.login(token));
             dispatch(authActions.fulfillUser(user));
           })
           .catch(() => {
-            setLoading(false);
             setSubmitting(false);
             setStatus("Usuario o contraseña incorrectos");
           });
@@ -65,35 +62,28 @@ function Login() {
           height="100"
         />
         <div className="card-body">
-          <form
-            onSubmit={formik.handleSubmit}
-            className={`${
-              !formik.isSubmitting ? "needs-validation" : "was-validated"
-            }`}
-            noValidate
-          >
+          <form onSubmit={formik.handleSubmit}>
             {formik.status && (
-              <div className="mb-10 alert alert-danger alert-dismissible">
-                <div
-                  className="
-                font-weight-bold"
-                >
-                  {formik.status}
-                </div>
-              </div>
+              <Alert variant="standard" severity="error">
+                {formik.status}
+              </Alert>
             )}
             <label htmlFor="username">Nombre de usuario</label>
             <input
               type="text"
               id="username"
               name="username"
-              className="form-control"
+              className={`form-control ${
+                formik.touched.username
+                  ? formik.errors.username
+                    ? "is-invalid"
+                    : "is-valid"
+                  : ""
+              }`}
               placeholder="Nombre de usuario"
               {...formik.getFieldProps("username")}
             />
-            {formik.touched.username && formik.errors.username ? (
-              <small>{formik.errors.email}</small>
-            ) : null}
+            <div className="invalid-feedback">{formik.errors.username}</div>
 
             <label htmlFor="username" className="mt-2">
               Contraseña
@@ -102,15 +92,17 @@ function Login() {
               type="password"
               id="password"
               name="password"
-              className="form-control"
+              className={`form-control ${
+                formik.touched.password
+                  ? formik.errors.password
+                    ? "is-invalid"
+                    : "is-valid"
+                  : ""
+              }`}
               placeholder="Contraseña"
               {...formik.getFieldProps("password")}
             />
-            {formik.touched.password && formik.errors.password ? (
-              <div className="fv-plugins-message-container">
-                <div className="fv-help-block">{formik.errors.password}</div>
-              </div>
-            ) : null}
+            <div className="invalid-feedback">{formik.errors.password}</div>
 
             <button
               type="submit"
@@ -119,7 +111,7 @@ function Login() {
               style={{ backgroundColor: "#343a40" }}
             >
               <span>Iniciar sesión</span>
-              {loading && (
+              {formik.isSubmitting && (
                 <CircularProgress className="ml-2" size={10} color="inherit" />
               )}
             </button>

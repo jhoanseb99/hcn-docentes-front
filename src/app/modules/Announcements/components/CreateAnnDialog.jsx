@@ -1,89 +1,93 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 import { actions } from "../_redux/annRedux";
 
 import BaseModal from "../../../components/UI/BaseModal.jsx";
 
+const initialValues = {
+  Title: "",
+  Description: "",
+};
+
 function CreateAnnDialog({ open, handleClose }) {
   const dispatch = useDispatch();
-  const initInputData = {
-    Title: "",
-    Description: "" 
-  };
 
-  const [ state, setState ] = React.useState({
-    wadSubmited: false,
+  const annSchema = Yup.object().shape({
+    Title: Yup.string().required("Campo requerido"),
+    Description: Yup.string().required("Campo requerido"),
   });
 
-  const [ inputs_data, setInputData ] = React.useState(initInputData);
-  
-  const handleStateChange = (field, value) => setState({...state, [field]: value});
+  const formik = useFormik({
+    initialValues,
+    validationSchema: annSchema,
+    onSubmit: (values, { setStatus, setSubmitting }) => {
+      setTimeout(() => {
+        handleCreate(values);
+      }, 1000);
+    },
+  });
 
-  const validateInputs = () => {
-    let to_validate = Object.keys(initInputData);
-    let [ i, ok ] = [ 0, true ];
-    while(i < to_validate.length && ok) {
-      ok = ok && inputs_data[to_validate[i]].length;
-      i++;
-    }
-    return ok;
-  };
-
-  const handleInputsChange = event => {
-    const { name, value } = event.target;
-    setInputData({
-      ...inputs_data,
-      [name]: value
-    })
-  };
-
-  const handleCreate = () => {
-    if(!validateInputs()) return;
-    dispatch(actions.createAnnouncement(inputs_data))
-    .then(() => handleClose())
+  const handleCreate = (values) => {
+    dispatch(actions.createAnnouncement(values)).then(() => handleClose());
   };
 
   const actionButtons = [
     {
       content: "Publicar anuncio",
-      onClick: () => handleCreate()
+      onClick: formik.handleSubmit,
+      type: "submit",
     },
     {
       content: "Cancelar",
       onClick: () => handleClose(),
-      className: "btn btn-secondary"
-    }
+      className: "btn btn-secondary",
+      type: "button",
+    },
   ];
 
   return (
-    <BaseModal 
+    <BaseModal
       title="Crear nuevo anuncio"
       open={open}
       actions={actionButtons}
       handleClose={handleClose}
     >
-      <form className={`${!state.wadSubmited ? "needs-validation" : "was-validated"}`} noValidate>
+      <form onSubmit={formik.handleSubmit}>
         <div className="form-group">
           <label htmlFor="Title">Título del anuncio</label>
-          <input 
+          <input
             type="text"
             name="Title"
-            className="form-control"
-            value={inputs_data.Title}
-            onChange={handleInputsChange}
+            className={`form-control ${
+              formik.touched.Title
+                ? formik.errors.Title
+                  ? "is-invalid"
+                  : "is-valid"
+                : ""
+            }`}
+            {...formik.getFieldProps("Title")}
           />
+          <div className="invalid-feedback">{formik.errors.Title}</div>
         </div>
         <div className="form-group">
           <label htmlFor="Description">Contenido del anuncio</label>
-          <textarea  
+          <textarea
             type="text"
             name="Description"
-            className="form-control"
-            style={{minHeight: "150px"}}
-            value={inputs_data.Description}
-            onChange={handleInputsChange}
+            className={`form-control ${
+              formik.touched.Description
+                ? formik.errors.Description
+                  ? "is-invalid"
+                  : "is-valid"
+                : ""
+            }`}
+            {...formik.getFieldProps("Description")}
+            style={{ minHeight: "150px" }}
           />
+          <div className="invalid-feedback">{formik.errors.Description}</div>
         </div>
       </form>
     </BaseModal>

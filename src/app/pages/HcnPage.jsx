@@ -7,7 +7,7 @@ import AddHcnDialog from "../modules/HCN/components/AddHcnDialog.jsx";
 import CardGridContainer from "../components/UI/CardGridContainer";
 
 function HcnPage() {
-  const { hcnListByCourse } = useSelector((state) => state.hcn);
+  const { hcnList, hcnListByCourse } = useSelector((state) => state.hcn);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -35,7 +35,7 @@ function HcnPage() {
     >
       <CardGridContainer data={hcnListByCourse}>
         {(hcn) => (
-          <NavLink to={`/hcn/update/${hcn.MongoID}`}>
+          <NavLink to={`/hcn/update/${hcnList[hcn.HCNID].MongoID}`}>
             <div className="card custom-card" style={{ height: "150px" }}>
               <div className="d-flex card-body justify-content-center align-items-center">
                 <div className="d-flex flex-column align-items-center">

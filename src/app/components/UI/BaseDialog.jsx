@@ -12,25 +12,20 @@ function BaseDialog(props) {
   const { open, title, actions, children, ...others } = props;
   return (
     <Dialog open={open} {...others}>
-      <DialogTitle>{ title }</DialogTitle>
-      <DialogContent className="p-4">
-        { children }
-      </DialogContent>
-      {actions && 
+      <DialogTitle>{title}</DialogTitle>
+      <DialogContent className="p-4">{children}</DialogContent>
+      {actions && (
         <DialogActions>
           {actions.map((action, index) => {
             const { content, ...props } = action;
             return (
-              <Button 
-                className={props.className ? props.className : "btn btn-primary"} key={ index }
-                { ...props } 
-              >
-                  { content }
+              <Button key={index} {...props}>
+                {content}
               </Button>
             );
           })}
         </DialogActions>
-      }
+      )}
     </Dialog>
   );
 }

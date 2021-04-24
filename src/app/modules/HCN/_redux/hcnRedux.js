@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { notificationActions } from "app/components/_redux/notificationRedux";
 import * as requestFromServer from "./hcnCrud";
 import * as authRedux from "../../Auth/_redux/authRedux";
 
@@ -16,15 +16,20 @@ const actionTypes = {
 };
 
 const getHcnList = () => async (dispatch, getState) => {
+  const userId = getState().auth.user.ID;
   return requestFromServer
     .getAllHcn(undefined, getState().auth.authToken)
     .then((data) => {
       dispatch(
-        hcnSlice.actions.setList({ type: actionTypes.set_list, list: data })
+        hcnSlice.actions.setList({
+          type: actionTypes.set_list,
+          list: data.filter((value) => value.TeacherID === userId),
+        })
       );
     })
     .catch((err) => {
       console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
       dispatch(
         hcnSlice.actions.setList({ type: actionTypes.set_list, list: HCN })
       );
@@ -45,6 +50,7 @@ const getHcnListByCourse = () => async (dispatch, getState) => {
     })
     .catch((err) => {
       console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
     });
 };
 
@@ -53,6 +59,7 @@ const getHcn = (params) => async (dispatch, getState) => {
     .getHcn(params, getState().auth.authToken)
     .catch((err) => {
       console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
     });
 };
 
@@ -61,10 +68,12 @@ const createHcn = (props) => async (dispatch, getState) => {
   return requestFromServer
     .createHcn({ ...props, TeacherID: userId }, getState().auth.authToken)
     .then(() => {
+      notificationActions.setNotification("HCN creada exitosamente");
       dispatch(getHcnListByCourse());
     })
     .catch((err) => {
       console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
     });
 };
 
@@ -73,10 +82,12 @@ const updateHcn = (props) => async (dispatch, getState) => {
   return requestFromServer
     .updateHcn({ ...props, TeacherID: userId }, getState().auth.authToken)
     .then(() => {
+      notificationActions.setNotification("HCN actualizada exitosamente");
       dispatch(getHcnListByCourse());
     })
     .catch((err) => {
       console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
     });
 };
 
@@ -85,10 +96,12 @@ const addHcnToCourse = (id) => async (dispatch, getState) => {
   return requestFromServer
     .addHcnToCourse({ HCNID: id, CourseID }, getState().auth.authToken)
     .then(() => {
+      notificationActions.setNotification("HCN añadida exitosamente");
       dispatch(getHcnListByCourse());
     })
     .catch((err) => {
       console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
     });
 };
 

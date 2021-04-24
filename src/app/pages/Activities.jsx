@@ -1,45 +1,55 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import CreateActivityDialog from "../modules/Activities/components/CreateActivityDialog.jsx";
 import UpdateActivityDialog from "../modules/Activities/components/UpdateActivityDialog.jsx";
-import { actions } from "../modules/Activities/_redux/activitiesRedux"; 
+import { actions } from "../modules/Activities/_redux/activitiesRedux";
 import BaseCardSection from "../components/UI/BaseCardSection.jsx";
+import BaseDialog from "app/components/UI/BaseDialog";
 
 //import EditIcon from '@material-ui/icons/Edit';
 
 export default function Activities() {
-  const { activitieslist } = useSelector(state => state.activities);
+  const { activitieslist } = useSelector((state) => state.activities);
   const dispatch = useDispatch();
 
-  const [ openCreateDialog, setOpenCreateDialog ] = React.useState(false);
-  const [ openUpdateDialog, setOpenUpdateDialog ] = React.useState(false);
-  const [ activityValue, setActivityValue ] = React.useState(undefined);
+  const [openCreateDialog, setOpenCreateDialog] = React.useState(false);
+  const [openUpdateDialog, setOpenUpdateDialog] = React.useState(false);
+  const [confirmDelete, setConfirmDelete] = React.useState(false);
+  const [activityValue, setActivityValue] = React.useState(undefined);
 
   React.useEffect(() => {
     dispatch(actions.getActivitiesList());
   }, [dispatch]);
 
-  const handleDelete = ({ ID }) => {
+  const dispatchDelete = ({ ID }) => {
     dispatch(actions.deleteActivity(ID));
   };
-  
+
+  const handleDelete = (values) => {
+    setActivityValue(values);
+    setConfirmDelete(true);
+  };
+
   const handleUpdate = (data) => {
     setActivityValue(data);
     setOpenUpdateDialog(true);
-  }
+  };
 
-  return(
-    <BaseCardSection title="Actividades"
+  return (
+    <BaseCardSection
+      title="Actividades"
       toolbar={[
         {
           className: "btn btn-primary btn-circle font-weight-bolder",
           onClick: () => setOpenCreateDialog(true),
-          title: "+"
-        }
+          title: "+",
+        },
       ]}
-      style={{backgroundColor: "#f3f6f9"}}
+      style={{ backgroundColor: "#f3f6f9" }}
     >
       <div className="container-fluid">
         {/* anuncios */}
@@ -53,64 +63,89 @@ export default function Activities() {
                 <div className="card-title">
                   <div className="row">
                     <div className="col">
-                      <strong className="align-self-center">{ value.Title }</strong> 
+                      <strong className="align-self-center">
+                        {value.Title}
+                      </strong>
                     </div>
                     <div className="col text-right">
-                      { value.Type === "Calificable" &&
-                        <a className="btn btn-primary font-weight-bolder font-size-sm mr-3"
+                      {value.Type === "Calificable" && (
+                        <a
+                          className="btn btn-primary font-weight-bolder font-size-sm mr-3"
+                          title="calificar"
                         >
-                          Calificar
+                          <AssignmentTurnedInIcon />
                         </a>
-                      }
-                      <a className="btn btn-info font-weight-bolder font-size-sm mr-3"
-                        onClick={ () => handleUpdate(value) }
+                      )}
+                      <a
+                        className="btn btn-info font-weight-bolder font-size-sm mr-3"
+                        onClick={() => handleUpdate(value)}
+                        title="editar"
                       >
-                        editar
+                        <EditIcon />
                       </a>
-                      <a 
+                      <a
                         className="btn btn-danger font-weight-bolder font-size-sm mr-3"
-                        onClick={ () => handleDelete(value) }
+                        onClick={() => handleDelete(value)}
+                        title="eliminar"
                       >
-                        eliminar
+                        <DeleteIcon />
                       </a>
                     </div>
                   </div>
                 </div>
                 {/* Card::body::info */}
-                <div className="card-body p-0">
-                  { value.Description }
-                </div>
+                <div className="card-body p-0">{value.Description}</div>
                 <div className="card-body p-0 pt-2">
                   <small className="text-muted d-block">
-                    <strong>Fecha de publicación:</strong> { moment(value.CreationDate).format("DD-MM-YYYY") }
+                    <strong>Fecha de publicación:</strong>{" "}
+                    {moment(value.CreationDate).format("DD-MM-YYYY")}
                   </small>
                   <small className="text-muted d-block">
-                    <strong>Fecha de entrega:</strong> { moment(value.LimitDate).format("DD-MM-YYYY") }
+                    <strong>Fecha de entrega:</strong>{" "}
+                    {moment(value.LimitDate).format("DD-MM-YYYY")}
                   </small>
                 </div>
               </div>
-            </div> 
+            </div>
           </div>
         ))}
       </div>
-      
-      { 
-        openCreateDialog &&
+
+      {openCreateDialog && (
         <CreateActivityDialog
           open={openCreateDialog}
           handleClose={() => setOpenCreateDialog(false)}
         />
-      }
+      )}
 
-      { 
-        openUpdateDialog &&
+      {openUpdateDialog && (
         <UpdateActivityDialog
           open={openUpdateDialog}
           handleClose={() => setOpenUpdateDialog(false)}
           activity={activityValue}
         />
-      }
+      )}
 
+      {confirmDelete && (
+        <BaseDialog
+          open={confirmDelete}
+          onClose={() => setConfirmDelete(false)}
+          actions={[
+            {
+              content: "Confirmar",
+              onClick: () => dispatchDelete(activityValue),
+              color: "primary",
+            },
+            {
+              content: "Cancelar",
+              onClick: () => setConfirmDelete(false),
+              className: "btn btn-secondary",
+            },
+          ]}
+        >
+          ¿Desea eliminar actividad?
+        </BaseDialog>
+      )}
     </BaseCardSection>
   );
 }

@@ -1,13 +1,13 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import page404 from "./404";
+import page404 from "./404.jsx";
 
 export default function ErrorsPage() {
   return (
     <Switch>
       <Redirect from="/error" exact={true} to="/error/404" />
       <Route path="/error/404" component={page404} />
-      <Redirect to="/error"/>
+      <Redirect to="/error" />
     </Switch>
   );
 }

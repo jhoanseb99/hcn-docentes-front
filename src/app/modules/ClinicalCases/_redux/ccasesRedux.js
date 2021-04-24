@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { notificationActions } from "app/components/_redux/notificationRedux";
 import * as requestFromServer from "./ccasesCrud";
 import * as authRedux from "../../Auth/_redux/authRedux";
-
 import { CCASES } from "../../../const/data";
 
 const initCCasesState = {
@@ -17,92 +16,147 @@ const actionTypes = {
 
 const getCCasesList = () => (dispatch, getState) => {
   const userId = getState().auth.user.ID;
-  return requestFromServer.getAllCCases(undefined, getState().auth.authToken)
-  .then(data => {
-    dispatch(ccasesSlice.actions.setList(
-      { type: actionTypes.set_list, list: data.filter(value => value.TeacherID === userId) }
-    ));
-  })
-  .catch(err => {
-    console.log(err);
-    dispatch(ccasesSlice.actions.setList({ type: actionTypes.set_list, list: CCASES }));
-  });
+  return requestFromServer
+    .getAllCCases(undefined, getState().auth.authToken)
+    .then((data) => {
+      dispatch(
+        ccasesSlice.actions.setList({
+          type: actionTypes.set_list,
+          list: data.filter((value) => value.TeacherID === userId),
+        })
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
+      dispatch(
+        ccasesSlice.actions.setList({
+          type: actionTypes.set_list,
+          list: CCASES,
+        })
+      );
+    });
 };
 
 const getCCasesListByCourse = () => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.getAllCCasesByCourse({ id: CourseID }, getState().auth.authToken)
-  .then(async data => {
-    dispatch(ccasesSlice.actions.setListByCourse({ type: actionTypes.set_list, list: [] }));
-    await Promise.all(data.map(async value => {
-      let ccase = await requestFromServer.getCCase({ id: value.ClinicalCaseID });
-      dispatch(ccasesSlice.actions.addListByCourse({ type: actionTypes.set_list, value: ccase }));
-    }))
-  })
-  .catch(err => {
-    console.log(err);
-    dispatch(ccasesSlice.actions.sortListByCourse({ 
-      type: actionTypes.set_list, 
-      sort_by: (a, b) => new Date(b.CreationDate) - new Date(a.CreationDate)
-    }));
-  });
+  return requestFromServer
+    .getAllCCasesByCourse({ id: CourseID }, getState().auth.authToken)
+    .then(async (data) => {
+      dispatch(
+        ccasesSlice.actions.setListByCourse({
+          type: actionTypes.set_list,
+          list: [],
+        })
+      );
+      await Promise.all(
+        data.map(async (value) => {
+          let ccase = await requestFromServer.getCCase({
+            id: value.ClinicalCaseID,
+          });
+          dispatch(
+            ccasesSlice.actions.addListByCourse({
+              type: actionTypes.set_list,
+              value: ccase,
+            })
+          );
+        })
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
+      dispatch(
+        ccasesSlice.actions.sortListByCourse({
+          type: actionTypes.set_list,
+          sort_by: (a, b) =>
+            new Date(b.CreationDate) - new Date(a.CreationDate),
+        })
+      );
+    });
 };
 
-const addCCaseToCourse = id => (dispatch, getState) => {
+const addCCaseToCourse = (id) => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.addCCaseToCourse({ ClinicalCaseID: id, CourseID }, getState().auth.authToken)
-  .then(() => {
-    dispatch(getCCasesListByCourse());
-  })
-  .catch(err => {
-    console.log(err);
-  });
+  return requestFromServer
+    .addCCaseToCourse(
+      { ClinicalCaseID: id, CourseID },
+      getState().auth.authToken
+    )
+    .then(() => {
+      notificationActions.setNotification("Caso Clínico añadido exitosamente");
+      dispatch(getCCasesListByCourse());
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
+    });
 };
 
-const createCCase = props => (dispatch, getState) => {
+const createCCase = (props) => (dispatch, getState) => {
   const userId = getState().auth.user.ID;
-  return requestFromServer.createCCase({ ...props, TeacherID: userId }, getState().auth.authToken)
-  .then(() => {
-    dispatch(getCCasesList());
-  })
-  .catch(err => {
-    console.log(err);
-  });
+  return requestFromServer
+    .createCCase({ ...props, TeacherID: userId }, getState().auth.authToken)
+    .then(() => {
+      notificationActions.setNotification("Caso Clínico creado exitosamente");
+      dispatch(getCCasesList());
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
+    });
 };
 
-const updateCCase = props => (dispatch, getState) => {
+const updateCCase = (props) => (dispatch, getState) => {
   const userId = getState().auth.user.ID;
-  return requestFromServer.updateCCase({ ...props, TeacherID: userId }, getState().auth.authToken)
-  .then(() => {
-    dispatch(getCCasesList());
-    dispatch(getCCasesListByCourse());
-  })
-  .catch(err => {
-    console.log(err);
-  });
+  return requestFromServer
+    .updateCCase({ ...props, TeacherID: userId }, getState().auth.authToken)
+    .then(() => {
+      notificationActions.setNotification(
+        "Caso Clínico actualizado exitosamente"
+      );
+      dispatch(getCCasesList());
+      dispatch(getCCasesListByCourse());
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
+    });
 };
 
-const deleteCCaseByCourse = id => (dispatch, getState) => {
+const deleteCCaseByCourse = (id) => (dispatch, getState) => {
   return dispatch(removeCCase(id))
-  .then(() => requestFromServer.deleteCCase({ ID: id }, getState().auth.authToken))
-  .then(() => {
-    dispatch(getCCasesList());
-    dispatch(getCCasesListByCourse());
-  })
-  .catch(err => {
-    console.log(err);
-  });
+    .then(() =>
+      requestFromServer.deleteCCase({ ID: id }, getState().auth.authToken)
+    )
+    .then(() => {
+      notificationActions.setNotification(
+        "Caso Clínico eliminado exitosamente"
+      );
+      dispatch(getCCasesList());
+      dispatch(getCCasesListByCourse());
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
+    });
 };
 
-const removeCCase = id => (dispatch, getState) => {
+const removeCCase = (id) => (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
-  return requestFromServer.removeCCaseToCourse({ ClinicalCaseID: id, CourseID }, getState().auth.authToken)
-  .then(() => {
-    dispatch(getCCasesListByCourse());
-  })
-  .catch(err => {
-    console.log(err);
-  });
+  return requestFromServer
+    .removeCCaseToCourse(
+      { ClinicalCaseID: id, CourseID },
+      getState().auth.authToken
+    )
+    .then(() => {
+      notificationActions.setNotification("Caso Clínico removido exitosamente");
+      dispatch(getCCasesListByCourse());
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
+    });
 };
 
 export const actions = {
@@ -112,7 +166,7 @@ export const actions = {
   createCCase,
   updateCCase,
   removeCCase,
-  deleteCCaseByCourse
+  deleteCCaseByCourse,
 };
 
 export const ccasesSlice = createSlice({
@@ -135,5 +189,5 @@ export const ccasesSlice = createSlice({
       const { sort_by } = action.payload;
       state.ccasesListByCourse.sort(sort_by);
     },
-  }
+  },
 });

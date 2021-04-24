@@ -3,7 +3,7 @@ import { Redirect, Switch, Route } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
 import { Header } from "../theme/layout";
 import BasePage from "./BasePage";
-import ErrorsPage from "./modules/ErrorPages/ErrorPage";
+import ErrorsPage from "./pages/ErrorPages/ErrorPage";
 import AuthPage from "./pages/AuthPage";
 
 export default function Routes() {
@@ -16,17 +16,17 @@ export default function Routes() {
 
   return (
     <Switch>
-      { !isAuthorized ? (
+      {!isAuthorized ? (
         <Route>
           <AuthPage />
         </Route>
       ) : (
         <Redirect from="/auth" to="/" />
-      ) }
+      )}
 
-      <Route path="/error" component={ErrorsPage}/>
+      <Route path="/error" component={ErrorsPage} />
 
-      { !isAuthorized ? (
+      {!isAuthorized ? (
         /*Redirect to `/auth` when user is not authorized*/
         <Redirect to="/auth/login" />
       ) : (

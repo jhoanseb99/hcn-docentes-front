@@ -24,24 +24,30 @@ function CoursesPage() {
   return (
     <BaseSection title="Cursos">
       {/* Courses */}
-      <CardGridContainer data={coursesList}>
-        {(course) => (
-          <NavLink to="/courses">
-            <div
-              className="card custom-card"
-              style={{ height: "150px" }}
-              onClick={() => handleCourse(course.ID)}
-            >
-              <div className="d-flex card-body justify-content-center align-items-center">
-                <div className="d-flex flex-column align-items-center">
-                  <FontAwesomeIcon icon={faChalkboardTeacher} size="3x" />
-                  <span className="mt-1">{course.Name}</span>
+      {coursesList ? (
+        <CardGridContainer data={coursesList}>
+          {(course) => (
+            <NavLink to="/courses">
+              <div
+                className="card custom-card"
+                style={{ height: "150px" }}
+                onClick={() => handleCourse(course.ID)}
+              >
+                <div className="d-flex card-body justify-content-center align-items-center">
+                  <div className="d-flex flex-column align-items-center">
+                    <FontAwesomeIcon icon={faChalkboardTeacher} size="3x" />
+                    <span className="mt-1">{course.Name}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </NavLink>
-        )}
-      </CardGridContainer>
+            </NavLink>
+          )}
+        </CardGridContainer>
+      ) : (
+        <div>
+          <span>No hay datos para mostrar en este momento</span>
+        </div>
+      )}
     </BaseSection>
   );
 }

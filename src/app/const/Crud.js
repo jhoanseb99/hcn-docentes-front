@@ -1,11 +1,11 @@
 import { URL } from ".";
 
 /**
- * 
- * @param {string} path 
+ *
+ * @param {string} path
  */
 function makeRequest({ path, method, headers, ...others }) {
-  const timeout = 2000;
+  const timeout = 4000;
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeout);
   let config = {
@@ -13,7 +13,7 @@ function makeRequest({ path, method, headers, ...others }) {
     headers: headers ? headers : new Headers(),
     timeout,
     signal: controller.signal,
-    ...others
+    ...others,
   };
   let myRequest = new Request(URL + path, config);
   return fetch(myRequest);

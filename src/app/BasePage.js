@@ -5,9 +5,10 @@ import { ContentRoute } from "../theme/helpers";
 import Home from "./pages/Home.jsx";
 import CoursesPage from "./pages/CoursesPage";
 import { notificationActions } from "app/components/_redux/notificationRedux";
-import { actions as ccasesRedux } from "./modules/ClinicalCases/_redux/ccasesRedux";
-import { actions as hcnRedux } from "./modules/HCN/_redux/hcnRedux";
+import { actions as ccasesRedux } from "app/modules/ClinicalCases/_redux/ccasesRedux";
+import { actions as hcnRedux } from "app/modules/HCN/_redux/hcnRedux";
 import { actions as courseRedux } from "app/modules/Courses/_redux/coursesRedux";
+import { actions as studentsRedux } from "app/modules/Students/_redux/studentsRedux";
 import NotificationBar from "./components/UI/NotificationBar";
 import LoadingScreen from "theme/layout/LoadingScreen";
 
@@ -33,7 +34,8 @@ export default function BasePage() {
     dispatch(ccasesRedux.getCCasesList());
     dispatch(hcnRedux.getHcnList());
     dispatch(courseRedux.getCoursesList());
-  }, []);
+    dispatch(studentsRedux.getStudentsList());
+  }, [dispatch]);
 
   return (
     <React.Suspense fallback={<LoadingScreen />}>

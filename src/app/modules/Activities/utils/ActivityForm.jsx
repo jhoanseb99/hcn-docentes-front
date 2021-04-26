@@ -47,6 +47,7 @@ function ActivityForm(props) {
           ClinicalCaseID: parseInt(values.ClinicalCaseID),
           HCNID: parseInt(values.HCNID),
         });
+        actions.setSubmitting(false);
       }, 1000);
     },
   });

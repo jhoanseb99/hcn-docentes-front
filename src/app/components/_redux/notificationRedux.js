@@ -6,14 +6,22 @@ const initialNotificationState = {
   variant: "success",
 };
 
-const set_notification = {
+const actionTypes = {
   set_notification: "SET_NOTIFICATION",
+};
+
+const errorMessage = (message) => {
+  let msg = "Ocurrió un error";
+  if (message && message.length) {
+    msg = message;
+  }
+  return msg;
 };
 
 const setNotificationField = (field, data) => (dispatch) => {
   dispatch(
     notificationSlice.actions.setNotificationField({
-      type: set_notification.set_notification,
+      type: actionTypes.set_notification,
       field,
       data,
     })
@@ -23,8 +31,8 @@ const setNotificationField = (field, data) => (dispatch) => {
 const setNotification = (message, variant = "success") => (dispatch) => {
   dispatch(
     notificationSlice.actions.setNotification({
-      type: set_notification.set_notification,
-      message,
+      type: actionTypes.set_notification,
+      message: errorMessage(message),
       variant,
     })
   );

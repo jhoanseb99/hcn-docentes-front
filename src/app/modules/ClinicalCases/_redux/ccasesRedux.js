@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { notificationActions } from "app/components/_redux/notificationRedux";
 import * as requestFromServer from "./ccasesCrud";
-import * as authRedux from "../../Auth/_redux/authRedux";
 import { CCASES } from "../../../const/data";
 
 const initCCasesState = {
@@ -38,7 +37,7 @@ const getCCasesList = () => (dispatch, getState) => {
     });
 };
 
-const getCCasesListByCourse = () => (dispatch, getState) => {
+const getCCasesListByCourse = () => async (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
   return requestFromServer
     .getAllCCasesByCourse({ id: CourseID }, getState().auth.authToken)

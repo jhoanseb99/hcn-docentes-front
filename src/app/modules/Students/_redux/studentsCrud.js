@@ -14,7 +14,9 @@ export function getAllStudents(params, authToken) {
     makeRequest({
       path: PATH_GET_ALL_STUDENTS + getQueryParams(params),
       method: "GET",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
       .then((response) => {
         if (!response.ok) throw new Error(response.status);

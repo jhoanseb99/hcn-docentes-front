@@ -1,16 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { notificationActions } from "app/components/_redux/notificationRedux";
 import * as requestFromServer from "./activitiesCrud";
-import * as authRedux from "../../Auth/_redux/authRedux";
 
 import { ACTIVITIES } from "../../../const/data";
 
 const initActivitiesState = {
   activitieslist: [],
+  gradeList: [],
 };
 
 const actionTypes = {
   set_list: "SET_LIST",
+  set_grade_list: "SET_GRADE_LIST",
 };
 
 const setList = (list) => (dispatch) => {
@@ -19,7 +20,7 @@ const setList = (list) => (dispatch) => {
   );
 };
 
-const getActivitiesList = () => (dispatch, getState) => {
+const getActivitiesList = () => async (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
   return requestFromServer
     .getAllActivities({ CourseID }, getState().auth.authToken)
@@ -47,12 +48,16 @@ const getActivitiesList = () => (dispatch, getState) => {
     });
 };
 
-const updateActivity = (props) => (dispatch, getState) => {
+const updateActivity = (props) => async (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
   return requestFromServer
     .updateActivity({ ...props, CourseID }, getState().auth.authToken)
     .then(() => {
-      notificationActions.setNotification("Actividad actualizada exitosamente");
+      dispatch(
+        notificationActions.setNotification(
+          "Actividad actualizada exitosamente"
+        )
+      );
       dispatch(getActivitiesList());
     })
     .catch((err) => {
@@ -71,7 +76,9 @@ const createActivity = (props) => async (dispatch, getState) => {
       getState().auth.authToken
     )
     .then(() => {
-      notificationActions.setNotification("Actividad creada exitosamente");
+      dispatch(
+        notificationActions.setNotification("Actividad creada exitosamente")
+      );
       dispatch(getActivitiesList());
     })
     .catch((err) => {
@@ -80,12 +87,31 @@ const createActivity = (props) => async (dispatch, getState) => {
     });
 };
 
-const deleteActivity = (id) => (dispatch, getState) => {
+const deleteActivity = (id) => async (dispatch, getState) => {
   return requestFromServer
     .deleteActivity({ ID: id }, getState().auth.authToken)
     .then(() => {
-      notificationActions.setNotification("Actividad eliminada exitosamente");
+      dispatch(
+        notificationActions.setNotification("Actividad eliminada exitosamente")
+      );
       dispatch(getActivitiesList());
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
+    });
+};
+
+const getAllSolvedHcn = (id) => async (dispatch, getState) => {
+  return requestFromServer
+    .getAllSolvedHcn({ id }, getState().auth.authToken)
+    .then((data) => {
+      dispatch(
+        activitiesSlice.actions.setGradeList({
+          type: actionTypes.set_grade_list,
+          list: data,
+        })
+      );
     })
     .catch((err) => {
       console.log(err);
@@ -99,6 +125,7 @@ export const actions = {
   updateActivity,
   createActivity,
   deleteActivity,
+  getAllSolvedHcn,
 };
 
 export const activitiesSlice = createSlice({
@@ -109,6 +136,11 @@ export const activitiesSlice = createSlice({
       const { list } = action.payload;
       console.log(list);
       state.activitieslist = list;
+    },
+    setGradeList: (state, action) => {
+      const { list } = action.payload;
+      console.log(list);
+      state.gradeList = list;
     },
   },
 });

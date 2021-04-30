@@ -18,103 +18,115 @@ export const PATH_UPDATE_HCN = PATH_HCN + "/UpdateHCNMongo";
 export function getAllHcn(params, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_GET_ALL_HCN + getQueryParams(params), 
+      path: PATH_GET_ALL_HCN + getQueryParams(params),
       method: "GET",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return response.json();
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.json();
+      })
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function getHcnInfo(params, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_GET_HCN_INFO + getQueryParams(params), 
+      path: PATH_GET_HCN_INFO + getQueryParams(params),
       method: "GET",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return response.json();
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.json();
+      })
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function getAllHcnByCourse(params, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_GET_ALL_HCN_BY_COURSE + getQueryParams(params), 
+      path: PATH_GET_ALL_HCN_BY_COURSE + getQueryParams(params),
       method: "GET",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return response.json();
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.json();
+      })
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function addHcnToCourse(props, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_ADD_HCN_TO_COURSE, 
+      path: PATH_ADD_HCN_TO_COURSE,
       method: "POST",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
       body: JSON.stringify({
         HCNID: props.HCNID,
         CourseID: props.CourseID,
         Displayable: 1,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return "It works!";
       })
-    })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return "It works!";
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function createHcn(props, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_CREATE_HCN, 
+      path: PATH_CREATE_HCN,
       method: "POST",
-      headers: new Headers(),
-      body: JSON.stringify(props)
+      headers: new Headers({
+        Token: authToken,
+      }),
+      body: JSON.stringify(props),
     })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return response.json();
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.json();
+      })
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function updateHcn(props, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_UPDATE_HCN, 
+      path: PATH_UPDATE_HCN,
       method: "POST",
-      headers: new Headers(),
-      body: JSON.stringify(props)
+      headers: new Headers({
+        Token: authToken,
+      }),
+      body: JSON.stringify(props),
     })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return response.json();
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.json();
+      })
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
@@ -123,16 +135,15 @@ export function getHcn(params, authToken) {
     makeRequest({
       path: PATH_GET_HCN + getQueryParams(params),
       method: "GET",
-      headers: new Headers()
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return response.json();
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.json();
+      })
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
-
-
-

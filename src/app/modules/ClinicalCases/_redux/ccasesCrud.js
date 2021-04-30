@@ -11,160 +11,176 @@ export const PATH_CREATE_CCASE = PATH_CCASES + "/CreateClinicalCase";
 export const PATH_UPDATE_CCASE = PATH_CCASES + "/UpdateClinicalCase";
 export const PATH_DELETE_CCASE = PATH_CCASES + "/DeleteClinicalCase";
 
-export const PATH_GET_ALL_CCASES_BY_COURSE = PATH_COURSES + "/GetAllClinicalCases";
+export const PATH_GET_ALL_CCASES_BY_COURSE =
+  PATH_COURSES + "/GetAllClinicalCases";
 export const PATH_ADD_CCASE_TO_COURSE = PATH_COURSES + "/AddClinicalCase";
 export const PATH_REMOVE_CCASE_TO_COURSE = PATH_COURSES + "/RemoveClinicalCase";
-
 
 export function getAllCCases(params, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_GET_ALL_CCASES + getQueryParams(params), 
+      path: PATH_GET_ALL_CCASES + getQueryParams(params),
       method: "GET",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return response.json();
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.json();
+      })
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function getCCase(params, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_GET_CCASE + getQueryParams(params), 
+      path: PATH_GET_CCASE + getQueryParams(params),
       method: "GET",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return response.json();
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.json();
+      })
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function getAllCCasesByCourse(params, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_GET_ALL_CCASES_BY_COURSE + getQueryParams(params), 
+      path: PATH_GET_ALL_CCASES_BY_COURSE + getQueryParams(params),
       method: "GET",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return response.json();
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.json();
+      })
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function addCCaseToCourse(props, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_ADD_CCASE_TO_COURSE, 
+      path: PATH_ADD_CCASE_TO_COURSE,
       method: "POST",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
       body: JSON.stringify({
         CourseID: props.CourseID,
         ClinicalCaseID: props.ClinicalCaseID,
         Displayable: 1,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return "It works!";
       })
-    })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return "It works!";
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function removeCCaseToCourse(props, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_REMOVE_CCASE_TO_COURSE, 
+      path: PATH_REMOVE_CCASE_TO_COURSE,
       method: "DELETE",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
       body: JSON.stringify({
-        CourseID:       props.CourseID,
+        CourseID: props.CourseID,
         ClinicalCaseID: props.ClinicalCaseID,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return "It works!";
       })
-    })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return "It works!";
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function createCCase(props, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_CREATE_CCASE, 
+      path: PATH_CREATE_CCASE,
       method: "POST",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
       body: JSON.stringify({
-        Title:        props.Title,
-        Description:  props.Description,
-        Media:        props.Media,
-        TeacherID:    props.TeacherID
+        Title: props.Title,
+        Description: props.Description,
+        Media: props.Media,
+        TeacherID: props.TeacherID,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return "It works!";
       })
-    })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return "It works!";
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function updateCCase(props, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_UPDATE_CCASE, 
+      path: PATH_UPDATE_CCASE,
       method: "POST",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
       body: JSON.stringify({
-        ID:           props.ID,
-        Title:        props.Title,
-        Description:  props.Description,
-        Media:        props.Media,
-        TeacherID:    props.TeacherID
+        ID: props.ID,
+        Title: props.Title,
+        Description: props.Description,
+        Media: props.Media,
+        TeacherID: props.TeacherID,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return "It works!";
       })
-    })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return "It works!";
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function deleteCCase(props, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_DELETE_CCASE, 
+      path: PATH_DELETE_CCASE,
       method: "DELETE",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
       body: JSON.stringify({
-        ID: props.ID
+        ID: props.ID,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return "It works!";
       })
-    })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return "It works!";
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }

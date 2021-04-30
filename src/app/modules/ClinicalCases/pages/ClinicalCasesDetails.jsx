@@ -7,7 +7,7 @@ import { base64ToBlob } from "../../../const";
 
 function ClinicalCasesDetails(props) {
   const { id } = props.match.params;
-  const [ ccase, setCCase ] = React.useState({
+  const [ccase, setCCase] = React.useState({
     ID: "",
     Title: "",
     Description: "",
@@ -15,11 +15,10 @@ function ClinicalCasesDetails(props) {
   });
 
   React.useEffect(() => {
-    getCCase({ id })
-      .then(data => {
-        console.log(data);
-        setCCase(data);
-      });
+    getCCase({ id }).then((data) => {
+      console.log(data);
+      setCCase(data);
+    });
   }, [id]);
 
   const mediaOpen = () => {
@@ -33,26 +32,27 @@ function ClinicalCasesDetails(props) {
       <form>
         <div className="form-group">
           <label htmlFor="Title">Título</label>
-          <input 
+          <input
             type="text"
             name="Title"
             className="form-control"
-            defaultValue={ ccase.Title }
+            defaultValue={ccase.Title}
           />
         </div>
         <div className="form-group">
           <label htmlFor="Description">Descripción</label>
-          <textarea  
+          <textarea
             type="text"
             name="Description"
             className="form-control"
-            style={{minHeight: "100px"}}
-            defaultValue={ ccase.Description }
+            style={{ minHeight: "100px" }}
+            defaultValue={ccase.Description}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="Media">Archivo</label>
-          <button className="btn btn-primary" onClick={mediaOpen}>Ver archivo</button>
+          <button className="btn btn-primary" onClick={mediaOpen}>
+            Ver archivo
+          </button>
         </div>
       </form>
     </BaseCardSection>

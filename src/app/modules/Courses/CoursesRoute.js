@@ -37,8 +37,8 @@ export default function CoursesRoute() {
           />
           <Route
             exact={true}
-            path="/courses/activities/grade"
-            component={GradePage}
+            path="/courses/activities/:id"
+            component={(props) => <GradePage {...props} />}
           />
           <Route
             exact={true}

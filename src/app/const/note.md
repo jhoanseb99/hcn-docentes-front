@@ -7,7 +7,7 @@ export GOROOT=/usr/local/go
 export GOPATH=$HOME/Projects/ADMFactory/Golang
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
-cd new_hcn/hcn/
+cd hcn/
 export PATH=$PATH:/usr/local/go/bin
 sudo systemctl start mongod
 go run main.go

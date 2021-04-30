@@ -13,6 +13,7 @@ import CreateCCaseDialog from "../modules/ClinicalCases/components/CreateCCaseDi
 import AddCCaseDialog from "../modules/ClinicalCases/components/AddCCaseDialog";
 import UpdateCCaseDialog from "../modules/ClinicalCases/components/UpdateCCaseDialog";
 import BaseCardSection from "../components/UI/BaseCardSection";
+import BaseDialog from "app/components/UI/BaseDialog";
 
 function CCasesPage() {
   const { ccasesListByCourse } = useSelector((state) => state.clinicalCases);
@@ -22,6 +23,10 @@ function CCasesPage() {
   const [openCreateDialog, setOpenCreateDialog] = React.useState(false);
   const [openUpdateDialog, setOpenUpdateDialog] = React.useState(false);
   const [openAddDialog, setOpenAddDialog] = React.useState(false);
+  const [confirmDelete, setConfirmDelete] = React.useState({
+    value: false,
+    func: () => {},
+  });
   const [ccaseValue, setCcaseValue] = React.useState(undefined);
 
   React.useEffect(() => {
@@ -34,12 +39,17 @@ function CCasesPage() {
     setOpenUpdateDialog(true);
   };
 
-  const handleDelete = ({ ID }) => {
+  const dispatchDelete = ({ ID }) => {
     dispatch(actions.deleteCCaseByCourse(ID));
   };
 
-  const handleRemove = ({ ID }) => {
+  const dispatchRemove = ({ ID }) => {
     dispatch(actions.removeCCase(ID));
+  };
+
+  const handleDelete = (values, func) => {
+    setCcaseValue(values);
+    setConfirmDelete({ value: true, func });
   };
 
   return (
@@ -93,14 +103,14 @@ function CCasesPage() {
                       </a>
                       <a
                         className="btn btn-danger font-weight-bolder font-size-sm mr-3"
-                        onClick={() => handleRemove(value)}
+                        onClick={() => handleDelete(value, dispatchRemove)}
                         title="remover de este curso"
                       >
                         <RemoveCircleIcon />
                       </a>
                       <a
                         className="btn btn-danger font-weight-bolder font-size-sm mr-3"
-                        onClick={() => handleDelete(value)}
+                        onClick={() => handleDelete(value, dispatchDelete)}
                         title="Eliminar de forma permanente"
                       >
                         <DeleteIcon />
@@ -144,6 +154,33 @@ function CCasesPage() {
           handleClose={() => setOpenUpdateDialog(false)}
           clinical_case={ccaseValue}
         />
+      )}
+
+      {confirmDelete.value && (
+        <BaseDialog
+          open={confirmDelete.value}
+          onClose={() =>
+            setConfirmDelete((prevState) => ({ ...prevState, value: false }))
+          }
+          actions={[
+            {
+              content: "Confirmar",
+              onClick: () => confirmDelete.func(ccaseValue),
+              color: "primary",
+            },
+            {
+              content: "Cancelar",
+              onClick: () =>
+                setConfirmDelete((prevState) => ({
+                  ...prevState,
+                  value: false,
+                })),
+              className: "btn btn-secondary",
+            },
+          ]}
+        >
+          ¿Desea realizar dicha acción?
+        </BaseDialog>
       )}
     </BaseCardSection>
   );

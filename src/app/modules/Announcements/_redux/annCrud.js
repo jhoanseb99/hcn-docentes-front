@@ -18,7 +18,9 @@ export function getAllAnnouncements(params, authToken) {
     makeRequest({
       path: PATH_GET_ALL_ANNOUNCEMENTS + getQueryParams(params),
       method: "GET",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
       .then((response) => {
         if (!response.ok) throw new Error(response.status);
@@ -34,7 +36,9 @@ export function getAnnouncement(params, authToken) {
     makeRequest({
       path: PATH_GET_ANNOUNCEMENT + getQueryParams(params),
       method: "GET",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
       .then((response) => {
         if (!response.ok) throw new Error(response.status);
@@ -49,8 +53,10 @@ export function updateAnnouncement(props, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
       path: PATH_UPDATE_ANNOUNCEMENT,
-      method: "POST",
-      headers: new Headers(),
+      method: "PUT",
+      headers: new Headers({
+        Token: authToken,
+      }),
       body: JSON.stringify({
         ID: props.ID,
         CourseID: props.CourseID,
@@ -73,7 +79,9 @@ export function createAnnouncement(props, authToken) {
     makeRequest({
       path: PATH_CREATE_ANNOUNCEMENT,
       method: "POST",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
       body: JSON.stringify({
         CourseID: props.CourseID,
         Title: props.Title,
@@ -95,7 +103,9 @@ export function deleteAnnouncement(id, authToken) {
     makeRequest({
       path: PATH_DELETE_ANNOUNCEMENT,
       method: "DELETE",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
       body: JSON.stringify({
         ID: id,
       }),

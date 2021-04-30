@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import moment from "moment";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -7,7 +8,7 @@ import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import CreateActivityDialog from "../modules/Activities/components/CreateActivityDialog.jsx";
 import UpdateActivityDialog from "../modules/Activities/components/UpdateActivityDialog.jsx";
 import { actions } from "../modules/Activities/_redux/activitiesRedux";
-import BaseCardSection from "../components/UI/BaseCardSection.jsx";
+import BaseCardSection from "app/components/UI/BaseCardSection.jsx";
 import BaseDialog from "app/components/UI/BaseDialog";
 
 //import EditIcon from '@material-ui/icons/Edit';
@@ -15,6 +16,7 @@ import BaseDialog from "app/components/UI/BaseDialog";
 export default function Activities() {
   const { activitieslist } = useSelector((state) => state.activities);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [openCreateDialog, setOpenCreateDialog] = React.useState(false);
   const [openUpdateDialog, setOpenUpdateDialog] = React.useState(false);
@@ -39,6 +41,10 @@ export default function Activities() {
     setOpenUpdateDialog(true);
   };
 
+  const handleGrade = ({ ID }) => {
+    history.push(`activities/${ID}`);
+  };
+
   return (
     <BaseCardSection
       title="Actividades"
@@ -52,7 +58,6 @@ export default function Activities() {
       style={{ backgroundColor: "#f3f6f9" }}
     >
       <div className="container-fluid">
-        {/* anuncios */}
         {activitieslist.map((value, index) => (
           <div key={index} className="row">
             {/* Card */}
@@ -72,6 +77,7 @@ export default function Activities() {
                         <a
                           className="btn btn-primary font-weight-bolder font-size-sm mr-3"
                           title="calificar"
+                          onClick={() => handleGrade(value)}
                         >
                           <AssignmentTurnedInIcon />
                         </a>

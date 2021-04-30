@@ -1,16 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 //import 'bootstrap/dist/css/bootstrap.css';
-import './index.css';
-import App from './app/App';
+import "./index.css";
+import App from "./app/App";
 import store, { persistor } from "./redux/store";
-import reportWebVitals from './app/reportWebVitals';
+import reportWebVitals from "./app/reportWebVitals";
 
 const { PUBLIC_URL } = process.env;
 
 ReactDOM.render(
-    <App store={store} persistor={persistor} basename={PUBLIC_URL} />,
-  document.getElementById('root')
+  <App store={store} persistor={persistor} basename={PUBLIC_URL} />,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

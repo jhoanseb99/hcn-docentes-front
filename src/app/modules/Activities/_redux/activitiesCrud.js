@@ -9,12 +9,16 @@ export const PATH_UPDATE_ACTIVITY = PATH_ACTIVITIES + "/UpdateActivity";
 export const PATH_CREATE_ACTIVITY = PATH_ACTIVITIES + "/CreateActivity";
 export const PATH_DELETE_ACTIVITY = PATH_ACTIVITIES + "/DeleteActivity";
 
+export const PATH_GET_ALL_SOLVED_HCN = "/SolvedHCN/GetAllSolvedHCN";
+
 export function getAllActivities(params, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
       path: PATH_GET_ALL_ACTIVITIES + getQueryParams(params),
       method: "GET",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
       .then((response) => {
         if (!response.ok) throw new Error(response.status);
@@ -30,7 +34,9 @@ export function getActivity(params, authToken) {
     makeRequest({
       path: PATH_GET_ACTIVITY + getQueryParams(params),
       method: "GET",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
       .then((response) => {
         if (!response.ok) throw new Error(response.status);
@@ -45,8 +51,10 @@ export function updateActivity(props, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
       path: PATH_UPDATE_ACTIVITY,
-      method: "POST",
-      headers: new Headers(),
+      method: "PUT",
+      headers: new Headers({
+        Token: authToken,
+      }),
       body: JSON.stringify({
         ID: props.ID,
         Title: props.Title,
@@ -74,7 +82,9 @@ export function createActivity(props, authToken) {
     makeRequest({
       path: PATH_CREATE_ACTIVITY,
       method: "POST",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
       body: JSON.stringify({
         Title: props.Title,
         Description: props.Description,
@@ -102,7 +112,9 @@ export function deleteActivity(props, authToken) {
     makeRequest({
       path: PATH_DELETE_ACTIVITY,
       method: "DELETE",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
       body: JSON.stringify({
         ID: props.ID,
       }),
@@ -110,6 +122,24 @@ export function deleteActivity(props, authToken) {
       .then((response) => {
         if (!response.ok) throw new Error(response.status);
         return "It Works!";
+      })
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
+  });
+}
+
+export function getAllSolvedHcn(params, authToken) {
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_GET_ALL_SOLVED_HCN + getQueryParams(params),
+      method: "GET",
+      headers: new Headers({
+        Token: authToken,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.json();
       })
       .then((response) => resolve(response))
       .catch((err) => reject(err.message));

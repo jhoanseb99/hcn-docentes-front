@@ -15,7 +15,7 @@ function HcnPage() {
 
   React.useEffect(() => {
     dispatch(hcnRedux.getHcnListByCourse());
-  }, []);
+  }, [dispatch]);
 
   return (
     <BaseSection

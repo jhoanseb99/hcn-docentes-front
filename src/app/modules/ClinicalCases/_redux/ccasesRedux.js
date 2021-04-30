@@ -75,7 +75,7 @@ const getCCasesListByCourse = () => async (dispatch, getState) => {
     });
 };
 
-const addCCaseToCourse = (id) => (dispatch, getState) => {
+const addCCaseToCourse = (id) => async (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
   return requestFromServer
     .addCCaseToCourse(
@@ -83,7 +83,9 @@ const addCCaseToCourse = (id) => (dispatch, getState) => {
       getState().auth.authToken
     )
     .then(() => {
-      notificationActions.setNotification("Caso Clínico añadido exitosamente");
+      dispatch(
+        notificationActions.setNotification("Caso Clínico añadido exitosamente")
+      );
       dispatch(getCCasesListByCourse());
     })
     .catch((err) => {
@@ -92,12 +94,14 @@ const addCCaseToCourse = (id) => (dispatch, getState) => {
     });
 };
 
-const createCCase = (props) => (dispatch, getState) => {
+const createCCase = (props) => async (dispatch, getState) => {
   const userId = getState().auth.user.ID;
   return requestFromServer
     .createCCase({ ...props, TeacherID: userId }, getState().auth.authToken)
     .then(() => {
-      notificationActions.setNotification("Caso Clínico creado exitosamente");
+      dispatch(
+        notificationActions.setNotification("Caso Clínico creado exitosamente")
+      );
       dispatch(getCCasesList());
     })
     .catch((err) => {
@@ -111,8 +115,10 @@ const updateCCase = (props) => (dispatch, getState) => {
   return requestFromServer
     .updateCCase({ ...props, TeacherID: userId }, getState().auth.authToken)
     .then(() => {
-      notificationActions.setNotification(
-        "Caso Clínico actualizado exitosamente"
+      dispatch(
+        notificationActions.setNotification(
+          "Caso Clínico actualizado exitosamente"
+        )
       );
       dispatch(getCCasesList());
       dispatch(getCCasesListByCourse());
@@ -129,8 +135,10 @@ const deleteCCaseByCourse = (id) => (dispatch, getState) => {
       requestFromServer.deleteCCase({ ID: id }, getState().auth.authToken)
     )
     .then(() => {
-      notificationActions.setNotification(
-        "Caso Clínico eliminado exitosamente"
+      dispatch(
+        notificationActions.setNotification(
+          "Caso Clínico eliminado exitosamente"
+        )
       );
       dispatch(getCCasesList());
       dispatch(getCCasesListByCourse());
@@ -149,7 +157,11 @@ const removeCCase = (id) => (dispatch, getState) => {
       getState().auth.authToken
     )
     .then(() => {
-      notificationActions.setNotification("Caso Clínico removido exitosamente");
+      dispatch(
+        notificationActions.setNotification(
+          "Caso Clínico removido exitosamente"
+        )
+      );
       dispatch(getCCasesListByCourse());
     })
     .catch((err) => {

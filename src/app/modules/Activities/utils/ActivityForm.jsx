@@ -169,7 +169,12 @@ function ActivityForm(props) {
               className="btn btn-primary"
               onClick={(event) => {
                 event.preventDefault();
-                //window.open(`/clinical-cases/${}`);
+                let hcn_data = hcnList.find(
+                  (value) => value.ID == formik.values.HCNID
+                );
+                if (formik.values.HCNID.length && hcn_data) {
+                  window.open(`/hcn/update/${hcn_data.MongoID}`);
+                }
               }}
             >
               Ver

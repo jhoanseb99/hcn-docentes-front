@@ -17,75 +17,86 @@ export const PATH_VISIBILITY_HCN_COURSE = PATH_COURSES + "/VisibilityHCN";
 export const PATH_ADD_CC_COURSE = PATH_COURSES + "/AddClinicalCase";
 export const PATH_GET_ALL_CC_COURSE = PATH_COURSES + "/GetAllClinicalCases";
 export const PATH_REMOVE_CC_COURSE = PATH_COURSES + "/RemoveClinicalCase";
-export const PATH_VISIBILITY_CC_COURSE = PATH_COURSES + "/VisibilityClinicalCase";
+export const PATH_VISIBILITY_CC_COURSE =
+  PATH_COURSES + "/VisibilityClinicalCase";
 
 export const PATH_ADD_STUDENT_COURSE = PATH_COURSES + "/AddStudent";
-export const PATH_GET_ALL_STUDENTS_COURSE = PATH_COURSES + "/GetAllStudentsCourse";
+export const PATH_GET_ALL_STUDENTS_COURSE =
+  PATH_COURSES + "/GetAllStudentsCourse";
 export const PATH_REMOVE_STUDENT_COURSE = PATH_COURSES + "/RemoveStudent";
-
 
 export function getAllCourses(authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_GET_ALL_COURSES, 
+      path: PATH_GET_ALL_COURSES,
       method: "GET",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return response.json();
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.json();
+      })
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function getCourse(params, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_GET_COURSE + getQueryParams(params), 
+      path: PATH_GET_COURSE + getQueryParams(params),
       method: "GET",
-      headers: new Headers(),
+      headers: new Headers({
+        Token: authToken,
+      }),
     })
-    .then(response => {
-      if(!response.ok) throw new Error(response.status);
-      return response.json();
-    })
-    .then(response => resolve(response))
-    .catch(err => reject(err.message)); 
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.json();
+      })
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }
 
 export function updateStudent(props, authToken) {
   return makeRequest({
-    path: PATH_UPDATE_COURSE, 
+    path: PATH_UPDATE_COURSE,
     method: "POST",
-    headers: new Headers(),
+    headers: new Headers({
+      Token: authToken,
+    }),
     body: JSON.stringify({
-      ID    : props.id,
-      Name  : props.name,
-      Email : props.email,
+      ID: props.id,
+      Name: props.name,
+      Email: props.email,
     }),
   });
 }
 
-export function createStudent(props, authToken) { 
+export function createStudent(props, authToken) {
   return makeRequest({
-    path: PATH_CREATE_COURSE, 
+    path: PATH_CREATE_COURSE,
     method: "POST",
-    headers: new Headers(),
+    headers: new Headers({
+      Token: authToken,
+    }),
     body: JSON.stringify({
-      ID    : props.id,
-      Name  : props.name,
-      Email : props.email,
+      ID: props.id,
+      Name: props.name,
+      Email: props.email,
     }),
   });
 }
 
 export function deleteStudent(authToken) {
   return makeRequest({
-    path: PATH_DELETE_COURSE, 
+    path: PATH_DELETE_COURSE,
     method: "DELETE",
-    headers: new Headers(),
+    headers: new Headers({
+      Token: authToken,
+    }),
   });
 }

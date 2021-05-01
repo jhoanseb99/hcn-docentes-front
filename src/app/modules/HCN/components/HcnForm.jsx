@@ -193,9 +193,9 @@ function HcnForm(props) {
       <button type="submit" className="btn btn-primary">
         {!isUpdate ? "Crear" : "Actualizar"}
       </button>
-      {/* <button className="btn btn-secondary ml-2" onClick={handleReturn}>
+      <button className="btn btn-secondary ml-2" onClick={handleReturn}>
         Volver
-      </button> */}
+      </button>
     </form>
   );
 }

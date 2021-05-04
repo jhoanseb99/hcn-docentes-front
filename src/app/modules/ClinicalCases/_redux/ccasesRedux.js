@@ -13,7 +13,7 @@ const actionTypes = {
   set_list_by_course: "SET_LIST_BY_COURSE",
 };
 
-const getCCasesList = () => (dispatch, getState) => {
+const getCCasesList = () => async (dispatch, getState) => {
   const userId = getState().auth.user.ID;
   return requestFromServer
     .getAllCCases(undefined, getState().auth.authToken)
@@ -39,8 +39,9 @@ const getCCasesList = () => (dispatch, getState) => {
 
 const getCCasesListByCourse = () => async (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
+  const authToken = getState().auth.authToken;
   return requestFromServer
-    .getAllCCasesByCourse({ id: CourseID }, getState().auth.authToken)
+    .getAllCCasesByCourse({ CourseID }, authToken)
     .then(async (data) => {
       dispatch(
         ccasesSlice.actions.setListByCourse({
@@ -50,9 +51,12 @@ const getCCasesListByCourse = () => async (dispatch, getState) => {
       );
       await Promise.all(
         data.map(async (value) => {
-          let ccase = await requestFromServer.getCCase({
-            id: value.ClinicalCaseID,
-          });
+          let ccase = await requestFromServer.getCCase(
+            {
+              ID: value.ClinicalCaseID,
+            },
+            authToken
+          );
           dispatch(
             ccasesSlice.actions.addListByCourse({
               type: actionTypes.set_list,
@@ -110,7 +114,7 @@ const createCCase = (props) => async (dispatch, getState) => {
     });
 };
 
-const updateCCase = (props) => (dispatch, getState) => {
+const updateCCase = (props) => async (dispatch, getState) => {
   const userId = getState().auth.user.ID;
   return requestFromServer
     .updateCCase({ ...props, TeacherID: userId }, getState().auth.authToken)
@@ -149,7 +153,7 @@ const deleteCCaseByCourse = (id) => (dispatch, getState) => {
     });
 };
 
-const removeCCase = (id) => (dispatch, getState) => {
+const removeCCase = (id) => async (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
   return requestFromServer
     .removeCCaseToCourse(

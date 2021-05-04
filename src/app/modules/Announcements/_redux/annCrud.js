@@ -67,9 +67,8 @@ export function updateAnnouncement(props, authToken) {
     })
       .then((response) => {
         if (!response.ok) throw new Error(response.status);
-        return response.json();
+        resolve(response);
       })
-      .then((response) => resolve(response))
       .catch((err) => reject(err.message));
   });
 }
@@ -91,9 +90,8 @@ export function createAnnouncement(props, authToken) {
     })
       .then((response) => {
         if (!response.ok) throw new Error(response.status);
-        return response.json();
+        resolve(response);
       })
-      .then((response) => resolve(response))
       .catch((err) => reject(err.message));
   });
 }

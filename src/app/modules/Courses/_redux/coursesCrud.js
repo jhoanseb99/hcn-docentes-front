@@ -25,11 +25,10 @@ export const PATH_GET_ALL_STUDENTS_COURSE =
   PATH_COURSES + "/GetAllStudentsCourse";
 export const PATH_REMOVE_STUDENT_COURSE = PATH_COURSES + "/RemoveStudent";
 
-export function getAllCourses(authToken) {
-  console.log(authToken);
+export function getAllCourses(params, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
-      path: PATH_GET_ALL_COURSES,
+      path: PATH_GET_ALL_COURSES + getQueryParams(params),
       method: "GET",
       headers: new Headers({
         Token: authToken,

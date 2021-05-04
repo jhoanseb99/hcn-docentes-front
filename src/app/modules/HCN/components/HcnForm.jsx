@@ -7,6 +7,7 @@ import { initialHcnValues } from "app/const";
 import GeneralDataForm from "../utils/GeneralDataForm";
 import PatientDataForm from "../utils/PatientDataForm";
 import AnthropometryDataForm from "../utils/AnthropometryDataForm";
+import { CircularProgress } from "@material-ui/core";
 
 const modeTypes = {
   create: "create",
@@ -61,15 +62,19 @@ const jsonToInputs = (data) => {
       } else if (children) ans[key] = children;
     }
   }
-  console.log(ans);
   return ans;
 };
 
 function HcnForm(props) {
-  const { handleSubmit, handleReturn, data, isUpdate = false } = props;
+  const {
+    handleSubmit,
+    handleReturn,
+    data,
+    isFeedback = false,
+    feedbackHCN,
+  } = props;
 
   const [displayFields, setDisplayFields] = React.useState(getDisplayObject());
-  const isFeedback = false;
 
   const hcnSchema = Yup.object().shape({
     ValorationDate: Yup.string().required("Campo requerido"),
@@ -78,11 +83,12 @@ function HcnForm(props) {
   const formik = useFormik({
     initialValues: jsonToInputs(data) || initialHcnValues,
     //validationSchema: hcnSchema,
-    onSubmit: (values, { setStatus, setSubmitting }) => {
+    onSubmit: (values, actions) => {
       console.log(values);
       setTimeout(() => {
         console.log(getJSON(values));
         handleSubmit(getJSON(values));
+        actions.setSubmitting(false);
       }, 1000);
     },
   });
@@ -115,9 +121,9 @@ function HcnForm(props) {
                   Datos antropométricos
                 </Nav.Link>
               </Nav.Item>
-              <Nav.Item>
+              {/* <Nav.Item>
                 <Nav.Link eventKey="Biochemistry">Datos bioquímicos</Nav.Link>
-              </Nav.Item>
+              </Nav.Item> */}
             </Nav>
           </div>
           <div className="col-10">
@@ -127,6 +133,7 @@ function HcnForm(props) {
                   formik={formik}
                   handleClick={handleOpenFeedback}
                   displayFields={displayFields}
+                  hasFeedback={isFeedback}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="PatientData">
@@ -134,6 +141,7 @@ function HcnForm(props) {
                   formik={formik}
                   handleClick={handleOpenFeedback}
                   displayFields={displayFields}
+                  hasFeedback={isFeedback}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="Anthropometry">
@@ -141,9 +149,10 @@ function HcnForm(props) {
                   formik={formik}
                   handleClick={handleOpenFeedback}
                   displayFields={displayFields}
+                  hasFeedback={isFeedback}
                 />
               </Tab.Pane>
-              <Tab.Pane eventKey="Biochemistry">
+              {/* <Tab.Pane eventKey="Biochemistry">
                 <div className="form-group">
                   <label htmlFor="TricipitalFold">Pliegue tricipital</label>
                   <div className="d-flex flex-row">
@@ -159,7 +168,7 @@ function HcnForm(props) {
                     <textarea type="text" className="form-control" />
                   ) : null}
                 </div>
-              </Tab.Pane>
+              </Tab.Pane> */}
             </Tab.Content>
           </div>
         </Tab.Container>
@@ -191,8 +200,20 @@ function HcnForm(props) {
         ) : null}
       </div>
       <button type="submit" className="btn btn-primary">
-        {!isUpdate ? "Crear" : "Actualizar"}
+        <span>{!data ? "Crear" : isFeedback ? "Guardar" : "Actualizar"}</span>
+        {formik.isSubmitting && (
+          <CircularProgress className="ml-2" size={10} color="inherit" />
+        )}
       </button>
+      {data && isFeedback && (
+        <button
+          type="button"
+          className="btn btn-success ml-2"
+          onClick={feedbackHCN}
+        >
+          Calificar
+        </button>
+      )}
       <button className="btn btn-secondary ml-2" onClick={handleReturn}>
         Volver
       </button>

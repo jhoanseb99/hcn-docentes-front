@@ -27,7 +27,7 @@ function AsideNavbar() {
       >
         <ul className="nav">
           <li aria-haspopup="true" className="nav-item">
-            <NavLink to="announcements" className="nav-link">
+            <NavLink to="/courses/announcements" className="nav-link">
               <FontAwesomeIcon
                 icon={faBullhorn}
                 width="24"
@@ -38,19 +38,19 @@ function AsideNavbar() {
             </NavLink>
           </li>
           <li aria-haspopup="true" className="nav-item">
-            <NavLink to="activities" className="nav-link">
+            <NavLink to="/courses/activities" className="nav-link">
               <FontAwesomeIcon icon={faBriefcase} className="nav-icon" />
               <span className="menu-text">Actividades</span>
             </NavLink>
           </li>
           <li aria-haspopup="true">
-            <NavLink to="clinical-cases">
+            <NavLink to="/courses/clinical-cases">
               <FontAwesomeIcon icon={faClinicMedical} />
               <span className="menu-text">Casos clínicos</span>
             </NavLink>
           </li>
           <li aria-haspopup="true" className="nav-item">
-            <NavLink to="hcn" className="nav-link">
+            <NavLink to="/courses/hcn" className="nav-link">
               <FontAwesomeIcon icon={faNotesMedical} className="nav-icon" />
               <span className="menu-text">HCN</span>
             </NavLink>

@@ -7,7 +7,7 @@ import AddHcnDialog from "../modules/HCN/components/AddHcnDialog.jsx";
 import CardGridContainer from "../components/UI/CardGridContainer";
 
 function HcnPage() {
-  const { hcnList, hcnListByCourse } = useSelector((state) => state.hcn);
+  const { hcnListByCourse, hcnObject } = useSelector((state) => state.hcn);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -34,17 +34,19 @@ function HcnPage() {
       ]}
     >
       <CardGridContainer data={hcnListByCourse}>
-        {(hcn) => (
-          <NavLink to={`/hcn/update/${hcnList[hcn.HCNID].MongoID}`}>
-            <div className="card custom-card" style={{ height: "150px" }}>
-              <div className="d-flex card-body justify-content-center align-items-center">
-                <div className="d-flex flex-column align-items-center">
-                  <span className="mt-1">{hcn.HCNID}</span>
+        {(hcn) =>
+          hcnObject[hcn.HCNID] && (
+            <NavLink to={`/hcn/update/${hcnObject[hcn.HCNID].MongoID}`}>
+              <div className="card custom-card" style={{ height: "150px" }}>
+                <div className="d-flex card-body justify-content-center align-items-center">
+                  <div className="d-flex flex-column align-items-center">
+                    <span className="mt-1">{hcn.HCNID}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </NavLink>
-        )}
+            </NavLink>
+          )
+        }
       </CardGridContainer>
 
       {openAddDialog && (

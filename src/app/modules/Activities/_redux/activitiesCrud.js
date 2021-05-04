@@ -9,7 +9,9 @@ export const PATH_UPDATE_ACTIVITY = PATH_ACTIVITIES + "/UpdateActivity";
 export const PATH_CREATE_ACTIVITY = PATH_ACTIVITIES + "/CreateActivity";
 export const PATH_DELETE_ACTIVITY = PATH_ACTIVITIES + "/DeleteActivity";
 
+export const PATH_CREATE_SOLVEDHCN = "/SolvedHCN/CreateSolvedHCN";
 export const PATH_GET_ALL_SOLVED_HCN = "/SolvedHCN/GetAllSolvedHCN";
+export const PATH_DELETE_SOLVED_HCN = "/SolvedHCN/DeleteSolvedHCN";
 
 export function getAllActivities(params, authToken) {
   return new Promise((resolve, reject) => {
@@ -70,9 +72,8 @@ export function updateActivity(props, authToken) {
     })
       .then((response) => {
         if (!response.ok) throw new Error(response.status);
-        return response.json();
+        resolve(response);
       })
-      .then((response) => resolve(response))
       .catch((err) => reject(err.message));
   });
 }
@@ -121,9 +122,8 @@ export function deleteActivity(props, authToken) {
     })
       .then((response) => {
         if (!response.ok) throw new Error(response.status);
-        return "It Works!";
+        resolve(response);
       })
-      .then((response) => resolve(response))
       .catch((err) => reject(err.message));
   });
 }
@@ -142,6 +142,49 @@ export function getAllSolvedHcn(params, authToken) {
         return response.json();
       })
       .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
+  });
+}
+
+export function createSolvedHcn(props, authToken) {
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_CREATE_SOLVEDHCN,
+      method: "POST",
+      headers: new Headers({
+        Token: authToken,
+      }),
+      body: JSON.stringify({
+        CourseID: props.CourseID,
+        ActivityID: props.ActivityID,
+        OriginalHCN: props.OriginalHCN,
+        TeacherID: props.TeacherID,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        resolve(response);
+      })
+      .catch((err) => reject(err.message));
+  });
+}
+
+export function deleteSolvedHcn(props, authToken) {
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_DELETE_SOLVED_HCN,
+      method: "DELETE",
+      headers: new Headers({
+        Token: authToken,
+      }),
+      body: JSON.stringify({
+        ActivityID: props.ActivityID,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        resolve(response);
+      })
       .catch((err) => reject(err.message));
   });
 }

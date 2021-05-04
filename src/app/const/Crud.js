@@ -10,7 +10,7 @@ function makeRequest({ path, method, headers, ...others }) {
   const id = setTimeout(() => controller.abort(), timeout);
   let config = {
     method,
-    headers: headers ? headers : new Headers(),
+    headers: headers ?? new Headers(),
     timeout,
     signal: controller.signal,
     ...others,

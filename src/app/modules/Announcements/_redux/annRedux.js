@@ -19,7 +19,7 @@ const setList = (list) => (dispatch) => {
   dispatch(annSlice.actions.setList({ type: actionTypes.set_list, list }));
 };
 
-const getAnnouncementsList = () => (dispatch, getState) => {
+const getAnnouncementsList = () => async (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
   return requestFromServer
     .getAllAnnouncements({ CourseID }, getState().auth.authToken)
@@ -46,7 +46,7 @@ const getAnnouncementsList = () => (dispatch, getState) => {
     });
 };
 
-const updateAnnouncement = (props) => (dispatch, getState) => {
+const updateAnnouncement = (props) => async (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
   return requestFromServer
     .updateAnnouncement({ ...props, CourseID }, getState().auth.authToken)

@@ -55,7 +55,7 @@ function GradePage(props) {
                         className="btn btn-primary font-weight-bolder font-size-sm mr-3"
                         title="calificar"
                         onClick={() => {
-                          history.push(`/hcn/update/${value.MongoID}`);
+                          history.push(`/hcn/feedback/${id}/${value.MongoID}`);
                         }}
                       >
                         <AssignmentTurnedInIcon />

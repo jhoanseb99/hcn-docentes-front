@@ -69,12 +69,20 @@ const updateActivity = (props) => async (dispatch, getState) => {
 const createActivity = (props) => async (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
   const userId = getState().auth.user.ID;
-  console.log(userId);
+  const authToken = getState().auth.authToken;
   return requestFromServer
-    .createActivity(
-      { ...props, CourseID, TeacherID: userId },
-      getState().auth.authToken
-    )
+    .createActivity({ ...props, CourseID, TeacherID: userId }, authToken)
+    .then((activity) => {
+      return requestFromServer.createSolvedHcn(
+        {
+          CourseID,
+          OriginalHCN: props.HCNID,
+          TeacherID: userId,
+          ActivityID: activity.ID,
+        },
+        authToken
+      );
+    })
     .then(() => {
       dispatch(
         notificationActions.setNotification("Actividad creada exitosamente")
@@ -88,8 +96,10 @@ const createActivity = (props) => async (dispatch, getState) => {
 };
 
 const deleteActivity = (id) => async (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
   return requestFromServer
-    .deleteActivity({ ID: id }, getState().auth.authToken)
+    .deleteSolvedHcn({ ActivityID: id }, authToken)
+    .then(() => requestFromServer.deleteActivity({ ID: id }, authToken))
     .then(() => {
       dispatch(
         notificationActions.setNotification("Actividad eliminada exitosamente")

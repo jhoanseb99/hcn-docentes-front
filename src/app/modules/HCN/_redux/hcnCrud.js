@@ -14,6 +14,7 @@ export const PATH_ADD_HCN_TO_COURSE = PATH_COURSES + "/AddHCN";
 export const PATH_CREATE_HCN = PATH_HCN + "/CreateHCNMongo";
 export const PATH_GET_HCN = PATH_HCN + "/GetHCNMongo";
 export const PATH_UPDATE_HCN = PATH_HCN + "/UpdateHCNMongo";
+export const PATH_UPDATE_SOLVED_HCN = "/SolvedHCN/UpdateSolvedHCN";
 
 export function getAllHcn(params, authToken) {
   return new Promise((resolve, reject) => {
@@ -112,10 +113,11 @@ export function createHcn(props, authToken) {
 }
 
 export function updateHcn(props, authToken) {
+  console.log(props);
   return new Promise((resolve, reject) => {
     makeRequest({
       path: PATH_UPDATE_HCN,
-      method: "POST",
+      method: "PUT",
       headers: new Headers({
         Token: authToken,
       }),
@@ -123,9 +125,8 @@ export function updateHcn(props, authToken) {
     })
       .then((response) => {
         if (!response.ok) throw new Error(response.status);
-        return response.json();
+        resolve(response);
       })
-      .then((response) => resolve(response))
       .catch((err) => reject(err.message));
   });
 }
@@ -144,6 +145,25 @@ export function getHcn(params, authToken) {
         return response.json();
       })
       .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
+  });
+}
+
+export function updateSolvedHcn(props, authToken) {
+  console.log(props);
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_UPDATE_SOLVED_HCN,
+      method: "PUT",
+      headers: new Headers({
+        Token: authToken,
+      }),
+      body: JSON.stringify(props),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        resolve(response);
+      })
       .catch((err) => reject(err.message));
   });
 }

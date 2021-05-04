@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useSelector } from "react-redux";
 import BaseCardSection from "../../../components/UI/BaseCardSection";
 
 import { getCCase } from "../_redux/ccasesCrud";
@@ -7,6 +7,7 @@ import { base64ToBlob } from "../../../const";
 
 function ClinicalCasesDetails(props) {
   const { id } = props.match.params;
+  const { authToken } = useSelector((state) => state.auth);
   const [ccase, setCCase] = React.useState({
     ID: "",
     Title: "",
@@ -15,7 +16,7 @@ function ClinicalCasesDetails(props) {
   });
 
   React.useEffect(() => {
-    getCCase({ id }).then((data) => {
+    getCCase({ ID: id }, authToken).then((data) => {
       console.log(data);
       setCCase(data);
     });

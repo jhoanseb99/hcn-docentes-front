@@ -21,9 +21,7 @@ export function getAllCCases(params, authToken) {
     makeRequest({
       path: PATH_GET_ALL_CCASES + getQueryParams(params),
       method: "GET",
-      headers: new Headers({
-        Token: authToken,
-      }),
+      headers: new Headers({ Token: authToken }),
     })
       .then((response) => {
         if (!response.ok) throw new Error(response.status);
@@ -132,9 +130,8 @@ export function createCCase(props, authToken) {
     })
       .then((response) => {
         if (!response.ok) throw new Error(response.status);
-        return "It works!";
+        resolve(response);
       })
-      .then((response) => resolve(response))
       .catch((err) => reject(err.message));
   });
 }
@@ -143,7 +140,7 @@ export function updateCCase(props, authToken) {
   return new Promise((resolve, reject) => {
     makeRequest({
       path: PATH_UPDATE_CCASE,
-      method: "POST",
+      method: "PUT",
       headers: new Headers({
         Token: authToken,
       }),
@@ -157,9 +154,8 @@ export function updateCCase(props, authToken) {
     })
       .then((response) => {
         if (!response.ok) throw new Error(response.status);
-        return "It works!";
+        resolve(response);
       })
-      .then((response) => resolve(response))
       .catch((err) => reject(err.message));
   });
 }

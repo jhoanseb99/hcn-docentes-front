@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { notificationActions } from "app/components/_redux/notificationRedux";
 import * as requestFromServer from "./hcnCrud";
-import * as authRedux from "../../Auth/_redux/authRedux";
 
 import { HCN } from "../../../const/data";
 
 const initCCasesState = {
   hcnList: [],
   hcnListByCourse: [],
+  hcnObject: {},
 };
 
 const actionTypes = {
@@ -39,7 +39,7 @@ const getHcnList = () => async (dispatch, getState) => {
 const getHcnListByCourse = () => async (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
   return requestFromServer
-    .getAllHcnByCourse({ id: CourseID }, getState().auth.authToken)
+    .getAllHcnByCourse({ CourseID }, getState().auth.authToken)
     .then((data) => {
       dispatch(
         hcnSlice.actions.setListByCourse({
@@ -78,11 +78,31 @@ const createHcn = (props) => async (dispatch, getState) => {
 };
 
 const updateHcn = (props) => async (dispatch, getState) => {
-  const userId = getState().auth.user.ID;
   return requestFromServer
-    .updateHcn({ ...props, TeacherID: userId }, getState().auth.authToken)
+    .updateHcn(props, getState().auth.authToken)
     .then(() => {
       notificationActions.setNotification("HCN actualizada exitosamente");
+      dispatch(getHcnListByCourse());
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
+    });
+};
+
+const feedbackHcn = (props) => async (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  return requestFromServer
+    .updateSolvedHcn(
+      {
+        ActivityID: props.ActivityID,
+        Solver: props.Solver,
+        Reviewed: 1,
+      },
+      authToken
+    )
+    .then(() => {
+      notificationActions.setNotification("HCN calificada exitosamente");
       dispatch(getHcnListByCourse());
     })
     .catch((err) => {
@@ -112,6 +132,7 @@ export const actions = {
   createHcn,
   updateHcn,
   addHcnToCourse,
+  feedbackHcn,
 };
 
 export const hcnSlice = createSlice({
@@ -121,6 +142,9 @@ export const hcnSlice = createSlice({
     setList: (state, action) => {
       const { list } = action.payload;
       state.hcnList = list;
+      list.forEach((element) => {
+        state.hcnObject[element.ID] = element;
+      });
     },
     setListByCourse: (state, action) => {
       const { list } = action.payload;

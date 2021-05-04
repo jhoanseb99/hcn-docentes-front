@@ -14,7 +14,7 @@ function UpdateActivityDialog({ open, handleClose, activity }) {
   const dispatch = useDispatch();
 
   const handleUpdate = (values) => {
-    dispatch(actions.updateActivity({ ...values, ID: activity.ID })).then(() =>
+    dispatch(actions.updateActivity({ ...activity, ...values })).then(() =>
       handleClose()
     );
   };

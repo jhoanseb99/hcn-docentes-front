@@ -13,16 +13,22 @@ const initCoursesState = {
     data: {},
     announcementsList: [],
     activitiesList: [],
-  }
+  },
 };
 
 const actionTypes = {
   set_list: "SET_LIST",
-  set_current_course: "SET_CURRENT_COURSE"
+  set_current_course: "SET_CURRENT_COURSE",
 };
 
-const setCurrentCourse = (field, data) => dispatch => {
-  dispatch(coursesSlice.actions.setCurrentCourse({ type: actionTypes.setCurrentCourse, field, data }));
+const setCurrentCourse = (field, data) => (dispatch) => {
+  dispatch(
+    coursesSlice.actions.setCurrentCourse({
+      type: actionTypes.setCurrentCourse,
+      field,
+      data,
+    })
+  );
 };
 
 /**
@@ -30,37 +36,57 @@ const setCurrentCourse = (field, data) => dispatch => {
  */
 const getCoursesList = () => async (dispatch, getState) => {
   const userId = getState().auth.user.ID;
-  return requestFromServer.getAllCourses(undefined, getState().auth.authToken)
-  .then(data => {
-    dispatch(coursesSlice.actions.setCoursesList({ type: actionTypes.set_list, list: data
-      .filter(value => value.TeacherID === userId)
-      .sort((a, b) => new Date(b.CreationDate) - new Date(a.CreationDate)) 
-    }));
-  })
-  .catch(err => {
-    console.log(err);
-    dispatch(coursesSlice.actions.setCoursesList({ type: actionTypes.set_list, list: COURSES }));
-  });
+  return requestFromServer
+    .getAllCourses(undefined, getState().auth.authToken)
+    .then((data) => {
+      dispatch(
+        coursesSlice.actions.setCoursesList({
+          type: actionTypes.set_list,
+          list: data
+            .filter((value) => value.TeacherID === userId)
+            .sort(
+              (a, b) => new Date(b.CreationDate) - new Date(a.CreationDate)
+            ),
+        })
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(
+        coursesSlice.actions.setCoursesList({
+          type: actionTypes.set_list,
+          list: COURSES,
+        })
+      );
+    });
 };
 
-
 /**
- * 
- * @param {*} id 
+ *
+ * @param {*} id
  */
-const getCourseData = id => (dispatch, getState) => {
-  return requestFromServer.getCourse({ id }, getState().auth.authToken)
-  .then(data => {
-    dispatch(coursesSlice.actions.setCurrentCourse({ 
-      type: actionTypes.set_current_course, field: "data", data 
-    }));
-  })
-  .catch(err => {
-    console.log(err);
-    dispatch(coursesSlice.actions.setCurrentCourse({ 
-      type: actionTypes.set_current_course, field: "data", data: COURSES.find(value => value.ID === id)
-    }));
-  });
+const getCourseData = (id) => async (dispatch, getState) => {
+  return requestFromServer
+    .getCourse({ ID: id }, getState().auth.authToken)
+    .then((data) => {
+      dispatch(
+        coursesSlice.actions.setCurrentCourse({
+          type: actionTypes.set_current_course,
+          field: "data",
+          data,
+        })
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(
+        coursesSlice.actions.setCurrentCourse({
+          type: actionTypes.set_current_course,
+          field: "data",
+          data: COURSES.find((value) => value.ID === id),
+        })
+      );
+    });
 };
 
 export const actions = {
@@ -70,9 +96,7 @@ export const actions = {
 };
 
 export const getters = {
-  getCurrentCourse: () => () => {
-    
-  }
+  getCurrentCourse: () => () => {},
 };
 
 export const coursesSlice = createSlice({
@@ -87,5 +111,5 @@ export const coursesSlice = createSlice({
       const { field, data } = action.payload;
       state.currentCourse[field] = data;
     },
-  }
+  },
 });

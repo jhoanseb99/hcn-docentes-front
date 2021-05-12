@@ -144,12 +144,10 @@ export const activitiesSlice = createSlice({
   reducers: {
     setList: (state, action) => {
       const { list } = action.payload;
-      console.log(list);
       state.activitieslist = list;
     },
     setGradeList: (state, action) => {
       const { list } = action.payload;
-      console.log(list);
       state.gradeList = list;
     },
   },

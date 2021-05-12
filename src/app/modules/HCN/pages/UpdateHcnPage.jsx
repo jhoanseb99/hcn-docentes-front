@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import { CircularProgress } from "@material-ui/core";
 import { actions as hcnRedux } from "../_redux/hcnRedux";
@@ -12,7 +11,6 @@ function UpdateHcnPage(props) {
   const [hcn_data, setHcnData] = React.useState({});
   const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const updateHCN = (values) => {
     dispatch(hcnRedux.updateHcn({ ...values, _id: hcn_data._id }));
@@ -40,11 +38,7 @@ function UpdateHcnPage(props) {
           )}
         >
           {!loading ? (
-            <HcnForm
-              handleSubmit={updateHCN}
-              handleReturn={() => history.push("/courses/hcn")}
-              data={hcn_data}
-            />
+            <HcnForm handleSubmit={updateHCN} data={hcn_data} />
           ) : (
             <CircularProgress size={10} color="inherit" />
           )}

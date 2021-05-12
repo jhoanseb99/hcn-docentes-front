@@ -206,6 +206,13 @@ function PatientDataForm(props) {
           <textarea type="text" className="form-control" />
         ) : null}
       </div>
+
+      <textarea
+        type="text"
+        name="PatientData_Feedback"
+        className="form-control"
+        {...formik.getFieldProps("PatientData_Feedback")}
+      />
     </>
   );
 }

@@ -103,6 +103,13 @@ function AnthropometryDataForm(props) {
             <textarea type="text" className="form-control" />
           ) : null}
         </div>
+
+        <textarea
+          type="text"
+          name="Anthropometry_Weight_Feedback"
+          className="form-control"
+          {...formik.getFieldProps("Anthropometry_Weight_Feedback")}
+        />
       </div>
       <div className="form-row">
         <div className="form-group col">
@@ -128,7 +135,12 @@ function AnthropometryDataForm(props) {
             )}
           </div>
           {displayFields["Anthropometry_TricipitalFold_Value"].Feedback ? (
-            <textarea type="text" className="form-control" />
+            <textarea
+              type="text"
+              name="Anthropometry_TricipitalFold_Feedback"
+              className="form-control"
+              {...formik.getFieldProps("Anthropometry_TricipitalFold_Feedback")}
+            />
           ) : null}
         </div>
         <div className="form-group col">
@@ -154,7 +166,14 @@ function AnthropometryDataForm(props) {
             )}
           </div>
           {displayFields["Anthropometry_SubscapularFold_Value"].Feedback ? (
-            <textarea type="text" className="form-control" />
+            <textarea
+              type="text"
+              name="Anthropometry_SubscapularFold_Feedback"
+              className="form-control"
+              {...formik.getFieldProps(
+                "Anthropometry_SubscapularFold_Feedback"
+              )}
+            />
           ) : null}
         </div>
       </div>
@@ -182,7 +201,14 @@ function AnthropometryDataForm(props) {
             )}
           </div>
           {displayFields["Anthropometry_BrachialPerimeter_Value"].Feedback ? (
-            <textarea type="text" className="form-control" />
+            <textarea
+              type="text"
+              name="Anthropometry_BrachialPerimeter_Feedback"
+              className="form-control"
+              {...formik.getFieldProps(
+                "Anthropometry_BrachialPerimeter_Feedback"
+              )}
+            />
           ) : null}
         </div>
         <div className="form-group col">
@@ -210,13 +236,20 @@ function AnthropometryDataForm(props) {
             )}
           </div>
           {displayFields["Anthropometry_AbdominalPerimeter_Value"].Feedback ? (
-            <textarea type="text" className="form-control" />
+            <textarea
+              type="text"
+              name="Anthropometry_AbdominalPerimeter_Feedback"
+              className="form-control"
+              {...formik.getFieldProps(
+                "Anthropometry_AbdominalPerimeter_Feedback"
+              )}
+            />
           ) : null}
         </div>
       </div>
       <div className="form-row">
         <div className="form-group col">
-          <label htmlFor="Anthropometry_Height_Value">Altura</label>
+          <label htmlFor="Anthropometry_Height_Value">Altura (cm)</label>
           <div className="d-flex flex-row">
             <input
               type="number"
@@ -236,7 +269,12 @@ function AnthropometryDataForm(props) {
             )}
           </div>
           {displayFields["Anthropometry_Height_Value"].Feedback ? (
-            <textarea type="text" className="form-control" />
+            <textarea
+              type="text"
+              name="Anthropometry_Height_Feedback"
+              className="form-control"
+              {...formik.getFieldProps("Anthropometry_Height_Feedback")}
+            />
           ) : null}
         </div>
         <div className="form-group col">
@@ -260,7 +298,12 @@ function AnthropometryDataForm(props) {
             )}
           </div>
           {displayFields["Anthropometry_Structure_Value"].Feedback ? (
-            <textarea type="text" className="form-control" />
+            <textarea
+              type="text"
+              name="Anthropometry_Structure_Feedback"
+              className="form-control"
+              {...formik.getFieldProps("Anthropometry_Structure_Feedback")}
+            />
           ) : null}
         </div>
         <div className="form-group col">
@@ -289,20 +332,20 @@ function AnthropometryDataForm(props) {
         </div>
       </div>
       <div className="form-group">
-        <label htmlFor="Biochemistry_Interpretation">Interpretación</label>
+        <label htmlFor="Anthropometry_Interpretation">Interpretación</label>
         <div className="d-flex flex-row">
           <textarea
             type="text"
-            name="Biochemistry_Interpretation"
+            name="Anthropometry_Interpretation"
             className="form-control"
-            {...formik.getFieldProps("Biochemistry_Interpretation")}
+            {...formik.getFieldProps("Anthropometry_Interpretation")}
           />
           {hasFeedback && (
             <div>
               <button
                 type="button"
                 className="btn btn-primary ml-3"
-                name="Biochemistry_Interpretation"
+                name="Anthropometry_Interpretation"
                 onClick={handleClick}
               >
                 +
@@ -310,10 +353,18 @@ function AnthropometryDataForm(props) {
             </div>
           )}
         </div>
-        {displayFields["Biochemistry_Interpretation"].Feedback ? (
+        {displayFields["Anthropometry_Interpretation"].Feedback ? (
           <textarea type="text" className="form-control" />
         ) : null}
       </div>
+
+      <label htmlFor="Anthropometry_Feedback">Comentario docente</label>
+      <textarea
+        type="text"
+        name="Anthropometry_Feedback"
+        className="form-control"
+        {...formik.getFieldProps("Anthropometry_Feedback")}
+      />
     </>
   );
 }

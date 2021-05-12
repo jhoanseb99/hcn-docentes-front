@@ -47,7 +47,7 @@ function Announcements() {
         {
           className: "btn btn-primary btn-circle font-weight-bolder",
           onClick: () => setOpenCreateDialog(true),
-          title: "+",
+          title: "Crear anuncio",
         },
       ]}
       style={{ backgroundColor: "#f3f6f9" }}

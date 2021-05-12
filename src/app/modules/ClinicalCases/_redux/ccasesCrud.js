@@ -15,6 +15,7 @@ export const PATH_GET_ALL_CCASES_BY_COURSE =
   PATH_COURSES + "/GetAllClinicalCases";
 export const PATH_ADD_CCASE_TO_COURSE = PATH_COURSES + "/AddClinicalCase";
 export const PATH_REMOVE_CCASE_TO_COURSE = PATH_COURSES + "/RemoveClinicalCase";
+export const PATH_VISIBILITY_CCASE = PATH_COURSES + "/VisibilityClinicalCase";
 
 export function getAllCCases(params, authToken) {
   return new Promise((resolve, reject) => {
@@ -60,6 +61,7 @@ export function getAllCCasesByCourse(params, authToken) {
       }),
     })
       .then((response) => {
+        if (response.status == "404") resolve([]);
         if (!response.ok) throw new Error(response.status);
         return response.json();
       })
@@ -177,6 +179,28 @@ export function deleteCCase(props, authToken) {
         return "It works!";
       })
       .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
+  });
+}
+
+export function visibilityCCase(props, authToken) {
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_VISIBILITY_CCASE,
+      method: "POST",
+      headers: new Headers({
+        Token: authToken,
+      }),
+      body: JSON.stringify({
+        CourseID: props.CourseID,
+        ClinicalCaseID: props.ClinicalCaseID,
+        Displayable: props.Displayable,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        resolve(response);
+      })
       .catch((err) => reject(err.message));
   });
 }

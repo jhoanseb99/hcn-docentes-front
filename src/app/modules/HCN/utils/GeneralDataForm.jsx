@@ -129,6 +129,13 @@ function GeneralDataForm(props) {
           <textarea type="text" className="form-control" />
         ) : null}
       </div>
+
+      <textarea
+        type="text"
+        name="GeneralData_Feedback"
+        className="form-control"
+        {...formik.getFieldProps("GeneralData_Feedback")}
+      />
     </>
   );
 }

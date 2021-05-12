@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import BaseCardSection from "../../../components/UI/BaseCardSection";
 
@@ -8,6 +9,7 @@ import { base64ToBlob } from "../../../const";
 function ClinicalCasesDetails(props) {
   const { id } = props.match.params;
   const { authToken } = useSelector((state) => state.auth);
+  const history = useHistory();
   const [ccase, setCCase] = React.useState({
     ID: "",
     Title: "",
@@ -53,6 +55,13 @@ function ClinicalCasesDetails(props) {
         <div className="form-group">
           <button className="btn btn-primary" onClick={mediaOpen}>
             Ver archivo
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary ml-2"
+            onClick={() => history.goBack()}
+          >
+            Volver
           </button>
         </div>
       </form>

@@ -44,7 +44,7 @@ const getHcnListByCourse = () => async (dispatch, getState) => {
       dispatch(
         hcnSlice.actions.setListByCourse({
           type: actionTypes.set_list,
-          list: data ?? [],
+          list: data.filter((value) => value.Displayable) ?? [],
         })
       );
     })
@@ -68,8 +68,8 @@ const createHcn = (props) => async (dispatch, getState) => {
   return requestFromServer
     .createHcn({ ...props, TeacherID: userId }, getState().auth.authToken)
     .then(() => {
-      notificationActions.setNotification("HCN creada exitosamente");
-      dispatch(getHcnListByCourse());
+      dispatch(notificationActions.setNotification("HCN creada exitosamente"));
+      dispatch(getHcnList());
     })
     .catch((err) => {
       console.log(err);
@@ -81,8 +81,35 @@ const updateHcn = (props) => async (dispatch, getState) => {
   return requestFromServer
     .updateHcn(props, getState().auth.authToken)
     .then(() => {
-      notificationActions.setNotification("HCN actualizada exitosamente");
-      dispatch(getHcnListByCourse());
+      dispatch(
+        notificationActions.setNotification("HCN actualizada exitosamente")
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
+    });
+};
+
+const updateFeedbackHcn = (props, activity) => async (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  return requestFromServer
+    .updateHcn(props, authToken)
+    .then(() => {
+      if (!activity.Reviewed) return;
+      return requestFromServer.updateSolvedHcn(
+        {
+          ActivityID: activity.ActivityID,
+          Solver: activity.Solver,
+          Reviewed: 0,
+        },
+        authToken
+      );
+    })
+    .then(() => {
+      dispatch(
+        notificationActions.setNotification("HCN actualizada exitosamente")
+      );
     })
     .catch((err) => {
       console.log(err);
@@ -102,8 +129,9 @@ const feedbackHcn = (props) => async (dispatch, getState) => {
       authToken
     )
     .then(() => {
-      notificationActions.setNotification("HCN calificada exitosamente");
-      dispatch(getHcnListByCourse());
+      dispatch(
+        notificationActions.setNotification("HCN calificada exitosamente")
+      );
     })
     .catch((err) => {
       console.log(err);
@@ -116,8 +144,46 @@ const addHcnToCourse = (id) => async (dispatch, getState) => {
   return requestFromServer
     .addHcnToCourse({ HCNID: id, CourseID }, getState().auth.authToken)
     .then(() => {
-      notificationActions.setNotification("HCN añadida exitosamente");
+      dispatch(notificationActions.setNotification("HCN añadida exitosamente"));
       dispatch(getHcnListByCourse());
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(notificationActions.setNotification(err.message, "error"));
+    });
+};
+
+const deleteHcn = (id) => async (dispatch, getState) => {
+  const CourseID = getState().courses.currentCourse.id;
+  const authToken = getState().auth.authToken;
+  return (
+    requestFromServer
+      //.deleteHcn({ ID: id }, authToken)
+      .visibilityHcn({ HCNID: id, CourseID, Displayable: 0 }, authToken)
+      .then(() => {
+        dispatch(getHcnListByCourse());
+        dispatch(
+          notificationActions.setNotification("HCN eliminada exitosamente")
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(notificationActions.setNotification(err.message, "error"));
+      })
+  );
+};
+
+const removeHcn = (id) => async (dispatch, getState) => {
+  const CourseID = getState().courses.currentCourse.id;
+  console.log(CourseID);
+  const authToken = getState().auth.authToken;
+  return requestFromServer
+    .removeHcn({ HCNID: id, CourseID }, authToken)
+    .then(() => {
+      dispatch(getHcnListByCourse());
+      dispatch(
+        notificationActions.setNotification("HCN removida exitosamente")
+      );
     })
     .catch((err) => {
       console.log(err);
@@ -131,8 +197,11 @@ export const actions = {
   getHcn,
   createHcn,
   updateHcn,
+  updateFeedbackHcn,
   addHcnToCourse,
   feedbackHcn,
+  deleteHcn,
+  removeHcn,
 };
 
 export const hcnSlice = createSlice({

@@ -57,12 +57,14 @@ const getCCasesListByCourse = () => async (dispatch, getState) => {
             },
             authToken
           );
-          dispatch(
-            ccasesSlice.actions.addListByCourse({
-              type: actionTypes.set_list,
-              value: ccase,
-            })
-          );
+          if (value.Displayable) {
+            dispatch(
+              ccasesSlice.actions.addListByCourse({
+                type: actionTypes.set_list,
+                value: ccase,
+              })
+            );
+          }
         })
       );
     })
@@ -134,9 +136,14 @@ const updateCCase = (props) => async (dispatch, getState) => {
 };
 
 const deleteCCaseByCourse = (id) => (dispatch, getState) => {
+  const CourseID = getState().courses.currentCourse.id;
   return dispatch(removeCCase(id))
     .then(() =>
-      requestFromServer.deleteCCase({ ID: id }, getState().auth.authToken)
+      //requestFromServer.deleteCCase({ ID: id }, getState().auth.authToken)
+      requestFromServer.visibilityCCase(
+        { ClinicalCaseID: id, CourseID, Displayable: 0 },
+        getState().auth.authToken
+      )
     )
     .then(() => {
       dispatch(

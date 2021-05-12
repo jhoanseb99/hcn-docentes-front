@@ -2,51 +2,65 @@
   this["webpackJsonphcn-docentes-front"] || []).push([
   [0],
   {
-    10: function (e, t, n) {
-      "use strict";
-      var r = n(11),
-        a = n(9),
-        i = n(18);
-      t.a = function (e) {
-        var t = e.path,
-          n = e.method,
-          o = e.headers,
-          c = Object(a.a)(e, ["path", "method", "headers"]),
-          s = new AbortController(),
-          u =
-            (setTimeout(function () {
-              return s.abort();
-            }, 4e3),
-            Object(r.a)(
-              {
-                method: n,
-                headers: o || new Headers(),
-                timeout: 4e3,
-                signal: s.signal,
-              },
-              c
-            )),
-          l = new Request(i.a + t, u);
-        return fetch(l);
-      };
-    },
     109: function (e, t, n) {
       "use strict";
       n.d(t, "a", function () {
-        return b;
+        return v;
       }),
         n.d(t, "b", function () {
-          return j;
+          return O;
         });
-      var r = n(7),
-        a = n.n(r),
-        i = n(16),
-        o = n(11),
-        c = n(28),
-        s = n(8),
-        u = n(10),
+      var r = n(12),
+        a = n(5),
+        i = n.n(a),
+        c = n(11),
+        o = n(28),
+        s = n(7),
+        u = n(9),
         l = n(18);
+      function f(e, t) {
+        return new Promise(function (n, r) {
+          Object(u.a)({
+            path: "/Announcements/GetAllAnnouncements" + Object(l.c)(e),
+            method: "GET",
+            headers: new Headers({ Token: t }),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              return e.json();
+            })
+            .then(function (e) {
+              return n(e);
+            })
+            .catch(function (e) {
+              return r(e.message);
+            });
+        });
+      }
       function d(e, t) {
+        return new Promise(function (n, r) {
+          Object(u.a)({
+            path: "/Announcements/UpdateAnnouncement",
+            method: "PUT",
+            headers: new Headers({ Token: t }),
+            body: JSON.stringify({
+              ID: e.ID,
+              CourseID: e.CourseID,
+              Title: e.Title,
+              Description: e.Description,
+              CreationDate: e.CreationDate,
+            }),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              n(e);
+            })
+            .catch(function (e) {
+              return r(e.message);
+            });
+        });
+      }
+      function h(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
             path: "/Announcements/CreateAnnouncement",
@@ -61,17 +75,14 @@
           })
             .then(function (e) {
               if (!e.ok) throw new Error(e.status);
-              return e.json();
-            })
-            .then(function (e) {
-              return n(e);
+              n(e);
             })
             .catch(function (e) {
               return r(e.message);
             });
         });
       }
-      function h(e, t) {
+      function p(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
             path: "/Announcements/DeleteAnnouncement",
@@ -88,130 +99,139 @@
             });
         });
       }
-      n(40);
-      var f = n(39),
-        m = "SET_LIST",
-        p = function () {
-          return function (e, t) {
-            var n,
-              r,
-              a = t().courses.currentCourse.id;
-            return ((n = { CourseID: a }),
-            (r = t().auth.authToken),
-            new Promise(function (e, t) {
-              Object(u.a)({
-                path: "/Announcements/GetAllAnnouncements" + Object(l.c)(n),
-                method: "GET",
-                headers: new Headers({ Token: r }),
-              })
-                .then(function (e) {
-                  if (!e.ok) throw new Error(e.status);
-                  return e.json();
-                })
-                .then(function (t) {
-                  return e(t);
-                })
-                .catch(function (e) {
-                  return t(e.message);
-                });
-            }))
-              .then(function (t) {
-                e(
-                  j.actions.setList({
-                    type: m,
-                    list: t
-                      .filter(function (e) {
-                        return e.CourseID === a;
-                      })
-                      .sort(function (e, t) {
+      n(48);
+      var m = n(39),
+        b = "SET_LIST",
+        j = function () {
+          return (function () {
+            var e = Object(c.a)(
+              i.a.mark(function e(t, n) {
+                var r;
+                return i.a.wrap(function (e) {
+                  for (;;)
+                    switch ((e.prev = e.next)) {
+                      case 0:
                         return (
-                          new Date(t.CreationDate) - new Date(e.CreationDate)
+                          (r = n().courses.currentCourse.id),
+                          e.abrupt(
+                            "return",
+                            f({ CourseID: r }, n().auth.authToken)
+                              .then(function (e) {
+                                t(
+                                  O.actions.setList({
+                                    type: b,
+                                    list: e
+                                      .filter(function (e) {
+                                        return e.CourseID === r;
+                                      })
+                                      .sort(function (e, t) {
+                                        return (
+                                          new Date(t.CreationDate) -
+                                          new Date(e.CreationDate)
+                                        );
+                                      }),
+                                  })
+                                );
+                              })
+                              .catch(function (e) {
+                                t(s.a.setNotification(e.message, "error")),
+                                  t(
+                                    O.actions.setList({
+                                      type: b,
+                                      list: m.b.filter(function (e) {
+                                        return e.CourseID === r;
+                                      }),
+                                    })
+                                  );
+                              })
+                          )
                         );
-                      }),
-                  })
-                );
+                      case 2:
+                      case "end":
+                        return e.stop();
+                    }
+                }, e);
               })
-              .catch(function (t) {
-                e(s.a.setNotification(t.message, "error")),
-                  e(
-                    j.actions.setList({
-                      type: m,
-                      list: f.b.filter(function (e) {
-                        return e.CourseID === a;
-                      }),
-                    })
-                  );
-              });
-          };
+            );
+            return function (t, n) {
+              return e.apply(this, arguments);
+            };
+          })();
         },
-        b = {
+        v = {
           setList: function (e) {
             return function (t) {
-              t(j.actions.setList({ type: m, list: e }));
+              t(O.actions.setList({ type: b, list: e }));
             };
           },
-          getAnnouncementsList: p,
+          getAnnouncementsList: j,
           updateAnnouncement: function (e) {
-            return function (t, n) {
-              var r = n().courses.currentCourse.id;
-              return (function (e, t) {
-                return new Promise(function (n, r) {
-                  Object(u.a)({
-                    path: "/Announcements/UpdateAnnouncement",
-                    method: "PUT",
-                    headers: new Headers({ Token: t }),
-                    body: JSON.stringify({
-                      ID: e.ID,
-                      CourseID: e.CourseID,
-                      Title: e.Title,
-                      Description: e.Description,
-                      CreationDate: e.CreationDate,
-                    }),
-                  })
-                    .then(function (e) {
-                      if (!e.ok) throw new Error(e.status);
-                      return e.json();
-                    })
-                    .then(function (e) {
-                      return n(e);
-                    })
-                    .catch(function (e) {
-                      return r(e.message);
-                    });
-                });
-              })(
-                Object(o.a)(Object(o.a)({}, e), {}, { CourseID: r }),
-                n().auth.authToken
-              )
-                .then(function () {
-                  t(s.a.setNotification("Anuncio actualizado exitosamente")),
-                    t(p());
-                })
-                .catch(function (e) {
-                  console.log(e), t(s.a.setNotification(e.message, "error"));
-                });
-            };
-          },
-          createAnnouncement: function (e) {
             return (function () {
-              var t = Object(i.a)(
-                a.a.mark(function t(n, r) {
-                  var i;
-                  return a.a.wrap(function (t) {
+              var t = Object(c.a)(
+                i.a.mark(function t(n, a) {
+                  var c;
+                  return i.a.wrap(function (t) {
                     for (;;)
                       switch ((t.prev = t.next)) {
                         case 0:
                           return (
-                            (i = r().courses.currentCourse.id),
+                            (c = a().courses.currentCourse.id),
                             t.abrupt(
                               "return",
                               d(
-                                Object(o.a)(
-                                  Object(o.a)({}, e),
+                                Object(r.a)(
+                                  Object(r.a)({}, e),
                                   {},
-                                  { CourseID: i }
+                                  { CourseID: c }
                                 ),
-                                r().auth.authToken
+                                a().auth.authToken
+                              )
+                                .then(function () {
+                                  n(
+                                    s.a.setNotification(
+                                      "Anuncio actualizado exitosamente"
+                                    )
+                                  ),
+                                    n(j());
+                                })
+                                .catch(function (e) {
+                                  console.log(e),
+                                    n(s.a.setNotification(e.message, "error"));
+                                })
+                            )
+                          );
+                        case 2:
+                        case "end":
+                          return t.stop();
+                      }
+                  }, t);
+                })
+              );
+              return function (e, n) {
+                return t.apply(this, arguments);
+              };
+            })();
+          },
+          createAnnouncement: function (e) {
+            return (function () {
+              var t = Object(c.a)(
+                i.a.mark(function t(n, a) {
+                  var c;
+                  return i.a.wrap(function (t) {
+                    for (;;)
+                      switch ((t.prev = t.next)) {
+                        case 0:
+                          return (
+                            (c = a().courses.currentCourse.id),
+                            t.abrupt(
+                              "return",
+                              h(
+                                Object(r.a)(
+                                  Object(r.a)({}, e),
+                                  {},
+                                  { CourseID: c }
+                                ),
+                                a().auth.authToken
                               )
                                 .then(function () {
                                   n(
@@ -219,7 +239,7 @@
                                       "Anuncio creado exitosamente"
                                     )
                                   ),
-                                    n(p());
+                                    n(j());
                                 })
                                 .catch(function (e) {
                                   console.log(e),
@@ -241,22 +261,22 @@
           },
           deleteAnnouncement: function (e) {
             return (function () {
-              var t = Object(i.a)(
-                a.a.mark(function t(n, r) {
-                  return a.a.wrap(function (t) {
+              var t = Object(c.a)(
+                i.a.mark(function t(n, r) {
+                  return i.a.wrap(function (t) {
                     for (;;)
                       switch ((t.prev = t.next)) {
                         case 0:
                           return t.abrupt(
                             "return",
-                            h(e, r().auth.authToken)
+                            p(e, r().auth.authToken)
                               .then(function () {
                                 n(
                                   s.a.setNotification(
                                     "Anuncio eliminado exitosamente"
                                   )
                                 ),
-                                  n(p());
+                                  n(j());
                               })
                               .catch(function (e) {
                                 console.log(e),
@@ -276,7 +296,7 @@
             })();
           },
         },
-        j = Object(c.b)({
+        O = Object(o.b)({
           name: "Adv",
           initialState: { announcementslist: [], annState: { loading: !1 } },
           reducers: {
@@ -290,20 +310,20 @@
     125: function (e, t, n) {
       "use strict";
       n.d(t, "a", function () {
-        return C;
+        return y;
       }),
         n.d(t, "b", function () {
-          return x;
+          return D;
         });
-      var r = n(11),
-        a = n(7),
+      var r = n(12),
+        a = n(5),
         i = n.n(a),
-        o = n(16),
-        c = n(28),
-        s = n(8),
-        u = n(10),
+        c = n(11),
+        o = n(28),
+        s = n(7),
+        u = n(9),
         l = n(18);
-      function d(e, t) {
+      function f(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
             path: "/Activities/GetAllActivities" + Object(l.c)(e),
@@ -322,7 +342,7 @@
             });
         });
       }
-      function h(e, t) {
+      function d(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
             path: "/Activities/UpdateActivity",
@@ -343,17 +363,14 @@
           })
             .then(function (e) {
               if (!e.ok) throw new Error(e.status);
-              return e.json();
-            })
-            .then(function (e) {
-              return n(e);
+              n(e);
             })
             .catch(function (e) {
               return r(e.message);
             });
         });
       }
-      function f(e, t) {
+      function h(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
             path: "/Activities/CreateActivity",
@@ -384,7 +401,7 @@
             });
         });
       }
-      function m(e, t) {
+      function p(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
             path: "/Activities/DeleteActivity",
@@ -394,17 +411,14 @@
           })
             .then(function (e) {
               if (!e.ok) throw new Error(e.status);
-              return "It Works!";
-            })
-            .then(function (e) {
-              return n(e);
+              n(e);
             })
             .catch(function (e) {
               return r(e.message);
             });
         });
       }
-      function p(e, t) {
+      function m(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
             path: "/SolvedHCN/GetAllSolvedHCN" + Object(l.c)(e),
@@ -423,12 +437,51 @@
             });
         });
       }
-      var b = n(39),
-        j = "SET_LIST",
-        O = "SET_GRADE_LIST",
-        v = function () {
+      function b(e, t) {
+        return new Promise(function (n, r) {
+          Object(u.a)({
+            path: "/SolvedHCN/CreateSolvedHCN",
+            method: "POST",
+            headers: new Headers({ Token: t }),
+            body: JSON.stringify({
+              CourseID: e.CourseID,
+              ActivityID: e.ActivityID,
+              OriginalHCN: e.OriginalHCN,
+              TeacherID: e.TeacherID,
+            }),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              n(e);
+            })
+            .catch(function (e) {
+              return r(e.message);
+            });
+        });
+      }
+      function j(e, t) {
+        return new Promise(function (n, r) {
+          Object(u.a)({
+            path: "/SolvedHCN/DeleteSolvedHCN",
+            method: "DELETE",
+            headers: new Headers({ Token: t }),
+            body: JSON.stringify({ ActivityID: e.ActivityID }),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              n(e);
+            })
+            .catch(function (e) {
+              return r(e.message);
+            });
+        });
+      }
+      var v = n(39),
+        O = "SET_LIST",
+        C = "SET_GRADE_LIST",
+        x = function () {
           return (function () {
-            var e = Object(o.a)(
+            var e = Object(c.a)(
               i.a.mark(function e(t, n) {
                 var r;
                 return i.a.wrap(function (e) {
@@ -439,11 +492,11 @@
                           (r = n().courses.currentCourse.id),
                           e.abrupt(
                             "return",
-                            d({ CourseID: r }, n().auth.authToken)
+                            f({ CourseID: r }, n().auth.authToken)
                               .then(function (e) {
                                 t(
-                                  x.actions.setList({
-                                    type: j,
+                                  D.actions.setList({
+                                    type: O,
                                     list: e
                                       .filter(function (e) {
                                         return e.CourseID === r;
@@ -460,7 +513,7 @@
                               .catch(function (e) {
                                 console.log(e),
                                   t(s.a.setNotification(e.message, "error")),
-                                  t(x.actions.setList({ type: j, list: b.a }));
+                                  t(D.actions.setList({ type: O, list: v.a }));
                               })
                           )
                         );
@@ -476,31 +529,31 @@
             };
           })();
         },
-        C = {
+        y = {
           setList: function (e) {
             return function (t) {
-              t(x.actions.setList({ type: j, list: e }));
+              t(D.actions.setList({ type: O, list: e }));
             };
           },
-          getActivitiesList: v,
+          getActivitiesList: x,
           updateActivity: function (e) {
             return (function () {
-              var t = Object(o.a)(
+              var t = Object(c.a)(
                 i.a.mark(function t(n, a) {
-                  var o;
+                  var c;
                   return i.a.wrap(function (t) {
                     for (;;)
                       switch ((t.prev = t.next)) {
                         case 0:
                           return (
-                            (o = a().courses.currentCourse.id),
+                            (c = a().courses.currentCourse.id),
                             t.abrupt(
                               "return",
-                              h(
+                              d(
                                 Object(r.a)(
                                   Object(r.a)({}, e),
                                   {},
-                                  { CourseID: o }
+                                  { CourseID: c }
                                 ),
                                 a().auth.authToken
                               )
@@ -510,7 +563,7 @@
                                       "Actividad actualizada exitosamente"
                                     )
                                   ),
-                                    n(v());
+                                    n(x());
                                 })
                                 .catch(function (e) {
                                   console.log(e),
@@ -532,34 +585,45 @@
           },
           createActivity: function (e) {
             return (function () {
-              var t = Object(o.a)(
+              var t = Object(c.a)(
                 i.a.mark(function t(n, a) {
-                  var o, c;
+                  var c, o, u;
                   return i.a.wrap(function (t) {
                     for (;;)
                       switch ((t.prev = t.next)) {
                         case 0:
                           return (
-                            (o = a().courses.currentCourse.id),
-                            (c = a().auth.user.ID),
-                            console.log(c),
+                            (c = a().courses.currentCourse.id),
+                            (o = a().auth.user.ID),
+                            (u = a().auth.authToken),
                             t.abrupt(
                               "return",
-                              f(
+                              h(
                                 Object(r.a)(
                                   Object(r.a)({}, e),
                                   {},
-                                  { CourseID: o, TeacherID: c }
+                                  { CourseID: c, TeacherID: o }
                                 ),
-                                a().auth.authToken
+                                u
                               )
+                                .then(function (t) {
+                                  return b(
+                                    {
+                                      CourseID: c,
+                                      OriginalHCN: e.HCNID,
+                                      TeacherID: o,
+                                      ActivityID: t.ID,
+                                    },
+                                    u
+                                  );
+                                })
                                 .then(function () {
                                   n(
                                     s.a.setNotification(
                                       "Actividad creada exitosamente"
                                     )
                                   ),
-                                    n(v());
+                                    n(x());
                                 })
                                 .catch(function (e) {
                                   console.log(e),
@@ -581,29 +645,36 @@
           },
           deleteActivity: function (e) {
             return (function () {
-              var t = Object(o.a)(
+              var t = Object(c.a)(
                 i.a.mark(function t(n, r) {
+                  var a;
                   return i.a.wrap(function (t) {
                     for (;;)
                       switch ((t.prev = t.next)) {
                         case 0:
-                          return t.abrupt(
-                            "return",
-                            m({ ID: e }, r().auth.authToken)
-                              .then(function () {
-                                n(
-                                  s.a.setNotification(
-                                    "Actividad eliminada exitosamente"
-                                  )
-                                ),
-                                  n(v());
-                              })
-                              .catch(function (e) {
-                                console.log(e),
-                                  n(s.a.setNotification(e.message, "error"));
-                              })
+                          return (
+                            (a = r().auth.authToken),
+                            t.abrupt(
+                              "return",
+                              j({ ActivityID: e }, a)
+                                .then(function () {
+                                  return p({ ID: e }, a);
+                                })
+                                .then(function () {
+                                  n(
+                                    s.a.setNotification(
+                                      "Actividad eliminada exitosamente"
+                                    )
+                                  ),
+                                    n(x());
+                                })
+                                .catch(function (e) {
+                                  console.log(e),
+                                    n(s.a.setNotification(e.message, "error"));
+                                })
+                            )
                           );
-                        case 1:
+                        case 2:
                         case "end":
                           return t.stop();
                       }
@@ -617,7 +688,7 @@
           },
           getAllSolvedHcn: function (e) {
             return (function () {
-              var t = Object(o.a)(
+              var t = Object(c.a)(
                 i.a.mark(function t(n, r) {
                   return i.a.wrap(function (t) {
                     for (;;)
@@ -625,9 +696,9 @@
                         case 0:
                           return t.abrupt(
                             "return",
-                            p({ id: e }, r().auth.authToken)
+                            m({ id: e }, r().auth.authToken)
                               .then(function (e) {
-                                n(x.actions.setGradeList({ type: O, list: e }));
+                                n(D.actions.setGradeList({ type: C, list: e }));
                               })
                               .catch(function (e) {
                                 console.log(e),
@@ -647,17 +718,17 @@
             })();
           },
         },
-        x = Object(c.b)({
+        D = Object(o.b)({
           name: "Activies",
           initialState: { activitieslist: [], gradeList: [] },
           reducers: {
             setList: function (e, t) {
               var n = t.payload.list;
-              console.log(n), (e.activitieslist = n);
+              e.activitieslist = n;
             },
             setGradeList: function (e, t) {
               var n = t.payload.list;
-              console.log(n), (e.gradeList = n);
+              e.gradeList = n;
             },
           },
         });
@@ -674,7 +745,7 @@
           return i;
         }),
         n.d(t, "d", function () {
-          return o;
+          return c;
         });
       var r = "http://104.44.129.29:3600";
       function a(e) {
@@ -697,7 +768,7 @@
           r[a] = t.charCodeAt(a);
         return new Blob([r], { type: "application/pdf" });
       }
-      var o = {
+      var c = {
         ConsultationReason: "",
         Interpretation: "",
         Feedback: "",
@@ -758,15 +829,15 @@
       var r = n(2),
         a = n(0),
         i = n.n(a),
-        o = n(30),
-        c = n.n(o),
+        c = n(30),
+        o = n.n(c),
         s = (n(183), n(21)),
         u = n(161),
         l = n(26),
-        d = n(22),
-        h = n(52),
-        f = n(53);
-      var m = function () {
+        f = n(22),
+        d = n(52),
+        h = n(53);
+      var p = function () {
         return Object(r.jsx)("div", {
           id: "kt_aside",
           className: "sidebar d-flex flex-column flex-row-auto",
@@ -783,11 +854,11 @@
                   "aria-haspopup": "true",
                   className: "nav-item",
                   children: Object(r.jsxs)(l.b, {
-                    to: "announcements",
+                    to: "/courses/announcements",
                     className: "nav-link",
                     children: [
-                      Object(r.jsx)(h.a, {
-                        icon: f.b,
+                      Object(r.jsx)(d.a, {
+                        icon: h.b,
                         width: "24",
                         height: "24",
                         className: "nav-icon",
@@ -800,10 +871,10 @@
                   "aria-haspopup": "true",
                   className: "nav-item",
                   children: Object(r.jsxs)(l.b, {
-                    to: "activities",
+                    to: "/courses/activities",
                     className: "nav-link",
                     children: [
-                      Object(r.jsx)(h.a, { icon: f.a, className: "nav-icon" }),
+                      Object(r.jsx)(d.a, { icon: h.a, className: "nav-icon" }),
                       Object(r.jsx)("span", {
                         className: "menu-text",
                         children: "Actividades",
@@ -814,9 +885,9 @@
                 Object(r.jsx)("li", {
                   "aria-haspopup": "true",
                   children: Object(r.jsxs)(l.b, {
-                    to: "clinical-cases",
+                    to: "/courses/clinical-cases",
                     children: [
-                      Object(r.jsx)(h.a, { icon: f.d }),
+                      Object(r.jsx)(d.a, { icon: h.d }),
                       Object(r.jsx)("span", {
                         className: "menu-text",
                         children: "Casos cl\xednicos",
@@ -828,10 +899,10 @@
                   "aria-haspopup": "true",
                   className: "nav-item",
                   children: Object(r.jsxs)(l.b, {
-                    to: "hcn",
+                    to: "/courses/hcn",
                     className: "nav-link",
                     children: [
-                      Object(r.jsx)(h.a, { icon: f.e, className: "nav-icon" }),
+                      Object(r.jsx)(d.a, { icon: h.e, className: "nav-icon" }),
                       Object(r.jsx)("span", {
                         className: "menu-text",
                         children: "HCN",
@@ -844,14 +915,14 @@
           }),
         });
       };
-      function p(e) {
+      function m(e) {
         var t = e.children,
           n = e.aside,
           a = void 0 === n || n;
         return Object(r.jsxs)("div", {
           className: "d-flex flex-row",
           children: [
-            a && Object(r.jsx)(m, {}),
+            a && Object(r.jsx)(p, {}),
             Object(r.jsx)("div", {
               className: "content ".concat(a ? "with-aside" : ""),
               children: t,
@@ -861,24 +932,24 @@
       }
       var b = n(331),
         j = n(302),
-        O = n(329),
-        v = n(11),
-        C = n(9),
+        v = n(329),
+        O = n(12),
+        C = n(10),
         x = function (e) {
           return "" + e;
         };
-      function g(e) {
+      function y(e) {
         var t = e.component,
           n = e.aside,
           a = void 0 !== n && n,
-          o = Object(C.a)(e, ["component", "aside"]);
+          c = Object(C.a)(e, ["component", "aside"]);
         return Object(r.jsx)(
-          d.b,
-          Object(v.a)(
-            Object(v.a)({}, o),
+          f.b,
+          Object(O.a)(
+            Object(O.a)({}, c),
             {},
             {
-              children: Object(r.jsx)(p, {
+              children: Object(r.jsx)(m, {
                 aside: a,
                 children: i.a.createElement(t),
               }),
@@ -886,8 +957,8 @@
           )
         );
       }
-      var y = n(40);
-      var D = function () {
+      var D = n(48);
+      var g = function () {
         var e = Object(s.d)(function (e) {
             return e.auth;
           }).user,
@@ -917,16 +988,16 @@
             }),
             Object(r.jsx)(b.a.Collapse, {
               className: "justify-content-end navbar-dropdown",
-              children: Object(r.jsxs)(O.a, {
+              children: Object(r.jsxs)(v.a, {
                 title: e.Name,
                 id: "collasible-nav-dropdown",
                 children: [
-                  Object(r.jsx)(O.a.Divider, {}),
-                  Object(r.jsx)(O.a.Item, {
+                  Object(r.jsx)(v.a.Divider, {}),
+                  Object(r.jsx)(v.a.Item, {
                     children: Object(r.jsx)("button", {
                       className: "btn btn-danger",
                       onClick: function () {
-                        return t(y.a.logout());
+                        return t(D.a.logout());
                       },
                       children: "Cerrar sesi\xf3n",
                     }),
@@ -942,14 +1013,14 @@
         return Object(r.jsxs)("div", {
           className: "d-flex flex-column",
           children: [
-            Object(r.jsx)(D, {}),
+            Object(r.jsx)(g, {}),
             Object(r.jsx)("div", { className: "page", children: t }),
           ],
         });
       }
       var N = n(65),
-        T = n(69),
-        I = n(49),
+        I = n(69),
+        T = n(49),
         k = function () {
           return Object(r.jsx)("div", {
             children: Object(r.jsx)("span", {
@@ -957,7 +1028,7 @@
             }),
           });
         };
-      var L = function () {
+      var A = function () {
         var e = Object(s.d)(function (e) {
             return e.hcn;
           }).hcnList,
@@ -974,7 +1045,7 @@
               title: "Cursos",
               className: "mb-5",
               children: n.length
-                ? Object(r.jsx)(T.a, {
+                ? Object(r.jsx)(I.a, {
                     data: n,
                     limit: 4,
                     size: 4,
@@ -986,7 +1057,7 @@
                           style: { height: "150px" },
                           onClick: function () {
                             return (
-                              (t = e.ID), void a(I.a.setCurrentCourse("id", t))
+                              (t = e.ID), void a(T.a.setCurrentCourse("id", t))
                             );
                             var t;
                           },
@@ -997,7 +1068,7 @@
                               className:
                                 "d-flex flex-column align-items-center",
                               children: [
-                                Object(r.jsx)(h.a, { icon: f.c, size: "3x" }),
+                                Object(r.jsx)(d.a, { icon: h.c, size: "3x" }),
                                 Object(r.jsx)("span", {
                                   className: "mt-1",
                                   children: e.Name,
@@ -1015,7 +1086,7 @@
               title: "Casos Cl\xednicos",
               className: "mb-5",
               children: t.length
-                ? Object(r.jsx)(T.a, {
+                ? Object(r.jsx)(I.a, {
                     data: t,
                     limit: 4,
                     size: 4,
@@ -1047,7 +1118,7 @@
               title: "Historias Cl\xednicas Nutricionales",
               className: "pb-5",
               children: e.length
-                ? Object(r.jsx)(T.a, {
+                ? Object(r.jsx)(I.a, {
                     data: e,
                     limit: 4,
                     size: 4,
@@ -1078,7 +1149,7 @@
           ],
         });
       };
-      var _ = function () {
+      var L = function () {
           var e = Object(s.d)(function (e) {
               return e.courses;
             }).coursesList,
@@ -1086,14 +1157,14 @@
           return (
             i.a.useEffect(
               function () {
-                t(I.a.getCoursesList());
+                t(T.a.getCoursesList());
               },
               [t]
             ),
             Object(r.jsx)(N.a, {
               title: "Cursos",
               children: e
-                ? Object(r.jsx)(T.a, {
+                ? Object(r.jsx)(I.a, {
                     data: e,
                     children: function (e) {
                       return Object(r.jsx)(l.b, {
@@ -1103,7 +1174,7 @@
                           style: { height: "150px" },
                           onClick: function () {
                             return (
-                              (n = e.ID), void t(I.a.setCurrentCourse("id", n))
+                              (n = e.ID), void t(T.a.setCurrentCourse("id", n))
                             );
                             var n;
                           },
@@ -1114,7 +1185,7 @@
                               className:
                                 "d-flex flex-column align-items-center",
                               children: [
-                                Object(r.jsx)(h.a, { icon: f.c, size: "3x" }),
+                                Object(r.jsx)(d.a, { icon: h.c, size: "3x" }),
                                 Object(r.jsx)("span", {
                                   className: "mt-1",
                                   children: e.Name,
@@ -1134,14 +1205,14 @@
             })
           );
         },
-        A = n(8),
-        E = n(85),
-        S = n(87),
-        P = n(7),
-        H = n.n(P),
-        B = n(16),
+        E = n(7),
+        _ = n(86),
+        S = n(84),
+        H = n(5),
+        P = n.n(H),
+        B = n(11),
         G = n(28),
-        F = n(10),
+        F = n(9),
         M = n(18);
       function z(e, t) {
         return new Promise(function (n, r) {
@@ -1166,8 +1237,8 @@
         R = function (e) {
           return (function () {
             var t = Object(B.a)(
-              H.a.mark(function t(n, r) {
-                return H.a.wrap(function (t) {
+              P.a.mark(function t(n, r) {
+                return P.a.wrap(function (t) {
                   for (;;)
                     switch ((t.prev = t.next)) {
                       case 0:
@@ -1175,11 +1246,11 @@
                           "return",
                           z(e, r().auth.authToken)
                             .then(function (e) {
-                              n(q.actions.setList({ type: U, list: e }));
+                              n(J.actions.setList({ type: U, list: e }));
                             })
                             .catch(function (e) {
                               console.log(e),
-                                n(A.a.setNotification(e.message, "error"));
+                                n(E.a.setNotification(e.message, "error"));
                             })
                         );
                       case 1:
@@ -1194,7 +1265,7 @@
             };
           })();
         },
-        q = Object(G.b)({
+        J = Object(G.b)({
           name: "students",
           initialState: { studentsList: [] },
           reducers: {
@@ -1204,12 +1275,12 @@
             },
           },
         }),
-        J = n(333),
+        q = n(333),
         V = n(330);
       function W(e) {
         return Object(r.jsx)(
           V.a,
-          Object(v.a)({ elevation: 6, variant: "filled" }, e)
+          Object(O.a)({ elevation: 6, variant: "filled" }, e)
         );
       }
       var X = function (e) {
@@ -1217,20 +1288,20 @@
             n = e.setOpen,
             a = e.severity,
             i = e.anchorOrigin,
-            o = void 0 === i ? { vertical: "bottom", horizontal: "right" } : i,
-            c = e.message,
+            c = void 0 === i ? { vertical: "bottom", horizontal: "right" } : i,
+            o = e.message,
             s = function (e, t) {
               "clickaway" !== t && n(!1);
             };
-          return Object(r.jsx)(J.a, {
+          return Object(r.jsx)(q.a, {
             open: t,
-            anchorOrigin: o,
+            anchorOrigin: c,
             autoHideDuration: 4e3,
             onClose: s,
             children: Object(r.jsx)(W, {
               onClose: s,
               severity: a,
-              children: c,
+              children: o,
             }),
           });
         },
@@ -1267,13 +1338,13 @@
           }),
           n = t.open,
           a = t.message,
-          o = t.variant;
+          c = t.variant;
         return (
           i.a.useEffect(
             function () {
-              e(E.a.getCCasesList()),
+              e(_.a.getCCasesList()),
                 e(S.a.getHcnList()),
-                e(I.a.getCoursesList()),
+                e(T.a.getCoursesList()),
                 e(R());
             },
             [e]
@@ -1281,32 +1352,32 @@
           Object(r.jsxs)(i.a.Suspense, {
             fallback: Object(r.jsx)(K, {}),
             children: [
-              Object(r.jsxs)(d.d, {
+              Object(r.jsxs)(f.d, {
                 children: [
-                  Object(r.jsx)(d.a, { exact: !0, from: "/", to: "/home" }),
-                  Object(r.jsx)(g, { exact: !0, path: "/home", component: L }),
-                  Object(r.jsx)(g, { path: "/clinical-cases", component: Z }),
-                  Object(r.jsx)(g, { path: "/hcn", component: $ }),
-                  Object(r.jsx)(g, {
+                  Object(r.jsx)(f.a, { exact: !0, from: "/", to: "/home" }),
+                  Object(r.jsx)(y, { exact: !0, path: "/home", component: A }),
+                  Object(r.jsx)(y, { path: "/clinical-cases", component: Z }),
+                  Object(r.jsx)(y, { path: "/hcn", component: $ }),
+                  Object(r.jsx)(y, {
                     exact: !0,
                     path: "/courses/all",
-                    component: _,
+                    component: L,
                   }),
-                  Object(r.jsx)(g, {
+                  Object(r.jsx)(y, {
                     path: "/courses",
                     aside: !0,
                     component: Q,
                   }),
-                  Object(r.jsx)(d.a, { to: "/error/404" }),
+                  Object(r.jsx)(f.a, { to: "/error/404" }),
                 ],
               }),
               Object(r.jsx)(X, {
                 open: n,
                 setOpen: function (t) {
-                  e(A.a.setNotificationField("open", t));
+                  e(E.a.setNotificationField("open", t));
                 },
                 message: a,
-                severity: o,
+                severity: c,
               }),
             ],
           })
@@ -1327,21 +1398,21 @@
         });
       }
       function ne() {
-        return Object(r.jsxs)(d.d, {
+        return Object(r.jsxs)(f.d, {
           children: [
-            Object(r.jsx)(d.a, { from: "/error", exact: !0, to: "/error/404" }),
-            Object(r.jsx)(d.b, { path: "/error/404", component: te }),
-            Object(r.jsx)(d.a, { to: "/error" }),
+            Object(r.jsx)(f.a, { from: "/error", exact: !0, to: "/error/404" }),
+            Object(r.jsx)(f.b, { path: "/error/404", component: te }),
+            Object(r.jsx)(f.a, { to: "/error" }),
           ],
         });
       }
       var re = n(124),
-        ae = n(86),
+        ae = n(87),
         ie = "/Authentication/Login";
-      function oe() {
-        return (oe = Object(B.a)(
-          H.a.mark(function e(t, n) {
-            return H.a.wrap(function (e) {
+      function ce() {
+        return (ce = Object(B.a)(
+          P.a.mark(function e(t, n) {
+            return P.a.wrap(function (e) {
               for (;;)
                 switch ((e.prev = e.next)) {
                   case 0:
@@ -1425,36 +1496,38 @@
           })
         )).apply(this, arguments);
       }
-      var ce = { username: "", password: "" };
+      var oe = { username: "", password: "" };
       var se = function () {
         var e = Object(s.c)(),
-          t = ae.a().shape({
-            username: ae
-              .b()
-              .min(3, "M\xednimo 3 car\xe1cteres")
-              .max(50, "M\xe1ximo 50 car\xe1cteres")
-              .required("Campo requerido"),
-            password: ae
-              .b()
-              .min(3, "M\xednimo 3 car\xe1cteres")
-              .max(50, "M\xe1ximo 50 car\xe1cteres")
-              .required("Campo requerido"),
-          }),
+          t = ae
+            .a()
+            .shape({
+              username: ae
+                .b()
+                .min(3, "M\xednimo 3 car\xe1cteres")
+                .max(50, "M\xe1ximo 50 car\xe1cteres")
+                .required("Campo requerido"),
+              password: ae
+                .b()
+                .min(3, "M\xednimo 3 car\xe1cteres")
+                .max(50, "M\xe1ximo 50 car\xe1cteres")
+                .required("Campo requerido"),
+            }),
           n = Object(re.a)({
-            initialValues: ce,
+            initialValues: oe,
             validationSchema: t,
             onSubmit: function (t, n) {
               var r = n.setStatus,
                 a = n.setSubmitting;
               setTimeout(function () {
                 (function (e, t) {
-                  return oe.apply(this, arguments);
+                  return ce.apply(this, arguments);
                 })(t.username, t.password)
                   .then(function (t) {
                     a(!1);
                     var n = t.Token,
                       r = Object(C.a)(t, ["Token"]);
-                    e(y.a.login(n)), e(y.a.fulfillUser(r));
+                    e(D.a.login(n)), e(D.a.fulfillUser(r));
                   })
                   .catch(function () {
                     a(!1), r("Usuario o contrase\xf1a incorrectos");
@@ -1496,7 +1569,7 @@
                     }),
                     Object(r.jsx)(
                       "input",
-                      Object(v.a)(
+                      Object(O.a)(
                         {
                           type: "text",
                           id: "username",
@@ -1524,7 +1597,7 @@
                     }),
                     Object(r.jsx)(
                       "input",
-                      Object(v.a)(
+                      Object(O.a)(
                         {
                           type: "password",
                           id: "password",
@@ -1583,15 +1656,15 @@
             children: Object(r.jsx)("div", {
               className:
                 "d-flex flex-column-fluid flex-center justify-content-center align-self-center h-100",
-              children: Object(r.jsxs)(d.d, {
+              children: Object(r.jsxs)(f.d, {
                 children: [
-                  Object(r.jsx)(d.b, { path: "/auth/login", component: se }),
-                  Object(r.jsx)(d.a, {
+                  Object(r.jsx)(f.b, { path: "/auth/login", component: se }),
+                  Object(r.jsx)(f.a, {
                     from: "/auth",
                     exact: !0,
                     to: "/auth/login",
                   }),
-                  Object(r.jsx)(d.a, { to: "/auth/login" }),
+                  Object(r.jsx)(f.a, { to: "/auth/login" }),
                 ],
               }),
             }),
@@ -1602,20 +1675,20 @@
         var e = Object(s.d)(function (e) {
           return { isAuthorized: null != e.auth.user };
         }, s.b).isAuthorized;
-        return Object(r.jsxs)(d.d, {
+        return Object(r.jsxs)(f.d, {
           children: [
             e
-              ? Object(r.jsx)(d.a, { from: "/auth", to: "/" })
-              : Object(r.jsx)(d.b, { children: Object(r.jsx)(ue, {}) }),
-            Object(r.jsx)(d.b, { path: "/error", component: ne }),
+              ? Object(r.jsx)(f.a, { from: "/auth", to: "/" })
+              : Object(r.jsx)(f.b, { children: Object(r.jsx)(ue, {}) }),
+            Object(r.jsx)(f.b, { path: "/error", component: ne }),
             e
               ? Object(r.jsx)(w, { children: Object(r.jsx)(ee, {}) })
-              : Object(r.jsx)(d.a, { to: "/auth/login" }),
+              : Object(r.jsx)(f.a, { to: "/auth/login" }),
           ],
         });
       }
       n(295);
-      var de = function (e) {
+      var fe = function (e) {
           var t = e.store,
             n = e.persistor,
             a = e.basename;
@@ -1630,37 +1703,37 @@
             }),
           });
         },
-        he = n(24),
-        fe = n(171),
-        me = n(107),
-        pe = n(25),
+        de = n(24),
+        he = n(171),
+        pe = n(107),
+        me = n(25),
         be = n(109),
         je = n(125),
-        Oe = Object(pe.c)({
-          auth: y.b,
-          notifications: A.b.reducer,
+        ve = Object(me.c)({
+          auth: D.b,
+          notifications: E.b.reducer,
           announcements: be.b.reducer,
           activities: je.b.reducer,
-          courses: I.b.reducer,
-          clinicalCases: E.b.reducer,
+          courses: T.b.reducer,
+          clinicalCases: _.b.reducer,
           hcn: S.b.reducer,
-          students: q.reducer,
+          students: J.reducer,
         }),
-        ve = Object(fe.a)(),
+        Oe = Object(he.a)(),
         Ce = [].concat(
-          Object(he.a)(
+          Object(de.a)(
             Object(G.c)({
               immutableCheck: !1,
               serializableCheck: !1,
               thunk: !0,
             })
           ),
-          [ve]
+          [Oe]
         ),
-        xe = Object(G.a)({ reducer: Oe, middleware: Ce, devTools: !1 }),
-        ge = Object(me.b)(xe),
-        ye = xe,
-        De = function (e) {
+        xe = Object(G.a)({ reducer: ve, middleware: Ce, devTools: !1 }),
+        ye = Object(pe.b)(xe),
+        De = xe,
+        ge = function (e) {
           e &&
             e instanceof Function &&
             n
@@ -1671,19 +1744,15 @@
                   r = t.getFID,
                   a = t.getFCP,
                   i = t.getLCP,
-                  o = t.getTTFB;
-                n(e), r(e), a(e), i(e), o(e);
+                  c = t.getTTFB;
+                n(e), r(e), a(e), i(e), c(e);
               });
         };
-      c.a.render(
-        Object(r.jsx)(de, {
-          store: ye,
-          persistor: ge,
-          basename: "",
-        }),
+      o.a.render(
+        Object(r.jsx)(fe, { store: De, persistor: ye, basename: "" }),
         document.getElementById("root")
       ),
-        De();
+        ge();
     },
     39: function (e, t, n) {
       "use strict";
@@ -1697,10 +1766,10 @@
           return i;
         }),
         n.d(t, "c", function () {
-          return o;
+          return c;
         }),
         n.d(t, "e", function () {
-          return c;
+          return o;
         });
       var r = [
           {
@@ -1785,7 +1854,7 @@
             CreationDate: "2021-01-19 03:33:48",
           },
         ],
-        o = [
+        c = [
           {
             ID: 1,
             Title: "El joven parchado",
@@ -1809,7 +1878,7 @@
             TeacherID: 3,
           },
         ],
-        c = [
+        o = [
           { ID: 1, TeacherID: 1 },
           { ID: 2, TeacherID: 1 },
           { ID: 3, TeacherID: 1 },
@@ -1818,84 +1887,6 @@
         ];
     },
     40: function (e, t, n) {
-      "use strict";
-      n.d(t, "b", function () {
-        return u;
-      }),
-        n.d(t, "a", function () {
-          return l;
-        });
-      var r = n(11),
-        a = n(107),
-        i = n(162),
-        o = n.n(i),
-        c =
-          (n(297),
-          {
-            Login: "[Login] Action",
-            Logout: "[Logout] Action",
-            Register: "[Register] Action",
-            UserRequested: "[Request User] Action",
-            UserLoaded: "[Load User] Auth API",
-            setSessionExpired: "SET_SESSION_EXPIRED",
-          }),
-        s = { user: void 0, authToken: void 0, sessionExpired: !1 },
-        u = Object(a.a)(
-          { storage: o.a, key: "v706-auth", whitelist: ["user", "authToken"] },
-          function () {
-            var e =
-                arguments.length > 0 && void 0 !== arguments[0]
-                  ? arguments[0]
-                  : s,
-              t = arguments.length > 1 ? arguments[1] : void 0;
-            switch (t.type) {
-              case c.Login:
-                var n = t.payload.authToken;
-                return { authToken: n, user: void 0 };
-              case c.Register:
-                var a = t.payload.authToken;
-                return { authToken: a, user: void 0 };
-              case c.Logout:
-                return s;
-              case c.UserLoaded:
-                var i = t.payload.user;
-                return Object(r.a)(Object(r.a)({}, e), {}, { user: i });
-              case c.setSessionExpired:
-                return Object(r.a)(
-                  Object(r.a)({}, e),
-                  {},
-                  { sessionExpired: !0 }
-                );
-              default:
-                return e;
-            }
-          }
-        ),
-        l = {
-          login: function (e) {
-            return { type: c.Login, payload: { authToken: e } };
-          },
-          register: function (e) {
-            return { type: c.Register, payload: { authToken: e } };
-          },
-          logout: function () {
-            return { type: c.Logout };
-          },
-          requestUser: function (e) {
-            return { type: c.UserRequested, payload: { user: e } };
-          },
-          fulfillUser: function (e) {
-            return { type: c.UserLoaded, payload: { user: e } };
-          },
-          setUser: function (e) {
-            return { type: c.SetUser, payload: { user: e } };
-          },
-          setSessionExpired: function () {
-            return { type: c.setSessionExpired };
-          },
-        };
-    },
-    44: function (e, t, n) {
       "use strict";
       n.d(t, "a", function () {
         return i;
@@ -1906,34 +1897,12 @@
         n.d(t, "c", function () {
           return u;
         });
-      var r = n(10),
+      var r = n(9),
         a = n(18),
         i = "/Courses",
-        o = i + "/GetAllCourses",
-        c = i + "/GetCourse";
-      function s(e) {
-        return (
-          console.log(e),
-          new Promise(function (t, n) {
-            Object(r.a)({
-              path: o,
-              method: "GET",
-              headers: new Headers({ Token: e }),
-            })
-              .then(function (e) {
-                if (!e.ok) throw new Error(e.status);
-                return e.json();
-              })
-              .then(function (e) {
-                return t(e);
-              })
-              .catch(function (e) {
-                return n(e.message);
-              });
-          })
-        );
-      }
-      function u(e, t) {
+        c = i + "/GetAllCourses",
+        o = i + "/GetCourse";
+      function s(e, t) {
         return new Promise(function (n, i) {
           Object(r.a)({
             path: c + Object(a.c)(e),
@@ -1952,21 +1921,118 @@
             });
         });
       }
+      function u(e, t) {
+        return new Promise(function (n, i) {
+          Object(r.a)({
+            path: o + Object(a.c)(e),
+            method: "GET",
+            headers: new Headers({ Token: t }),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              return e.json();
+            })
+            .then(function (e) {
+              return n(e);
+            })
+            .catch(function (e) {
+              return i(e.message);
+            });
+        });
+      }
+    },
+    48: function (e, t, n) {
+      "use strict";
+      n.d(t, "b", function () {
+        return u;
+      }),
+        n.d(t, "a", function () {
+          return l;
+        });
+      var r = n(12),
+        a = n(107),
+        i = n(162),
+        c = n.n(i),
+        o =
+          (n(297),
+          {
+            Login: "[Login] Action",
+            Logout: "[Logout] Action",
+            Register: "[Register] Action",
+            UserRequested: "[Request User] Action",
+            UserLoaded: "[Load User] Auth API",
+            setSessionExpired: "SET_SESSION_EXPIRED",
+          }),
+        s = { user: void 0, authToken: void 0, sessionExpired: !1 },
+        u = Object(a.a)(
+          { storage: c.a, key: "v706-auth", whitelist: ["user", "authToken"] },
+          function () {
+            var e =
+                arguments.length > 0 && void 0 !== arguments[0]
+                  ? arguments[0]
+                  : s,
+              t = arguments.length > 1 ? arguments[1] : void 0;
+            switch (t.type) {
+              case o.Login:
+                var n = t.payload.authToken;
+                return { authToken: n, user: void 0 };
+              case o.Register:
+                var a = t.payload.authToken;
+                return { authToken: a, user: void 0 };
+              case o.Logout:
+                return s;
+              case o.UserLoaded:
+                var i = t.payload.user;
+                return Object(r.a)(Object(r.a)({}, e), {}, { user: i });
+              case o.setSessionExpired:
+                return Object(r.a)(
+                  Object(r.a)({}, e),
+                  {},
+                  { sessionExpired: !0 }
+                );
+              default:
+                return e;
+            }
+          }
+        ),
+        l = {
+          login: function (e) {
+            return { type: o.Login, payload: { authToken: e } };
+          },
+          register: function (e) {
+            return { type: o.Register, payload: { authToken: e } };
+          },
+          logout: function () {
+            return { type: o.Logout };
+          },
+          requestUser: function (e) {
+            return { type: o.UserRequested, payload: { user: e } };
+          },
+          fulfillUser: function (e) {
+            return { type: o.UserLoaded, payload: { user: e } };
+          },
+          setUser: function (e) {
+            return { type: o.SetUser, payload: { user: e } };
+          },
+          setSessionExpired: function () {
+            return { type: o.setSessionExpired };
+          },
+        };
     },
     49: function (e, t, n) {
       "use strict";
       n.d(t, "a", function () {
-        return d;
+        return f;
       }),
         n.d(t, "b", function () {
-          return h;
+          return d;
         });
-      var r = n(7),
+      var r = n(5),
         a = n.n(r),
-        i = n(16),
-        o = n(28),
-        c = n(44),
-        s = (n(40), n(109), n(39)),
+        i = n(11),
+        c = n(28),
+        o = n(40),
+        s = (n(48), n(109), n(39)),
         u = {
           coursesList: [],
           currentCourse: {
@@ -1977,11 +2043,11 @@
           },
         },
         l = { set_list: "SET_LIST", set_current_course: "SET_CURRENT_COURSE" },
-        d = {
+        f = {
           setCurrentCourse: function (e, t) {
             return function (n) {
               n(
-                h.actions.setCurrentCourse({
+                d.actions.setCurrentCourse({
                   type: l.setCurrentCourse,
                   field: e,
                   data: t,
@@ -2002,11 +2068,11 @@
                             (r = n().auth.user.ID),
                             e.abrupt(
                               "return",
-                              c
+                              o
                                 .b(void 0, n().auth.authToken)
                                 .then(function (e) {
                                   t(
-                                    h.actions.setCoursesList({
+                                    d.actions.setCoursesList({
                                       type: l.set_list,
                                       list: e
                                         .filter(function (e) {
@@ -2024,7 +2090,7 @@
                                 .catch(function (e) {
                                   console.log(e),
                                     t(
-                                      h.actions.setCoursesList({
+                                      d.actions.setCoursesList({
                                         type: l.set_list,
                                         list: s.d,
                                       })
@@ -2045,34 +2111,53 @@
             })();
           },
           getCourseData: function (e) {
-            return function (t, n) {
-              return c
-                .c({ id: e }, n().auth.authToken)
-                .then(function (e) {
-                  t(
-                    h.actions.setCurrentCourse({
-                      type: l.set_current_course,
-                      field: "data",
-                      data: e,
-                    })
-                  );
+            return (function () {
+              var t = Object(i.a)(
+                a.a.mark(function t(n, r) {
+                  return a.a.wrap(function (t) {
+                    for (;;)
+                      switch ((t.prev = t.next)) {
+                        case 0:
+                          return t.abrupt(
+                            "return",
+                            o
+                              .c({ ID: e }, r().auth.authToken)
+                              .then(function (e) {
+                                n(
+                                  d.actions.setCurrentCourse({
+                                    type: l.set_current_course,
+                                    field: "data",
+                                    data: e,
+                                  })
+                                );
+                              })
+                              .catch(function (t) {
+                                console.log(t),
+                                  n(
+                                    d.actions.setCurrentCourse({
+                                      type: l.set_current_course,
+                                      field: "data",
+                                      data: s.d.find(function (t) {
+                                        return t.ID === e;
+                                      }),
+                                    })
+                                  );
+                              })
+                          );
+                        case 1:
+                        case "end":
+                          return t.stop();
+                      }
+                  }, t);
                 })
-                .catch(function (n) {
-                  console.log(n),
-                    t(
-                      h.actions.setCurrentCourse({
-                        type: l.set_current_course,
-                        field: "data",
-                        data: s.d.find(function (t) {
-                          return t.ID === e;
-                        }),
-                      })
-                    );
-                });
-            };
+              );
+              return function (e, n) {
+                return t.apply(this, arguments);
+              };
+            })();
           },
         },
-        h = Object(o.b)({
+        d = Object(c.b)({
           name: "courses",
           initialState: u,
           reducers: {
@@ -2098,28 +2183,28 @@
           return l;
         }),
         n.d(t, "e", function () {
-          return d;
-        }),
-        n.d(t, "a", function () {
-          return h;
-        }),
-        n.d(t, "g", function () {
           return f;
         }),
+        n.d(t, "a", function () {
+          return d;
+        }),
+        n.d(t, "g", function () {
+          return h;
+        }),
         n.d(t, "b", function () {
-          return m;
+          return p;
         }),
         n.d(t, "h", function () {
-          return p;
+          return m;
         }),
         n.d(t, "c", function () {
           return b;
         });
-      var r = n(10),
+      var r = n(9),
         a = n(18),
-        i = n(44),
-        o = i.a + "/GetAllClinicalCases",
-        c = i.a + "/AddClinicalCase",
+        i = n(40),
+        c = i.a + "/GetAllClinicalCases",
+        o = i.a + "/AddClinicalCase",
         s = i.a + "/RemoveClinicalCase";
       function u(e, t) {
         return new Promise(function (n, i) {
@@ -2159,10 +2244,10 @@
             });
         });
       }
-      function d(e, t) {
+      function f(e, t) {
         return new Promise(function (n, i) {
           Object(r.a)({
-            path: o + Object(a.c)(e),
+            path: c + Object(a.c)(e),
             method: "GET",
             headers: new Headers({ Token: t }),
           })
@@ -2178,10 +2263,10 @@
             });
         });
       }
-      function h(e, t) {
+      function d(e, t) {
         return new Promise(function (n, a) {
           Object(r.a)({
-            path: c,
+            path: o,
             method: "POST",
             headers: new Headers({ Token: t }),
             body: JSON.stringify({
@@ -2202,7 +2287,7 @@
             });
         });
       }
-      function f(e, t) {
+      function h(e, t) {
         return new Promise(function (n, a) {
           Object(r.a)({
             path: s,
@@ -2225,7 +2310,7 @@
             });
         });
       }
-      function m(e, t) {
+      function p(e, t) {
         return new Promise(function (n, a) {
           Object(r.a)({
             path: "/ClinicalCases/CreateClinicalCase",
@@ -2240,21 +2325,18 @@
           })
             .then(function (e) {
               if (!e.ok) throw new Error(e.status);
-              return "It works!";
-            })
-            .then(function (e) {
-              return n(e);
+              n(e);
             })
             .catch(function (e) {
               return a(e.message);
             });
         });
       }
-      function p(e, t) {
+      function m(e, t) {
         return new Promise(function (n, a) {
           Object(r.a)({
             path: "/ClinicalCases/UpdateClinicalCase",
-            method: "POST",
+            method: "PUT",
             headers: new Headers({ Token: t }),
             body: JSON.stringify({
               ID: e.ID,
@@ -2266,10 +2348,7 @@
           })
             .then(function (e) {
               if (!e.ok) throw new Error(e.status);
-              return "It works!";
-            })
-            .then(function (e) {
-              return n(e);
+              n(e);
             })
             .catch(function (e) {
               return a(e.message);
@@ -2299,49 +2378,49 @@
     },
     65: function (e, t, n) {
       "use strict";
-      var r = n(11),
-        a = n(9),
+      var r = n(12),
+        a = n(10),
         i = n(0),
-        o = n.n(i),
-        c = n(2);
+        c = n.n(i),
+        o = n(2);
       t.a = function (e) {
         var t = e.title,
           n = e.toolbar,
           s = e.component,
           u = e.children,
           l = e.className;
-        return Object(c.jsxs)("div", {
+        return Object(o.jsxs)("div", {
           className: "container-fluid ".concat(
             null !== l && void 0 !== l ? l : ""
           ),
           children: [
-            Object(c.jsxs)("div", {
+            Object(o.jsxs)("div", {
               className: "row pb-3",
               children: [
-                Object(c.jsx)("div", {
+                Object(o.jsx)("div", {
                   className: "col",
-                  children: Object(c.jsx)("h3", {
+                  children: Object(o.jsx)("h3", {
                     className: "text-dark",
                     children: t,
                   }),
                 }),
                 n
-                  ? Object(c.jsx)("div", {
+                  ? Object(o.jsx)("div", {
                       className: "col text-right",
                       children: n.map(function (e, t) {
                         var n = e.title,
-                          o = Object(a.a)(e, ["title"]);
+                          c = Object(a.a)(e, ["title"]);
                         return Object(i.createElement)(
                           "button",
-                          Object(r.a)(Object(r.a)({}, o), {}, { key: t }),
+                          Object(r.a)(Object(r.a)({}, c), {}, { key: t }),
                           n
                         );
                       }),
                     })
                   : s &&
-                    Object(c.jsx)("div", {
+                    Object(o.jsx)("div", {
                       className: "col text-right",
-                      children: o.a.createElement(s),
+                      children: c.a.createElement(s),
                     }),
               ],
             }),
@@ -2359,7 +2438,7 @@
           n = e.size,
           a = void 0 === n ? 3 : n,
           i = e.limit,
-          o = e.children;
+          c = e.children;
         return (function (e) {
           for (
             var t =
@@ -2383,7 +2462,7 @@
                   "div",
                   {
                     className: "col-".concat(Math.ceil(12 / a)),
-                    children: o(e),
+                    children: c(e),
                   },
                   t
                 );
@@ -2394,13 +2473,13 @@
         });
       };
     },
-    8: function (e, t, n) {
+    7: function (e, t, n) {
       "use strict";
       n.d(t, "a", function () {
-        return o;
+        return c;
       }),
         n.d(t, "b", function () {
-          return c;
+          return o;
         });
       var r = n(28),
         a = "SET_NOTIFICATION",
@@ -2408,10 +2487,10 @@
           var t = "Ocurri\xf3 un error";
           return e && e.length && (t = e), t;
         },
-        o = {
+        c = {
           setNotificationField: function (e, t) {
             return function (n) {
-              n(c.actions.setNotificationField({ type: a, field: e, data: t }));
+              n(o.actions.setNotificationField({ type: a, field: e, data: t }));
             };
           },
           setNotification: function (e) {
@@ -2421,7 +2500,7 @@
                 : "success";
             return function (n) {
               n(
-                c.actions.setNotification({
+                o.actions.setNotification({
                   type: a,
                   message: i(e),
                   variant: t,
@@ -2430,7 +2509,7 @@
             };
           },
         },
-        c = Object(r.b)({
+        o = Object(r.b)({
           name: "Notification",
           initialState: { open: !1, message: "", variant: "success" },
           reducers: {
@@ -2449,48 +2528,283 @@
           },
         });
     },
-    85: function (e, t, n) {
+    84: function (e, t, n) {
       "use strict";
       n.d(t, "a", function () {
-        return p;
+        return T;
       }),
         n.d(t, "b", function () {
-          return b;
+          return k;
         });
-      var r = n(11),
-        a = n(7),
+      var r = n(12),
+        a = n(5),
         i = n.n(a),
-        o = n(16),
-        c = n(28),
-        s = n(8),
-        u = n(55),
-        l = n(39),
-        d = "SET_LIST",
-        h = function () {
-          return function (e, t) {
-            var n = t().auth.user.ID;
-            return u
-              .d(void 0, t().auth.authToken)
-              .then(function (t) {
-                e(
-                  b.actions.setList({
-                    type: d,
-                    list: t.filter(function (e) {
-                      return e.TeacherID === n;
-                    }),
+        c = n(11),
+        o = n(28),
+        s = n(7),
+        u = n(9),
+        l = n(18),
+        f = n(40),
+        d = f.a + "/GetAllHCN",
+        h = f.a + "/AddHCN",
+        p = f.a + "/RemoveHCN";
+      function m(e, t) {
+        return new Promise(function (n, r) {
+          Object(u.a)({
+            path: "/HCN/GetAllHCN" + Object(l.c)(e),
+            method: "GET",
+            headers: new Headers({ Token: t }),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              return e.json();
+            })
+            .then(function (e) {
+              return n(e);
+            })
+            .catch(function (e) {
+              return r(e.message);
+            });
+        });
+      }
+      function b(e, t) {
+        return new Promise(function (n, r) {
+          Object(u.a)({
+            path: d + Object(l.c)(e),
+            method: "GET",
+            headers: new Headers({ Token: t }),
+          })
+            .then(
+              (function () {
+                var e = Object(c.a)(
+                  i.a.mark(function e(t) {
+                    var n;
+                    return i.a.wrap(
+                      function (e) {
+                        for (;;)
+                          switch ((e.prev = e.next)) {
+                            case 0:
+                              if (t.ok) {
+                                e.next = 2;
+                                break;
+                              }
+                              throw new Error(t.status);
+                            case 2:
+                              return (e.prev = 2), (e.next = 5), t.json();
+                            case 5:
+                              return (n = e.sent), e.abrupt("return", n);
+                            case 9:
+                              return (
+                                (e.prev = 9),
+                                (e.t0 = e.catch(2)),
+                                e.abrupt("return", [])
+                              );
+                            case 12:
+                            case "end":
+                              return e.stop();
+                          }
+                      },
+                      e,
+                      null,
+                      [[2, 9]]
+                    );
                   })
                 );
+                return function (t) {
+                  return e.apply(this, arguments);
+                };
+              })()
+            )
+            .then(function (e) {
+              return n(e);
+            })
+            .catch(function (e) {
+              return r(e.message);
+            });
+        });
+      }
+      function j(e, t) {
+        return new Promise(function (n, r) {
+          Object(u.a)({
+            path: h,
+            method: "POST",
+            headers: new Headers({ Token: t }),
+            body: JSON.stringify({
+              HCNID: e.HCNID,
+              CourseID: e.CourseID,
+              Displayable: 1,
+            }),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              return "It works!";
+            })
+            .then(function (e) {
+              return n(e);
+            })
+            .catch(function (e) {
+              return r(e.message);
+            });
+        });
+      }
+      function v(e, t) {
+        return new Promise(function (n, r) {
+          Object(u.a)({
+            path: "/HCN/CreateHCNMongo",
+            method: "POST",
+            headers: new Headers({ Token: t }),
+            body: JSON.stringify(e),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              return e.json();
+            })
+            .then(function (e) {
+              return n(e);
+            })
+            .catch(function (e) {
+              return r(e.message);
+            });
+        });
+      }
+      function O(e, t) {
+        return (
+          console.log(e),
+          new Promise(function (n, r) {
+            Object(u.a)({
+              path: "/HCN/UpdateHCNMongo",
+              method: "PUT",
+              headers: new Headers({ Token: t }),
+              body: JSON.stringify(e),
+            })
+              .then(function (e) {
+                if (!e.ok) throw new Error(e.status);
+                n(e);
               })
-              .catch(function (t) {
-                console.log(t),
-                  e(s.a.setNotification(t.message, "error")),
-                  e(b.actions.setList({ type: d, list: l.c }));
+              .catch(function (e) {
+                return r(e.message);
               });
-          };
-        },
-        f = function () {
+          })
+        );
+      }
+      function C(e, t) {
+        return new Promise(function (n, r) {
+          Object(u.a)({
+            path: "/HCN/GetHCNMongo" + Object(l.c)(e),
+            method: "GET",
+            headers: new Headers({ Token: t }),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              return e.json();
+            })
+            .then(function (e) {
+              return n(e);
+            })
+            .catch(function (e) {
+              return r(e.message);
+            });
+        });
+      }
+      function x(e, t) {
+        return new Promise(function (n, r) {
+          Object(u.a)({
+            path: "/SolvedHCN/UpdateSolvedHCN",
+            method: "PUT",
+            headers: new Headers({ Token: t }),
+            body: JSON.stringify(e),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              n(e);
+            })
+            .catch(function (e) {
+              return r(e.message);
+            });
+        });
+      }
+      function y(e, t) {
+        return new Promise(function (n, r) {
+          Object(u.a)({
+            path: "/HCN/DeleteHCN",
+            method: "DELETE",
+            headers: new Headers({ Token: t }),
+            body: JSON.stringify({ ID: e.ID }),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              n(e);
+            })
+            .catch(function (e) {
+              return r(e.message);
+            });
+        });
+      }
+      function D(e, t) {
+        return new Promise(function (n, r) {
+          Object(u.a)({
+            path: p,
+            method: "DELETE",
+            headers: new Headers({ Token: t }),
+            body: JSON.stringify({ ID: e.ID }),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              n(e);
+            })
+            .catch(function (e) {
+              return r(e.message);
+            });
+        });
+      }
+      var g = n(39),
+        w = "SET_LIST",
+        N = function () {
           return (function () {
-            var e = Object(o.a)(
+            var e = Object(c.a)(
+              i.a.mark(function e(t, n) {
+                var r;
+                return i.a.wrap(function (e) {
+                  for (;;)
+                    switch ((e.prev = e.next)) {
+                      case 0:
+                        return (
+                          (r = n().auth.user.ID),
+                          e.abrupt(
+                            "return",
+                            m(void 0, n().auth.authToken)
+                              .then(function (e) {
+                                t(
+                                  k.actions.setList({
+                                    type: w,
+                                    list: e.filter(function (e) {
+                                      return e.TeacherID === r;
+                                    }),
+                                  })
+                                );
+                              })
+                              .catch(function (e) {
+                                console.log(e),
+                                  t(s.a.setNotification(e.message, "error")),
+                                  t(k.actions.setList({ type: w, list: g.e }));
+                              })
+                          )
+                        );
+                      case 2:
+                      case "end":
+                        return e.stop();
+                    }
+                }, e);
+              })
+            );
+            return function (t, n) {
+              return e.apply(this, arguments);
+            };
+          })();
+        },
+        I = function () {
+          return (function () {
+            var e = Object(c.a)(
               i.a.mark(function e(t, n) {
                 var r;
                 return i.a.wrap(function (e) {
@@ -2501,11 +2815,462 @@
                           (r = n().courses.currentCourse.id),
                           e.abrupt(
                             "return",
+                            b({ CourseID: r }, n().auth.authToken)
+                              .then(function (e) {
+                                t(
+                                  k.actions.setListByCourse({
+                                    type: w,
+                                    list: null !== e && void 0 !== e ? e : [],
+                                  })
+                                );
+                              })
+                              .catch(function (e) {
+                                console.log(e),
+                                  t(s.a.setNotification(e.message, "error"));
+                              })
+                          )
+                        );
+                      case 2:
+                      case "end":
+                        return e.stop();
+                    }
+                }, e);
+              })
+            );
+            return function (t, n) {
+              return e.apply(this, arguments);
+            };
+          })();
+        },
+        T = {
+          getHcnList: N,
+          getHcnListByCourse: I,
+          getHcn: function (e) {
+            return (function () {
+              var t = Object(c.a)(
+                i.a.mark(function t(n, r) {
+                  return i.a.wrap(function (t) {
+                    for (;;)
+                      switch ((t.prev = t.next)) {
+                        case 0:
+                          return t.abrupt(
+                            "return",
+                            C(e, r().auth.authToken).catch(function (e) {
+                              console.log(e),
+                                n(s.a.setNotification(e.message, "error"));
+                            })
+                          );
+                        case 1:
+                        case "end":
+                          return t.stop();
+                      }
+                  }, t);
+                })
+              );
+              return function (e, n) {
+                return t.apply(this, arguments);
+              };
+            })();
+          },
+          createHcn: function (e) {
+            return (function () {
+              var t = Object(c.a)(
+                i.a.mark(function t(n, a) {
+                  var c;
+                  return i.a.wrap(function (t) {
+                    for (;;)
+                      switch ((t.prev = t.next)) {
+                        case 0:
+                          return (
+                            (c = a().auth.user.ID),
+                            t.abrupt(
+                              "return",
+                              v(
+                                Object(r.a)(
+                                  Object(r.a)({}, e),
+                                  {},
+                                  { TeacherID: c }
+                                ),
+                                a().auth.authToken
+                              )
+                                .then(function () {
+                                  n(
+                                    s.a.setNotification(
+                                      "HCN creada exitosamente"
+                                    )
+                                  ),
+                                    n(N());
+                                })
+                                .catch(function (e) {
+                                  console.log(e),
+                                    n(s.a.setNotification(e.message, "error"));
+                                })
+                            )
+                          );
+                        case 2:
+                        case "end":
+                          return t.stop();
+                      }
+                  }, t);
+                })
+              );
+              return function (e, n) {
+                return t.apply(this, arguments);
+              };
+            })();
+          },
+          updateHcn: function (e) {
+            return (function () {
+              var t = Object(c.a)(
+                i.a.mark(function t(n, r) {
+                  return i.a.wrap(function (t) {
+                    for (;;)
+                      switch ((t.prev = t.next)) {
+                        case 0:
+                          return t.abrupt(
+                            "return",
+                            O(e, r().auth.authToken)
+                              .then(function () {
+                                n(
+                                  s.a.setNotification(
+                                    "HCN actualizada exitosamente"
+                                  )
+                                );
+                              })
+                              .catch(function (e) {
+                                console.log(e),
+                                  n(s.a.setNotification(e.message, "error"));
+                              })
+                          );
+                        case 1:
+                        case "end":
+                          return t.stop();
+                      }
+                  }, t);
+                })
+              );
+              return function (e, n) {
+                return t.apply(this, arguments);
+              };
+            })();
+          },
+          updateFeedbackHcn: function (e, t) {
+            return (function () {
+              var n = Object(c.a)(
+                i.a.mark(function n(r, a) {
+                  var c;
+                  return i.a.wrap(function (n) {
+                    for (;;)
+                      switch ((n.prev = n.next)) {
+                        case 0:
+                          return (
+                            (c = a().auth.authToken),
+                            n.abrupt(
+                              "return",
+                              O(e, c)
+                                .then(function () {
+                                  if (t.Reviewed)
+                                    return x(
+                                      {
+                                        ActivityID: t.ActivityID,
+                                        Solver: t.Solver,
+                                        Reviewed: 0,
+                                      },
+                                      c
+                                    );
+                                })
+                                .then(function () {
+                                  r(
+                                    s.a.setNotification(
+                                      "HCN actualizada exitosamente"
+                                    )
+                                  );
+                                })
+                                .catch(function (e) {
+                                  console.log(e),
+                                    r(s.a.setNotification(e.message, "error"));
+                                })
+                            )
+                          );
+                        case 2:
+                        case "end":
+                          return n.stop();
+                      }
+                  }, n);
+                })
+              );
+              return function (e, t) {
+                return n.apply(this, arguments);
+              };
+            })();
+          },
+          addHcnToCourse: function (e) {
+            return (function () {
+              var t = Object(c.a)(
+                i.a.mark(function t(n, r) {
+                  var a;
+                  return i.a.wrap(function (t) {
+                    for (;;)
+                      switch ((t.prev = t.next)) {
+                        case 0:
+                          return (
+                            (a = r().courses.currentCourse.id),
+                            t.abrupt(
+                              "return",
+                              j({ HCNID: e, CourseID: a }, r().auth.authToken)
+                                .then(function () {
+                                  n(
+                                    s.a.setNotification(
+                                      "HCN a\xf1adida exitosamente"
+                                    )
+                                  ),
+                                    n(I());
+                                })
+                                .catch(function (e) {
+                                  console.log(e),
+                                    n(s.a.setNotification(e.message, "error"));
+                                })
+                            )
+                          );
+                        case 2:
+                        case "end":
+                          return t.stop();
+                      }
+                  }, t);
+                })
+              );
+              return function (e, n) {
+                return t.apply(this, arguments);
+              };
+            })();
+          },
+          feedbackHcn: function (e) {
+            return (function () {
+              var t = Object(c.a)(
+                i.a.mark(function t(n, r) {
+                  var a;
+                  return i.a.wrap(function (t) {
+                    for (;;)
+                      switch ((t.prev = t.next)) {
+                        case 0:
+                          return (
+                            (a = r().auth.authToken),
+                            t.abrupt(
+                              "return",
+                              x(
+                                {
+                                  ActivityID: e.ActivityID,
+                                  Solver: e.Solver,
+                                  Reviewed: 1,
+                                },
+                                a
+                              )
+                                .then(function () {
+                                  n(
+                                    s.a.setNotification(
+                                      "HCN calificada exitosamente"
+                                    )
+                                  );
+                                })
+                                .catch(function (e) {
+                                  console.log(e),
+                                    n(s.a.setNotification(e.message, "error"));
+                                })
+                            )
+                          );
+                        case 2:
+                        case "end":
+                          return t.stop();
+                      }
+                  }, t);
+                })
+              );
+              return function (e, n) {
+                return t.apply(this, arguments);
+              };
+            })();
+          },
+          deleteHcn: function (e) {
+            return (function () {
+              var t = Object(c.a)(
+                i.a.mark(function t(n, r) {
+                  var a;
+                  return i.a.wrap(function (t) {
+                    for (;;)
+                      switch ((t.prev = t.next)) {
+                        case 0:
+                          return (
+                            (a = r().auth.authToken),
+                            t.abrupt(
+                              "return",
+                              y({ ID: e }, a)
+                                .then(function () {
+                                  n(
+                                    s.a.setNotification(
+                                      "HCN eliminada exitosamente"
+                                    )
+                                  );
+                                })
+                                .catch(function (e) {
+                                  console.log(e),
+                                    n(s.a.setNotification(e.message, "error"));
+                                })
+                            )
+                          );
+                        case 2:
+                        case "end":
+                          return t.stop();
+                      }
+                  }, t);
+                })
+              );
+              return function (e, n) {
+                return t.apply(this, arguments);
+              };
+            })();
+          },
+          removeHcn: function (e) {
+            return (function () {
+              var t = Object(c.a)(
+                i.a.mark(function t(n, r) {
+                  var a;
+                  return i.a.wrap(function (t) {
+                    for (;;)
+                      switch ((t.prev = t.next)) {
+                        case 0:
+                          return (
+                            (a = r().auth.authToken),
+                            t.abrupt(
+                              "return",
+                              D({ ID: e }, a)
+                                .then(function () {
+                                  n(
+                                    s.a.setNotification(
+                                      "HCN removida exitosamente"
+                                    )
+                                  );
+                                })
+                                .catch(function (e) {
+                                  console.log(e),
+                                    n(s.a.setNotification(e.message, "error"));
+                                })
+                            )
+                          );
+                        case 2:
+                        case "end":
+                          return t.stop();
+                      }
+                  }, t);
+                })
+              );
+              return function (e, n) {
+                return t.apply(this, arguments);
+              };
+            })();
+          },
+        },
+        k = Object(o.b)({
+          name: "hcn",
+          initialState: { hcnList: [], hcnListByCourse: [], hcnObject: {} },
+          reducers: {
+            setList: function (e, t) {
+              var n = t.payload.list;
+              (e.hcnList = n),
+                n.forEach(function (t) {
+                  e.hcnObject[t.ID] = t;
+                });
+            },
+            setListByCourse: function (e, t) {
+              var n = t.payload.list;
+              e.hcnListByCourse = n;
+            },
+            addListByCourse: function (e, t) {
+              var n = t.payload.value;
+              e.hcnListByCourse.push(n);
+            },
+          },
+        });
+    },
+    86: function (e, t, n) {
+      "use strict";
+      n.d(t, "a", function () {
+        return m;
+      }),
+        n.d(t, "b", function () {
+          return b;
+        });
+      var r = n(12),
+        a = n(5),
+        i = n.n(a),
+        c = n(11),
+        o = n(28),
+        s = n(7),
+        u = n(55),
+        l = n(39),
+        f = "SET_LIST",
+        d = function () {
+          return (function () {
+            var e = Object(c.a)(
+              i.a.mark(function e(t, n) {
+                var r;
+                return i.a.wrap(function (e) {
+                  for (;;)
+                    switch ((e.prev = e.next)) {
+                      case 0:
+                        return (
+                          (r = n().auth.user.ID),
+                          e.abrupt(
+                            "return",
                             u
-                              .e({ id: r }, n().auth.authToken)
+                              .d(void 0, n().auth.authToken)
+                              .then(function (e) {
+                                t(
+                                  b.actions.setList({
+                                    type: f,
+                                    list: e.filter(function (e) {
+                                      return e.TeacherID === r;
+                                    }),
+                                  })
+                                );
+                              })
+                              .catch(function (e) {
+                                console.log(e),
+                                  t(s.a.setNotification(e.message, "error")),
+                                  t(b.actions.setList({ type: f, list: l.c }));
+                              })
+                          )
+                        );
+                      case 2:
+                      case "end":
+                        return e.stop();
+                    }
+                }, e);
+              })
+            );
+            return function (t, n) {
+              return e.apply(this, arguments);
+            };
+          })();
+        },
+        h = function () {
+          return (function () {
+            var e = Object(c.a)(
+              i.a.mark(function e(t, n) {
+                var r, a;
+                return i.a.wrap(function (e) {
+                  for (;;)
+                    switch ((e.prev = e.next)) {
+                      case 0:
+                        return (
+                          (r = n().courses.currentCourse.id),
+                          (a = n().auth.authToken),
+                          e.abrupt(
+                            "return",
+                            u
+                              .e({ CourseID: r }, a)
                               .then(
                                 (function () {
-                                  var e = Object(o.a)(
+                                  var e = Object(c.a)(
                                     i.a.mark(function e(n) {
                                       return i.a.wrap(function (e) {
                                         for (;;)
@@ -2514,7 +3279,7 @@
                                               return (
                                                 t(
                                                   b.actions.setListByCourse({
-                                                    type: d,
+                                                    type: f,
                                                     list: [],
                                                   })
                                                 ),
@@ -2522,7 +3287,7 @@
                                                 Promise.all(
                                                   n.map(
                                                     (function () {
-                                                      var e = Object(o.a)(
+                                                      var e = Object(c.a)(
                                                         i.a.mark(function e(n) {
                                                           var r;
                                                           return i.a.wrap(
@@ -2535,10 +3300,13 @@
                                                                   case 0:
                                                                     return (
                                                                       (e.next = 2),
-                                                                      u.f({
-                                                                        id:
-                                                                          n.ClinicalCaseID,
-                                                                      })
+                                                                      u.f(
+                                                                        {
+                                                                          ID:
+                                                                            n.ClinicalCaseID,
+                                                                        },
+                                                                        a
+                                                                      )
                                                                     );
                                                                   case 2:
                                                                     (r =
@@ -2546,7 +3314,7 @@
                                                                       t(
                                                                         b.actions.addListByCourse(
                                                                           {
-                                                                            type: d,
+                                                                            type: f,
                                                                             value: r,
                                                                           }
                                                                         )
@@ -2587,7 +3355,7 @@
                                   t(s.a.setNotification(e.message, "error")),
                                   t(
                                     b.actions.sortListByCourse({
-                                      type: d,
+                                      type: f,
                                       sort_by: function (e, t) {
                                         return (
                                           new Date(t.CreationDate) -
@@ -2599,7 +3367,7 @@
                               })
                           )
                         );
-                      case 2:
+                      case 3:
                       case "end":
                         return e.stop();
                     }
@@ -2611,26 +3379,56 @@
             };
           })();
         },
-        m = function (e) {
-          return function (t, n) {
-            var r = n().courses.currentCourse.id;
-            return u
-              .g({ ClinicalCaseID: e, CourseID: r }, n().auth.authToken)
-              .then(function () {
-                t(s.a.setNotification("Caso Cl\xednico removido exitosamente")),
-                  t(f());
+        p = function (e) {
+          return (function () {
+            var t = Object(c.a)(
+              i.a.mark(function t(n, r) {
+                var a;
+                return i.a.wrap(function (t) {
+                  for (;;)
+                    switch ((t.prev = t.next)) {
+                      case 0:
+                        return (
+                          (a = r().courses.currentCourse.id),
+                          t.abrupt(
+                            "return",
+                            u
+                              .g(
+                                { ClinicalCaseID: e, CourseID: a },
+                                r().auth.authToken
+                              )
+                              .then(function () {
+                                n(
+                                  s.a.setNotification(
+                                    "Caso Cl\xednico removido exitosamente"
+                                  )
+                                ),
+                                  n(h());
+                              })
+                              .catch(function (e) {
+                                console.log(e),
+                                  n(s.a.setNotification(e.message, "error"));
+                              })
+                          )
+                        );
+                      case 2:
+                      case "end":
+                        return t.stop();
+                    }
+                }, t);
               })
-              .catch(function (e) {
-                console.log(e), t(s.a.setNotification(e.message, "error"));
-              });
-          };
+            );
+            return function (e, n) {
+              return t.apply(this, arguments);
+            };
+          })();
         },
-        p = {
-          getCCasesListByCourse: f,
-          getCCasesList: h,
+        m = {
+          getCCasesListByCourse: h,
+          getCCasesList: d,
           addCCaseToCourse: function (e) {
             return (function () {
-              var t = Object(o.a)(
+              var t = Object(c.a)(
                 i.a.mark(function t(n, r) {
                   var a;
                   return i.a.wrap(function (t) {
@@ -2650,54 +3448,6 @@
                                   n(
                                     s.a.setNotification(
                                       "Caso Cl\xednico a\xf1adido exitosamente"
-                                    )
-                                  ),
-                                    n(f());
-                                })
-                                .catch(function (e) {
-                                  console.log(e),
-                                    n(s.a.setNotification(e.message, "error"));
-                                })
-                            )
-                          );
-                        case 2:
-                        case "end":
-                          return t.stop();
-                      }
-                  }, t);
-                })
-              );
-              return function (e, n) {
-                return t.apply(this, arguments);
-              };
-            })();
-          },
-          createCCase: function (e) {
-            return (function () {
-              var t = Object(o.a)(
-                i.a.mark(function t(n, a) {
-                  var o;
-                  return i.a.wrap(function (t) {
-                    for (;;)
-                      switch ((t.prev = t.next)) {
-                        case 0:
-                          return (
-                            (o = a().auth.user.ID),
-                            t.abrupt(
-                              "return",
-                              u
-                                .b(
-                                  Object(r.a)(
-                                    Object(r.a)({}, e),
-                                    {},
-                                    { TeacherID: o }
-                                  ),
-                                  a().auth.authToken
-                                )
-                                .then(function () {
-                                  n(
-                                    s.a.setNotification(
-                                      "Caso Cl\xednico creado exitosamente"
                                     )
                                   ),
                                     n(h());
@@ -2720,32 +3470,107 @@
               };
             })();
           },
-          updateCCase: function (e) {
-            return function (t, n) {
-              var a = n().auth.user.ID;
-              return u
-                .h(
-                  Object(r.a)(Object(r.a)({}, e), {}, { TeacherID: a }),
-                  n().auth.authToken
-                )
-                .then(function () {
-                  t(
-                    s.a.setNotification(
-                      "Caso Cl\xednico actualizado exitosamente"
-                    )
-                  ),
-                    t(h()),
-                    t(f());
+          createCCase: function (e) {
+            return (function () {
+              var t = Object(c.a)(
+                i.a.mark(function t(n, a) {
+                  var c;
+                  return i.a.wrap(function (t) {
+                    for (;;)
+                      switch ((t.prev = t.next)) {
+                        case 0:
+                          return (
+                            (c = a().auth.user.ID),
+                            t.abrupt(
+                              "return",
+                              u
+                                .b(
+                                  Object(r.a)(
+                                    Object(r.a)({}, e),
+                                    {},
+                                    { TeacherID: c }
+                                  ),
+                                  a().auth.authToken
+                                )
+                                .then(function () {
+                                  n(
+                                    s.a.setNotification(
+                                      "Caso Cl\xednico creado exitosamente"
+                                    )
+                                  ),
+                                    n(d());
+                                })
+                                .catch(function (e) {
+                                  console.log(e),
+                                    n(s.a.setNotification(e.message, "error"));
+                                })
+                            )
+                          );
+                        case 2:
+                        case "end":
+                          return t.stop();
+                      }
+                  }, t);
                 })
-                .catch(function (e) {
-                  console.log(e), t(s.a.setNotification(e.message, "error"));
-                });
-            };
+              );
+              return function (e, n) {
+                return t.apply(this, arguments);
+              };
+            })();
           },
-          removeCCase: m,
+          updateCCase: function (e) {
+            return (function () {
+              var t = Object(c.a)(
+                i.a.mark(function t(n, a) {
+                  var c;
+                  return i.a.wrap(function (t) {
+                    for (;;)
+                      switch ((t.prev = t.next)) {
+                        case 0:
+                          return (
+                            (c = a().auth.user.ID),
+                            t.abrupt(
+                              "return",
+                              u
+                                .h(
+                                  Object(r.a)(
+                                    Object(r.a)({}, e),
+                                    {},
+                                    { TeacherID: c }
+                                  ),
+                                  a().auth.authToken
+                                )
+                                .then(function () {
+                                  n(
+                                    s.a.setNotification(
+                                      "Caso Cl\xednico actualizado exitosamente"
+                                    )
+                                  ),
+                                    n(d()),
+                                    n(h());
+                                })
+                                .catch(function (e) {
+                                  console.log(e),
+                                    n(s.a.setNotification(e.message, "error"));
+                                })
+                            )
+                          );
+                        case 2:
+                        case "end":
+                          return t.stop();
+                      }
+                  }, t);
+                })
+              );
+              return function (e, n) {
+                return t.apply(this, arguments);
+              };
+            })();
+          },
+          removeCCase: p,
           deleteCCaseByCourse: function (e) {
             return function (t, n) {
-              return t(m(e))
+              return t(p(e))
                 .then(function () {
                   return u.c({ ID: e }, n().auth.authToken);
                 })
@@ -2755,8 +3580,8 @@
                       "Caso Cl\xednico eliminado exitosamente"
                     )
                   ),
-                    t(h()),
-                    t(f());
+                    t(d()),
+                    t(h());
                 })
                 .catch(function (e) {
                   console.log(e), t(s.a.setNotification(e.message, "error"));
@@ -2764,7 +3589,7 @@
             };
           },
         },
-        b = Object(c.b)({
+        b = Object(o.b)({
           name: "clinical-cases",
           initialState: { ccasesList: [], ccasesListByCourse: [] },
           reducers: {
@@ -2787,412 +3612,35 @@
           },
         });
     },
-    87: function (e, t, n) {
+    9: function (e, t, n) {
       "use strict";
-      n.d(t, "a", function () {
-        return y;
-      }),
-        n.d(t, "b", function () {
-          return D;
-        });
-      var r = n(11),
-        a = n(7),
-        i = n.n(a),
-        o = n(16),
-        c = n(28),
-        s = n(8),
-        u = n(10),
-        l = n(18),
-        d = n(44),
-        h = d.a + "/GetAllHCN",
-        f = d.a + "/AddHCN";
-      function m(e, t) {
-        return new Promise(function (n, r) {
-          Object(u.a)({
-            path: "/HCN/GetAllHCN" + Object(l.c)(e),
-            method: "GET",
-            headers: new Headers({ Token: t }),
-          })
-            .then(function (e) {
-              if (!e.ok) throw new Error(e.status);
-              return e.json();
-            })
-            .then(function (e) {
-              return n(e);
-            })
-            .catch(function (e) {
-              return r(e.message);
-            });
-        });
-      }
-      function p(e, t) {
-        return new Promise(function (n, r) {
-          Object(u.a)({
-            path: h + Object(l.c)(e),
-            method: "GET",
-            headers: new Headers({ Token: t }),
-          })
-            .then(function (e) {
-              if (!e.ok) throw new Error(e.status);
-              return e.json();
-            })
-            .then(function (e) {
-              return n(e);
-            })
-            .catch(function (e) {
-              return r(e.message);
-            });
-        });
-      }
-      function b(e, t) {
-        return new Promise(function (n, r) {
-          Object(u.a)({
-            path: f,
-            method: "POST",
-            headers: new Headers({ Token: t }),
-            body: JSON.stringify({
-              HCNID: e.HCNID,
-              CourseID: e.CourseID,
-              Displayable: 1,
-            }),
-          })
-            .then(function (e) {
-              if (!e.ok) throw new Error(e.status);
-              return "It works!";
-            })
-            .then(function (e) {
-              return n(e);
-            })
-            .catch(function (e) {
-              return r(e.message);
-            });
-        });
-      }
-      function j(e, t) {
-        return new Promise(function (n, r) {
-          Object(u.a)({
-            path: "/HCN/CreateHCNMongo",
-            method: "POST",
-            headers: new Headers({ Token: t }),
-            body: JSON.stringify(e),
-          })
-            .then(function (e) {
-              if (!e.ok) throw new Error(e.status);
-              return e.json();
-            })
-            .then(function (e) {
-              return n(e);
-            })
-            .catch(function (e) {
-              return r(e.message);
-            });
-        });
-      }
-      function O(e, t) {
-        return new Promise(function (n, r) {
-          Object(u.a)({
-            path: "/HCN/UpdateHCNMongo",
-            method: "POST",
-            headers: new Headers({ Token: t }),
-            body: JSON.stringify(e),
-          })
-            .then(function (e) {
-              if (!e.ok) throw new Error(e.status);
-              return e.json();
-            })
-            .then(function (e) {
-              return n(e);
-            })
-            .catch(function (e) {
-              return r(e.message);
-            });
-        });
-      }
-      function v(e, t) {
-        return new Promise(function (n, r) {
-          Object(u.a)({
-            path: "/HCN/GetHCNMongo" + Object(l.c)(e),
-            method: "GET",
-            headers: new Headers({ Token: t }),
-          })
-            .then(function (e) {
-              if (!e.ok) throw new Error(e.status);
-              return e.json();
-            })
-            .then(function (e) {
-              return n(e);
-            })
-            .catch(function (e) {
-              return r(e.message);
-            });
-        });
-      }
-      n(40);
-      var C = n(39),
-        x = "SET_LIST",
-        g = function () {
-          return (function () {
-            var e = Object(o.a)(
-              i.a.mark(function e(t, n) {
-                var r;
-                return i.a.wrap(function (e) {
-                  for (;;)
-                    switch ((e.prev = e.next)) {
-                      case 0:
-                        return (
-                          (r = n().courses.currentCourse.id),
-                          e.abrupt(
-                            "return",
-                            p({ id: r }, n().auth.authToken)
-                              .then(function (e) {
-                                t(
-                                  D.actions.setListByCourse({
-                                    type: x,
-                                    list: null !== e && void 0 !== e ? e : [],
-                                  })
-                                );
-                              })
-                              .catch(function (e) {
-                                console.log(e),
-                                  t(s.a.setNotification(e.message, "error"));
-                              })
-                          )
-                        );
-                      case 2:
-                      case "end":
-                        return e.stop();
-                    }
-                }, e);
-              })
-            );
-            return function (t, n) {
-              return e.apply(this, arguments);
-            };
-          })();
-        },
-        y = {
-          getHcnList: function () {
-            return (function () {
-              var e = Object(o.a)(
-                i.a.mark(function e(t, n) {
-                  var r;
-                  return i.a.wrap(function (e) {
-                    for (;;)
-                      switch ((e.prev = e.next)) {
-                        case 0:
-                          return (
-                            (r = n().auth.user.ID),
-                            e.abrupt(
-                              "return",
-                              m(void 0, n().auth.authToken)
-                                .then(function (e) {
-                                  t(
-                                    D.actions.setList({
-                                      type: x,
-                                      list: e.filter(function (e) {
-                                        return e.TeacherID === r;
-                                      }),
-                                    })
-                                  );
-                                })
-                                .catch(function (e) {
-                                  console.log(e),
-                                    t(s.a.setNotification(e.message, "error")),
-                                    t(
-                                      D.actions.setList({ type: x, list: C.e })
-                                    );
-                                })
-                            )
-                          );
-                        case 2:
-                        case "end":
-                          return e.stop();
-                      }
-                  }, e);
-                })
-              );
-              return function (t, n) {
-                return e.apply(this, arguments);
-              };
-            })();
-          },
-          getHcnListByCourse: g,
-          getHcn: function (e) {
-            return (function () {
-              var t = Object(o.a)(
-                i.a.mark(function t(n, r) {
-                  return i.a.wrap(function (t) {
-                    for (;;)
-                      switch ((t.prev = t.next)) {
-                        case 0:
-                          return t.abrupt(
-                            "return",
-                            v(e, r().auth.authToken).catch(function (e) {
-                              console.log(e),
-                                n(s.a.setNotification(e.message, "error"));
-                            })
-                          );
-                        case 1:
-                        case "end":
-                          return t.stop();
-                      }
-                  }, t);
-                })
-              );
-              return function (e, n) {
-                return t.apply(this, arguments);
-              };
-            })();
-          },
-          createHcn: function (e) {
-            return (function () {
-              var t = Object(o.a)(
-                i.a.mark(function t(n, a) {
-                  var o;
-                  return i.a.wrap(function (t) {
-                    for (;;)
-                      switch ((t.prev = t.next)) {
-                        case 0:
-                          return (
-                            (o = a().auth.user.ID),
-                            t.abrupt(
-                              "return",
-                              j(
-                                Object(r.a)(
-                                  Object(r.a)({}, e),
-                                  {},
-                                  { TeacherID: o }
-                                ),
-                                a().auth.authToken
-                              )
-                                .then(function () {
-                                  s.a.setNotification(
-                                    "HCN creada exitosamente"
-                                  ),
-                                    n(g());
-                                })
-                                .catch(function (e) {
-                                  console.log(e),
-                                    n(s.a.setNotification(e.message, "error"));
-                                })
-                            )
-                          );
-                        case 2:
-                        case "end":
-                          return t.stop();
-                      }
-                  }, t);
-                })
-              );
-              return function (e, n) {
-                return t.apply(this, arguments);
-              };
-            })();
-          },
-          updateHcn: function (e) {
-            return (function () {
-              var t = Object(o.a)(
-                i.a.mark(function t(n, a) {
-                  var o;
-                  return i.a.wrap(function (t) {
-                    for (;;)
-                      switch ((t.prev = t.next)) {
-                        case 0:
-                          return (
-                            (o = a().auth.user.ID),
-                            t.abrupt(
-                              "return",
-                              O(
-                                Object(r.a)(
-                                  Object(r.a)({}, e),
-                                  {},
-                                  { TeacherID: o }
-                                ),
-                                a().auth.authToken
-                              )
-                                .then(function () {
-                                  s.a.setNotification(
-                                    "HCN actualizada exitosamente"
-                                  ),
-                                    n(g());
-                                })
-                                .catch(function (e) {
-                                  console.log(e),
-                                    n(s.a.setNotification(e.message, "error"));
-                                })
-                            )
-                          );
-                        case 2:
-                        case "end":
-                          return t.stop();
-                      }
-                  }, t);
-                })
-              );
-              return function (e, n) {
-                return t.apply(this, arguments);
-              };
-            })();
-          },
-          addHcnToCourse: function (e) {
-            return (function () {
-              var t = Object(o.a)(
-                i.a.mark(function t(n, r) {
-                  var a;
-                  return i.a.wrap(function (t) {
-                    for (;;)
-                      switch ((t.prev = t.next)) {
-                        case 0:
-                          return (
-                            (a = r().courses.currentCourse.id),
-                            t.abrupt(
-                              "return",
-                              b({ HCNID: e, CourseID: a }, r().auth.authToken)
-                                .then(function () {
-                                  s.a.setNotification(
-                                    "HCN a\xf1adida exitosamente"
-                                  ),
-                                    n(g());
-                                })
-                                .catch(function (e) {
-                                  console.log(e),
-                                    n(s.a.setNotification(e.message, "error"));
-                                })
-                            )
-                          );
-                        case 2:
-                        case "end":
-                          return t.stop();
-                      }
-                  }, t);
-                })
-              );
-              return function (e, n) {
-                return t.apply(this, arguments);
-              };
-            })();
-          },
-        },
-        D = Object(c.b)({
-          name: "hcn",
-          initialState: { hcnList: [], hcnListByCourse: [] },
-          reducers: {
-            setList: function (e, t) {
-              var n = t.payload.list;
-              e.hcnList = n;
-            },
-            setListByCourse: function (e, t) {
-              var n = t.payload.list;
-              e.hcnListByCourse = n;
-            },
-            addListByCourse: function (e, t) {
-              var n = t.payload.value;
-              e.hcnListByCourse.push(n);
-            },
-          },
-        });
+      var r = n(12),
+        a = n(10),
+        i = n(18);
+      t.a = function (e) {
+        var t = e.path,
+          n = e.method,
+          c = e.headers,
+          o = Object(a.a)(e, ["path", "method", "headers"]),
+          s = new AbortController(),
+          u =
+            (setTimeout(function () {
+              return s.abort();
+            }, 4e3),
+            Object(r.a)(
+              {
+                method: n,
+                headers: null !== c && void 0 !== c ? c : new Headers(),
+                timeout: 4e3,
+                signal: s.signal,
+              },
+              o
+            )),
+          l = new Request(i.a + t, u);
+        return fetch(l);
+      };
     },
   },
   [[296, 1, 2]],
 ]);
-//# sourceMappingURL=main.43722947.chunk.js.map
+//# sourceMappingURL=main.1530e9eb.chunk.js.map

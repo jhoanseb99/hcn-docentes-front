@@ -29,10 +29,7 @@ function CreateHcnPage() {
             />
           )}
         >
-          <HcnForm
-            handleSubmit={saveHCN}
-            handleReturn={() => history.push("/courses/hcn")}
-          />
+          <HcnForm handleSubmit={saveHCN} />
         </BaseSection>
       </div>
     </div>

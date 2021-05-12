@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Tab from "react-bootstrap/Tab";
@@ -68,12 +69,13 @@ const jsonToInputs = (data) => {
 function HcnForm(props) {
   const {
     handleSubmit,
-    handleReturn,
     data,
     isFeedback = false,
     feedbackHCN,
+    wadReviewed,
   } = props;
 
+  const history = useHistory();
   const [displayFields, setDisplayFields] = React.useState(getDisplayObject());
 
   const hcnSchema = Yup.object().shape({
@@ -103,6 +105,8 @@ function HcnForm(props) {
       },
     });
   };
+
+  console.log(formik);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -209,12 +213,17 @@ function HcnForm(props) {
         <button
           type="button"
           className="btn btn-success ml-2"
+          disabled={wadReviewed}
           onClick={feedbackHCN}
         >
           Calificar
         </button>
       )}
-      <button className="btn btn-secondary ml-2" onClick={handleReturn}>
+      <button
+        type="button"
+        className="btn btn-secondary ml-2"
+        onClick={() => history.goBack()}
+      >
         Volver
       </button>
     </form>

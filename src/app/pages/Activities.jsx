@@ -26,7 +26,7 @@ export default function Activities() {
   }, [dispatch]);
 
   const dispatchDelete = ({ ID }) => {
-    dispatch(actions.deleteActivity(ID));
+    dispatch(actions.deleteActivity(ID)).then(() => setConfirmDelete(false));
   };
 
   const handleDelete = (values) => {
@@ -50,7 +50,7 @@ export default function Activities() {
         {
           className: "btn btn-primary btn-circle font-weight-bolder",
           onClick: () => setOpenCreateDialog(true),
-          title: "+",
+          title: "Crear actividad",
         },
       ]}
       style={{ backgroundColor: "#f3f6f9" }}

@@ -39,12 +39,15 @@ function CCasesPage() {
     setOpenUpdateDialog(true);
   };
 
+  const closeDeleteModal = () =>
+    setConfirmDelete((prevState) => ({ ...prevState, value: false }));
+
   const dispatchDelete = ({ ID }) => {
-    dispatch(actions.deleteCCaseByCourse(ID));
+    dispatch(actions.deleteCCaseByCourse(ID)).then(() => closeDeleteModal());
   };
 
   const dispatchRemove = ({ ID }) => {
-    dispatch(actions.removeCCase(ID));
+    dispatch(actions.removeCCase(ID)).then(() => closeDeleteModal());
   };
 
   const handleDelete = (values, func) => {
@@ -62,7 +65,7 @@ function CCasesPage() {
           onClick: () => setOpenAddDialog(true),
         },
         {
-          title: "+",
+          title: "Crear caso clínico",
           className: "btn btn-primary btn-circle font-weight-bolder ml-2",
           onClick: () => setOpenCreateDialog(true),
         },

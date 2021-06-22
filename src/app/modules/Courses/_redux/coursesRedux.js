@@ -13,6 +13,7 @@ const initCoursesState = {
     data: {},
     announcementsList: [],
     activitiesList: [],
+    studentsList: [],
   },
 };
 
@@ -89,10 +90,30 @@ const getCourseData = (id) => async (dispatch, getState) => {
     });
 };
 
+const getAllStudentsCourse = () => async (dispatch, getState) => {
+  const CourseID = getState().courses.currentCourse.id;
+  return requestFromServer
+    .GetAllStudentsCourse({ ID: CourseID }, getState().auth.authToken)
+    .then((data) => {
+      console.log(data);
+      dispatch(
+        coursesSlice.actions.setCurrentCourse({
+          type: actionTypes.set_current_course,
+          field: "studentsList",
+          data,
+        })
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const actions = {
   setCurrentCourse,
   getCoursesList,
   getCourseData,
+  getAllStudentsCourse,
 };
 
 export const getters = {

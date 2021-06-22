@@ -8,24 +8,38 @@ const initCCasesState = {
   hcnList: [],
   hcnListByCourse: [],
   hcnObject: {},
+  progress: 0,
 };
 
 const actionTypes = {
   set_list: "SET_LIST",
   set_list_by_course: "SET_LIST_BY_COURSE",
+  set_progress: "SET_PROGRESS",
+};
+
+const setProgress = (value) => async (dispatch) => {
+  const action = { type: actionTypes.set_progress, value };
+  dispatch(hcnSlice.actions.setProgress(action));
 };
 
 const getHcnList = () => async (dispatch, getState) => {
   const userId = getState().auth.user.ID;
   return requestFromServer
     .getAllHcn(undefined, getState().auth.authToken)
-    .then((data) => {
-      dispatch(
-        hcnSlice.actions.setList({
-          type: actionTypes.set_list,
-          list: data.filter((value) => value.TeacherID === userId),
+    .then(async (data) => {
+      const list = data.filter((value) => value.TeacherID === userId);
+      await Promise.all(
+        list.map(async (value) => {
+          const hcn = await dispatch(getHcn({ id: value.MongoID }));
+          console.log(hcn);
+          const ans = { ...value };
+          if (hcn) ans.Title = hcn.PatientData.FullName;
+          dispatch(
+            hcnSlice.actions.addList({ type: actionTypes.set_list, value: ans })
+          );
         })
       );
+      //dispatch(hcnSlice.actions.setList({ type: actionTypes.set_list, list }));
     })
     .catch((err) => {
       console.log(err);
@@ -40,11 +54,27 @@ const getHcnListByCourse = () => async (dispatch, getState) => {
   const CourseID = getState().courses.currentCourse.id;
   return requestFromServer
     .getAllHcnByCourse({ CourseID }, getState().auth.authToken)
-    .then((data) => {
+    .then(async (data) => {
+      const list = data.filter((value) => value.Displayable) ?? [];
       dispatch(
         hcnSlice.actions.setListByCourse({
           type: actionTypes.set_list,
-          list: data.filter((value) => value.Displayable) ?? [],
+          list: [],
+        })
+      );
+      await Promise.all(
+        list.map(async (value) => {
+          const MongoID = getState().hcn.hcnObject[value.HCNID].MongoID;
+          const hcn = await dispatch(getHcn({ id: MongoID }));
+          console.log(hcn);
+          const ans = { ...value };
+          if (hcn) ans.Title = hcn.PatientData.FullName;
+          dispatch(
+            hcnSlice.actions.addListByCourse({
+              type: actionTypes.set_list,
+              value: ans,
+            })
+          );
         })
       );
     })
@@ -202,6 +232,7 @@ export const actions = {
   feedbackHcn,
   deleteHcn,
   removeHcn,
+  setProgress,
 };
 
 export const hcnSlice = createSlice({
@@ -215,6 +246,11 @@ export const hcnSlice = createSlice({
         state.hcnObject[element.ID] = element;
       });
     },
+    addList: (state, action) => {
+      const { value } = action.payload;
+      state.hcnList.push(value);
+      state.hcnObject[value.ID] = value;
+    },
     setListByCourse: (state, action) => {
       const { list } = action.payload;
       state.hcnListByCourse = list;
@@ -222,6 +258,10 @@ export const hcnSlice = createSlice({
     addListByCourse: (state, action) => {
       const { value } = action.payload;
       state.hcnListByCourse.push(value);
+    },
+    setProgress: (state, action) => {
+      const { value } = action.payload;
+      state.progress = value;
     },
   },
 });

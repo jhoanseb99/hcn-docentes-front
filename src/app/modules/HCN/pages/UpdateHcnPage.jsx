@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import { CircularProgress } from "@material-ui/core";
 import { actions as hcnRedux } from "../_redux/hcnRedux";
@@ -8,9 +8,10 @@ import HcnForm from "../components/HcnForm";
 
 function UpdateHcnPage(props) {
   const { id } = props.match.params;
+  const dispatch = useDispatch();
+  const { progress } = useSelector((state) => state.hcn);
   const [hcn_data, setHcnData] = React.useState({});
   const [loading, setLoading] = React.useState(false);
-  const dispatch = useDispatch();
 
   const updateHCN = (values) => {
     dispatch(hcnRedux.updateHcn({ ...values, _id: hcn_data._id }));
@@ -32,7 +33,7 @@ function UpdateHcnPage(props) {
           component={() => (
             <ProgressBar
               className="mb-3"
-              now={60}
+              now={progress}
               label={`Progreso de la hcn %`}
             />
           )}

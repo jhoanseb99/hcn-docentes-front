@@ -156,9 +156,9 @@ function ActivityForm(props) {
               {...formik.getFieldProps("HCNID")}
             >
               <option value="">Seleccionar</option>
-              {hcnList.map(({ ID }) => (
+              {hcnList.map(({ ID, Title }) => (
                 <option value={ID} key={ID}>
-                  {ID}
+                  {Title ? Title : ID}
                 </option>
               ))}
             </select>

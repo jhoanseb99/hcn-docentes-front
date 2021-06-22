@@ -76,7 +76,9 @@ function Home() {
                 <div className="card custom-card" style={{ height: "150px" }}>
                   <div className="d-flex card-body justify-content-center align-items-center">
                     <div className="d-flex flex-column align-items-center">
-                      <span className="mt-1">{hcn.ID}</span>
+                      <span className="mt-1">
+                        {hcn.Title ? hcn.Title : hcn.ID}
+                      </span>
                     </div>
                   </div>
                 </div>

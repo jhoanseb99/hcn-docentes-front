@@ -72,6 +72,12 @@ const getCCasesListByCourse = () => async (dispatch, getState) => {
       console.log(err);
       dispatch(notificationActions.setNotification(err.message, "error"));
       dispatch(
+        ccasesSlice.actions.setListByCourse({
+          type: actionTypes.set_list,
+          list: CCASES,
+        })
+      );
+      dispatch(
         ccasesSlice.actions.sortListByCourse({
           type: actionTypes.set_list,
           sort_by: (a, b) =>

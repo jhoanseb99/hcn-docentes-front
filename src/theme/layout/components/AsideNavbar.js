@@ -7,6 +7,7 @@ import {
   faClinicMedical,
   faNotesMedical,
 } from "@fortawesome/free-solid-svg-icons";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 function AsideNavbar() {
   const menuItem = (icon, children) => (
@@ -53,6 +54,12 @@ function AsideNavbar() {
             <NavLink to="/courses/hcn" className="nav-link">
               <FontAwesomeIcon icon={faNotesMedical} className="nav-icon" />
               <span className="menu-text">HCN</span>
+            </NavLink>
+          </li>
+          <li aria-haspopup="true" className="nav-item">
+            <NavLink to="/courses/students" className="nav-link">
+              <AccountCircleIcon />
+              <span className="menu-text">Estudiantes</span>
             </NavLink>
           </li>
         </ul>

@@ -22,7 +22,7 @@ function HcnPage() {
   const [hcnValue, setHcnValue] = React.useState(undefined);
 
   React.useEffect(() => {
-    dispatch(hcnRedux.getHcnListByCourse());
+    dispatch(hcnRedux.getHcnListByCourse(hcnObject));
   }, [dispatch]);
 
   const closeDeleteModal = () =>
@@ -82,7 +82,9 @@ function HcnPage() {
                 <NavLink to={`/hcn/update/${hcnObject[hcn.HCNID].MongoID}`}>
                   <div className="d-flex justify-content-center align-items-center h-100">
                     <div className="d-flex flex-column align-items-center">
-                      <span className="mt-1">{hcn.HCNID}</span>
+                      <span className="mt-1">
+                        {hcn.Title ? hcn.Title : hcn.HCNID}
+                      </span>
                     </div>
                   </div>
                 </NavLink>

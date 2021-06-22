@@ -52,9 +52,9 @@ function AddHcnDialog({ open, handleClose }) {
             onChange={(event) => setHcnId(event.target.value)}
           >
             <option value="">Seleccionar</option>
-            {hcnList.map(({ ID }) => (
+            {hcnList.map(({ ID, Title }) => (
               <option value={ID} key={ID}>
-                {ID}
+                {Title ? Title : ID}
               </option>
             ))}
           </select>

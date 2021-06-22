@@ -2,7 +2,7 @@
   this["webpackJsonphcn-docentes-front"] || []).push([
   [0],
   {
-    109: function (e, t, n) {
+    112: function (e, t, n) {
       "use strict";
       n.d(t, "a", function () {
         return v;
@@ -17,7 +17,7 @@
         o = n(28),
         s = n(7),
         u = n(9),
-        l = n(18);
+        l = n(17);
       function f(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
@@ -99,7 +99,7 @@
             });
         });
       }
-      n(48);
+      n(49);
       var m = n(39),
         b = "SET_LIST",
         j = function () {
@@ -307,13 +307,13 @@
           },
         });
     },
-    125: function (e, t, n) {
+    126: function (e, t, n) {
       "use strict";
       n.d(t, "a", function () {
-        return y;
+        return D;
       }),
         n.d(t, "b", function () {
-          return D;
+          return x;
         });
       var r = n(12),
         a = n(5),
@@ -322,7 +322,7 @@
         o = n(28),
         s = n(7),
         u = n(9),
-        l = n(18);
+        l = n(17);
       function f(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
@@ -479,7 +479,7 @@
       var v = n(39),
         O = "SET_LIST",
         C = "SET_GRADE_LIST",
-        x = function () {
+        y = function () {
           return (function () {
             var e = Object(c.a)(
               i.a.mark(function e(t, n) {
@@ -495,7 +495,7 @@
                             f({ CourseID: r }, n().auth.authToken)
                               .then(function (e) {
                                 t(
-                                  D.actions.setList({
+                                  x.actions.setList({
                                     type: O,
                                     list: e
                                       .filter(function (e) {
@@ -513,7 +513,7 @@
                               .catch(function (e) {
                                 console.log(e),
                                   t(s.a.setNotification(e.message, "error")),
-                                  t(D.actions.setList({ type: O, list: v.a }));
+                                  t(x.actions.setList({ type: O, list: v.a }));
                               })
                           )
                         );
@@ -529,13 +529,13 @@
             };
           })();
         },
-        y = {
+        D = {
           setList: function (e) {
             return function (t) {
-              t(D.actions.setList({ type: O, list: e }));
+              t(x.actions.setList({ type: O, list: e }));
             };
           },
-          getActivitiesList: x,
+          getActivitiesList: y,
           updateActivity: function (e) {
             return (function () {
               var t = Object(c.a)(
@@ -563,7 +563,7 @@
                                       "Actividad actualizada exitosamente"
                                     )
                                   ),
-                                    n(x());
+                                    n(y());
                                 })
                                 .catch(function (e) {
                                   console.log(e),
@@ -623,7 +623,7 @@
                                       "Actividad creada exitosamente"
                                     )
                                   ),
-                                    n(x());
+                                    n(y());
                                 })
                                 .catch(function (e) {
                                   console.log(e),
@@ -666,7 +666,7 @@
                                       "Actividad eliminada exitosamente"
                                     )
                                   ),
-                                    n(x());
+                                    n(y());
                                 })
                                 .catch(function (e) {
                                   console.log(e),
@@ -698,7 +698,7 @@
                             "return",
                             m({ id: e }, r().auth.authToken)
                               .then(function (e) {
-                                n(D.actions.setGradeList({ type: C, list: e }));
+                                n(x.actions.setGradeList({ type: C, list: e }));
                               })
                               .catch(function (e) {
                                 console.log(e),
@@ -718,7 +718,7 @@
             })();
           },
         },
-        D = Object(o.b)({
+        x = Object(o.b)({
           name: "Activies",
           initialState: { activitieslist: [], gradeList: [] },
           reducers: {
@@ -733,7 +733,7 @@
           },
         });
     },
-    18: function (e, t, n) {
+    17: function (e, t, n) {
       "use strict";
       n.d(t, "a", function () {
         return r;
@@ -821,9 +821,9 @@
         Biochemistry_Feedback: "",
       };
     },
-    183: function (e, t, n) {},
-    295: function (e, t, n) {},
-    296: function (e, t, n) {
+    189: function (e, t, n) {},
+    302: function (e, t, n) {},
+    303: function (e, t, n) {
       "use strict";
       n.r(t);
       var r = n(2),
@@ -831,13 +831,15 @@
         i = n.n(a),
         c = n(30),
         o = n.n(c),
-        s = (n(183), n(21)),
-        u = n(161),
-        l = n(26),
+        s = (n(189), n(21)),
+        u = n(163),
+        l = n(24),
         f = n(22),
         d = n(52),
-        h = n(53);
-      var p = function () {
+        h = n(53),
+        p = n(164),
+        m = n.n(p);
+      var b = function () {
         return Object(r.jsx)("div", {
           id: "kt_aside",
           className: "sidebar d-flex flex-column flex-row-auto",
@@ -910,19 +912,34 @@
                     ],
                   }),
                 }),
+                Object(r.jsx)("li", {
+                  "aria-haspopup": "true",
+                  className: "nav-item",
+                  children: Object(r.jsxs)(l.b, {
+                    to: "/courses/students",
+                    className: "nav-link",
+                    children: [
+                      Object(r.jsx)(m.a, {}),
+                      Object(r.jsx)("span", {
+                        className: "menu-text",
+                        children: "Estudiantes",
+                      }),
+                    ],
+                  }),
+                }),
               ],
             }),
           }),
         });
       };
-      function m(e) {
+      function j(e) {
         var t = e.children,
           n = e.aside,
           a = void 0 === n || n;
         return Object(r.jsxs)("div", {
           className: "d-flex flex-row",
           children: [
-            a && Object(r.jsx)(p, {}),
+            a && Object(r.jsx)(b, {}),
             Object(r.jsx)("div", {
               className: "content ".concat(a ? "with-aside" : ""),
               children: t,
@@ -930,26 +947,26 @@
           ],
         });
       }
-      var b = n(331),
-        j = n(302),
-        v = n(329),
-        O = n(12),
-        C = n(10),
+      var v = n(337),
+        O = n(308),
+        C = n(335),
+        y = n(12),
+        D = n(10),
         x = function (e) {
           return "" + e;
         };
-      function y(e) {
+      function w(e) {
         var t = e.component,
           n = e.aside,
           a = void 0 !== n && n,
-          c = Object(C.a)(e, ["component", "aside"]);
+          c = Object(D.a)(e, ["component", "aside"]);
         return Object(r.jsx)(
           f.b,
-          Object(O.a)(
-            Object(O.a)({}, c),
+          Object(y.a)(
+            Object(y.a)({}, c),
             {},
             {
-              children: Object(r.jsx)(m, {
+              children: Object(r.jsx)(j, {
                 aside: a,
                 children: i.a.createElement(t),
               }),
@@ -957,18 +974,18 @@
           )
         );
       }
-      var D = n(48);
-      var g = function () {
+      var g = n(49);
+      var N = function () {
         var e = Object(s.d)(function (e) {
             return e.auth;
           }).user,
           t = Object(s.c)();
-        return Object(r.jsxs)(b.a, {
+        return Object(r.jsxs)(v.a, {
           bg: "dark",
           variant: "dark",
           className: "header navbar-default navbar-fixed-top fixed-top",
           children: [
-            Object(r.jsxs)(b.a.Brand, {
+            Object(r.jsxs)(v.a.Brand, {
               href: "/home",
               children: [
                 Object(r.jsx)("img", {
@@ -979,25 +996,25 @@
                 "Historias Cl\xednicas Nutricionales",
               ],
             }),
-            Object(r.jsx)(j.a, {
+            Object(r.jsx)(O.a, {
               className: "mr-auto",
-              children: Object(r.jsx)(j.a.Link, {
+              children: Object(r.jsx)(O.a.Link, {
                 href: "/courses",
                 children: "Mis cursos",
               }),
             }),
-            Object(r.jsx)(b.a.Collapse, {
+            Object(r.jsx)(v.a.Collapse, {
               className: "justify-content-end navbar-dropdown",
-              children: Object(r.jsxs)(v.a, {
+              children: Object(r.jsxs)(C.a, {
                 title: e.Name,
                 id: "collasible-nav-dropdown",
                 children: [
-                  Object(r.jsx)(v.a.Divider, {}),
-                  Object(r.jsx)(v.a.Item, {
+                  Object(r.jsx)(C.a.Divider, {}),
+                  Object(r.jsx)(C.a.Item, {
                     children: Object(r.jsx)("button", {
                       className: "btn btn-danger",
                       onClick: function () {
-                        return t(D.a.logout());
+                        return t(g.a.logout());
                       },
                       children: "Cerrar sesi\xf3n",
                     }),
@@ -1008,27 +1025,27 @@
           ],
         });
       };
-      function w(e) {
+      function I(e) {
         var t = e.children;
         return Object(r.jsxs)("div", {
           className: "d-flex flex-column",
           children: [
-            Object(r.jsx)(g, {}),
+            Object(r.jsx)(N, {}),
             Object(r.jsx)("div", { className: "page", children: t }),
           ],
         });
       }
-      var N = n(65),
-        I = n(69),
-        T = n(49),
-        k = function () {
+      var T = n(67),
+        k = n(72),
+        A = n(48),
+        L = function () {
           return Object(r.jsx)("div", {
             children: Object(r.jsx)("span", {
               children: "No hay datos para mostrar en este momento",
             }),
           });
         };
-      var A = function () {
+      var _ = function () {
         var e = Object(s.d)(function (e) {
             return e.hcn;
           }).hcnList,
@@ -1041,11 +1058,11 @@
           a = Object(s.c)();
         return Object(r.jsxs)(r.Fragment, {
           children: [
-            Object(r.jsx)(N.a, {
+            Object(r.jsx)(T.a, {
               title: "Cursos",
               className: "mb-5",
               children: n.length
-                ? Object(r.jsx)(I.a, {
+                ? Object(r.jsx)(k.a, {
                     data: n,
                     limit: 4,
                     size: 4,
@@ -1057,7 +1074,7 @@
                           style: { height: "150px" },
                           onClick: function () {
                             return (
-                              (t = e.ID), void a(T.a.setCurrentCourse("id", t))
+                              (t = e.ID), void a(A.a.setCurrentCourse("id", t))
                             );
                             var t;
                           },
@@ -1080,13 +1097,13 @@
                       });
                     },
                   })
-                : Object(r.jsx)(k, {}),
+                : Object(r.jsx)(L, {}),
             }),
-            Object(r.jsx)(N.a, {
+            Object(r.jsx)(T.a, {
               title: "Casos Cl\xednicos",
               className: "mb-5",
               children: t.length
-                ? Object(r.jsx)(I.a, {
+                ? Object(r.jsx)(k.a, {
                     data: t,
                     limit: 4,
                     size: 4,
@@ -1112,13 +1129,13 @@
                       });
                     },
                   })
-                : Object(r.jsx)(k, {}),
+                : Object(r.jsx)(L, {}),
             }),
-            Object(r.jsx)(N.a, {
+            Object(r.jsx)(T.a, {
               title: "Historias Cl\xednicas Nutricionales",
               className: "pb-5",
               children: e.length
-                ? Object(r.jsx)(I.a, {
+                ? Object(r.jsx)(k.a, {
                     data: e,
                     limit: 4,
                     size: 4,
@@ -1144,12 +1161,12 @@
                       });
                     },
                   })
-                : Object(r.jsx)(k, {}),
+                : Object(r.jsx)(L, {}),
             }),
           ],
         });
       };
-      var L = function () {
+      var S = function () {
           var e = Object(s.d)(function (e) {
               return e.courses;
             }).coursesList,
@@ -1157,14 +1174,14 @@
           return (
             i.a.useEffect(
               function () {
-                t(T.a.getCoursesList());
+                t(A.a.getCoursesList());
               },
               [t]
             ),
-            Object(r.jsx)(N.a, {
+            Object(r.jsx)(T.a, {
               title: "Cursos",
               children: e
-                ? Object(r.jsx)(I.a, {
+                ? Object(r.jsx)(k.a, {
                     data: e,
                     children: function (e) {
                       return Object(r.jsx)(l.b, {
@@ -1174,7 +1191,7 @@
                           style: { height: "150px" },
                           onClick: function () {
                             return (
-                              (n = e.ID), void t(T.a.setCurrentCourse("id", n))
+                              (n = e.ID), void t(A.a.setCurrentCourse("id", n))
                             );
                             var n;
                           },
@@ -1206,18 +1223,18 @@
           );
         },
         E = n(7),
-        _ = n(86),
-        S = n(84),
-        H = n(5),
-        P = n.n(H),
-        B = n(11),
-        G = n(28),
-        F = n(9),
-        M = n(18);
-      function z(e, t) {
+        H = n(88),
+        P = n(86),
+        B = n(5),
+        G = n.n(B),
+        F = n(11),
+        M = n(28),
+        z = n(9),
+        U = n(17);
+      function R(e, t) {
         return new Promise(function (n, r) {
-          Object(F.a)({
-            path: "/Students/GetAllStudents" + Object(M.c)(e),
+          Object(z.a)({
+            path: "/Students/GetAllStudents" + Object(U.c)(e),
             method: "GET",
             headers: new Headers({ Token: t }),
           })
@@ -1233,20 +1250,20 @@
             });
         });
       }
-      var U = "SET_LIST",
-        R = function (e) {
+      var J = "SET_LIST",
+        q = function (e) {
           return (function () {
-            var t = Object(B.a)(
-              P.a.mark(function t(n, r) {
-                return P.a.wrap(function (t) {
+            var t = Object(F.a)(
+              G.a.mark(function t(n, r) {
+                return G.a.wrap(function (t) {
                   for (;;)
                     switch ((t.prev = t.next)) {
                       case 0:
                         return t.abrupt(
                           "return",
-                          z(e, r().auth.authToken)
+                          R(e, r().auth.authToken)
                             .then(function (e) {
-                              n(J.actions.setList({ type: U, list: e }));
+                              n(V.actions.setList({ type: J, list: e }));
                             })
                             .catch(function (e) {
                               console.log(e),
@@ -1265,7 +1282,7 @@
             };
           })();
         },
-        J = Object(G.b)({
+        V = Object(M.b)({
           name: "students",
           initialState: { studentsList: [] },
           reducers: {
@@ -1275,15 +1292,15 @@
             },
           },
         }),
-        q = n(333),
-        V = n(330);
-      function W(e) {
+        W = n(339),
+        X = n(336);
+      function Y(e) {
         return Object(r.jsx)(
-          V.a,
-          Object(O.a)({ elevation: 6, variant: "filled" }, e)
+          X.a,
+          Object(y.a)({ elevation: 6, variant: "filled" }, e)
         );
       }
-      var X = function (e) {
+      var K = function (e) {
           var t = e.open,
             n = e.setOpen,
             a = e.severity,
@@ -1293,27 +1310,27 @@
             s = function (e, t) {
               "clickaway" !== t && n(!1);
             };
-          return Object(r.jsx)(q.a, {
+          return Object(r.jsx)(W.a, {
             open: t,
             anchorOrigin: c,
             autoHideDuration: 4e3,
             onClose: s,
-            children: Object(r.jsx)(W, {
+            children: Object(r.jsx)(Y, {
               onClose: s,
               severity: a,
               children: o,
             }),
           });
         },
-        Y = n(328);
-      var K = function () {
+        Q = n(334);
+      var Z = function () {
           return Object(r.jsx)("div", {
             className: "container vh-100",
             children: Object(r.jsx)("div", {
               className: "row h-100 text-center",
               children: Object(r.jsx)("div", {
                 className: "col align-self-center",
-                children: Object(r.jsx)(Y.a, {
+                children: Object(r.jsx)(Q.a, {
                   className: "ml-2",
                   size: 50,
                   color: "primary",
@@ -1322,16 +1339,16 @@
             }),
           });
         },
-        Q = i.a.lazy(function () {
-          return Promise.all([n.e(3), n.e(5)]).then(n.bind(null, 359));
-        }),
-        Z = i.a.lazy(function () {
-          return n.e(4).then(n.bind(null, 362));
-        }),
         $ = i.a.lazy(function () {
-          return n.e(6).then(n.bind(null, 360));
+          return Promise.all([n.e(3), n.e(5)]).then(n.bind(null, 360));
+        }),
+        ee = i.a.lazy(function () {
+          return n.e(4).then(n.bind(null, 363));
+        }),
+        te = i.a.lazy(function () {
+          return n.e(6).then(n.bind(null, 361));
         });
-      function ee() {
+      function ne() {
         var e = Object(s.c)(),
           t = Object(s.d)(function (e) {
             return e.notifications;
@@ -1342,36 +1359,36 @@
         return (
           i.a.useEffect(
             function () {
-              e(_.a.getCCasesList()),
-                e(S.a.getHcnList()),
-                e(T.a.getCoursesList()),
-                e(R());
+              e(H.a.getCCasesList()),
+                e(P.a.getHcnList()),
+                e(A.a.getCoursesList()),
+                e(q());
             },
             [e]
           ),
           Object(r.jsxs)(i.a.Suspense, {
-            fallback: Object(r.jsx)(K, {}),
+            fallback: Object(r.jsx)(Z, {}),
             children: [
               Object(r.jsxs)(f.d, {
                 children: [
                   Object(r.jsx)(f.a, { exact: !0, from: "/", to: "/home" }),
-                  Object(r.jsx)(y, { exact: !0, path: "/home", component: A }),
-                  Object(r.jsx)(y, { path: "/clinical-cases", component: Z }),
-                  Object(r.jsx)(y, { path: "/hcn", component: $ }),
-                  Object(r.jsx)(y, {
+                  Object(r.jsx)(w, { exact: !0, path: "/home", component: _ }),
+                  Object(r.jsx)(w, { path: "/clinical-cases", component: ee }),
+                  Object(r.jsx)(w, { path: "/hcn", component: te }),
+                  Object(r.jsx)(w, {
                     exact: !0,
                     path: "/courses/all",
-                    component: L,
+                    component: S,
                   }),
-                  Object(r.jsx)(y, {
+                  Object(r.jsx)(w, {
                     path: "/courses",
                     aside: !0,
-                    component: Q,
+                    component: $,
                   }),
                   Object(r.jsx)(f.a, { to: "/error/404" }),
                 ],
               }),
-              Object(r.jsx)(X, {
+              Object(r.jsx)(K, {
                 open: n,
                 setOpen: function (t) {
                   e(E.a.setNotificationField("open", t));
@@ -1383,7 +1400,7 @@
           })
         );
       }
-      function te() {
+      function re() {
         return Object(r.jsx)("div", {
           className: "container vh-100",
           children: Object(r.jsx)("div", {
@@ -1397,30 +1414,30 @@
           }),
         });
       }
-      function ne() {
+      function ae() {
         return Object(r.jsxs)(f.d, {
           children: [
             Object(r.jsx)(f.a, { from: "/error", exact: !0, to: "/error/404" }),
-            Object(r.jsx)(f.b, { path: "/error/404", component: te }),
+            Object(r.jsx)(f.b, { path: "/error/404", component: re }),
             Object(r.jsx)(f.a, { to: "/error" }),
           ],
         });
       }
-      var re = n(124),
-        ae = n(87),
-        ie = "/Authentication/Login";
-      function ce() {
-        return (ce = Object(B.a)(
-          P.a.mark(function e(t, n) {
-            return P.a.wrap(function (e) {
+      var ie = n(125),
+        ce = n(89),
+        oe = "/Authentication/Login";
+      function se() {
+        return (se = Object(F.a)(
+          G.a.mark(function e(t, n) {
+            return G.a.wrap(function (e) {
               for (;;)
                 switch ((e.prev = e.next)) {
                   case 0:
                     return e.abrupt(
                       "return",
                       new Promise(function (e, r) {
-                        Object(F.a)({
-                          path: ie,
+                        Object(z.a)({
+                          path: oe,
                           method: "POST",
                           body: JSON.stringify({ Email: t, Password: n }),
                         })
@@ -1496,38 +1513,38 @@
           })
         )).apply(this, arguments);
       }
-      var oe = { username: "", password: "" };
-      var se = function () {
+      var ue = { username: "", password: "" };
+      var le = function () {
         var e = Object(s.c)(),
-          t = ae
+          t = ce
             .a()
             .shape({
-              username: ae
+              username: ce
                 .b()
                 .min(3, "M\xednimo 3 car\xe1cteres")
                 .max(50, "M\xe1ximo 50 car\xe1cteres")
                 .required("Campo requerido"),
-              password: ae
+              password: ce
                 .b()
                 .min(3, "M\xednimo 3 car\xe1cteres")
                 .max(50, "M\xe1ximo 50 car\xe1cteres")
                 .required("Campo requerido"),
             }),
-          n = Object(re.a)({
-            initialValues: oe,
+          n = Object(ie.a)({
+            initialValues: ue,
             validationSchema: t,
             onSubmit: function (t, n) {
               var r = n.setStatus,
                 a = n.setSubmitting;
               setTimeout(function () {
                 (function (e, t) {
-                  return ce.apply(this, arguments);
+                  return se.apply(this, arguments);
                 })(t.username, t.password)
                   .then(function (t) {
                     a(!1);
                     var n = t.Token,
-                      r = Object(C.a)(t, ["Token"]);
-                    e(D.a.login(n)), e(D.a.fulfillUser(r));
+                      r = Object(D.a)(t, ["Token"]);
+                    e(g.a.login(n)), e(g.a.fulfillUser(r));
                   })
                   .catch(function () {
                     a(!1), r("Usuario o contrase\xf1a incorrectos");
@@ -1558,7 +1575,7 @@
                   onSubmit: n.handleSubmit,
                   children: [
                     n.status &&
-                      Object(r.jsx)(V.a, {
+                      Object(r.jsx)(X.a, {
                         variant: "standard",
                         severity: "error",
                         children: n.status,
@@ -1569,7 +1586,7 @@
                     }),
                     Object(r.jsx)(
                       "input",
-                      Object(O.a)(
+                      Object(y.a)(
                         {
                           type: "text",
                           id: "username",
@@ -1597,7 +1614,7 @@
                     }),
                     Object(r.jsx)(
                       "input",
-                      Object(O.a)(
+                      Object(y.a)(
                         {
                           type: "password",
                           id: "password",
@@ -1628,7 +1645,7 @@
                           children: "Iniciar sesi\xf3n",
                         }),
                         n.isSubmitting &&
-                          Object(r.jsx)(Y.a, {
+                          Object(r.jsx)(Q.a, {
                             className: "ml-2",
                             size: 10,
                             color: "inherit",
@@ -1642,7 +1659,7 @@
           }),
         });
       };
-      var ue = function () {
+      var fe = function () {
         return Object(r.jsx)("div", {
           className: "container-fluid",
           style: {
@@ -1658,7 +1675,7 @@
                 "d-flex flex-column-fluid flex-center justify-content-center align-self-center h-100",
               children: Object(r.jsxs)(f.d, {
                 children: [
-                  Object(r.jsx)(f.b, { path: "/auth/login", component: se }),
+                  Object(r.jsx)(f.b, { path: "/auth/login", component: le }),
                   Object(r.jsx)(f.a, {
                     from: "/auth",
                     exact: !0,
@@ -1671,7 +1688,7 @@
           }),
         });
       };
-      function le() {
+      function de() {
         var e = Object(s.d)(function (e) {
           return { isAuthorized: null != e.auth.user };
         }, s.b).isAuthorized;
@@ -1679,16 +1696,16 @@
           children: [
             e
               ? Object(r.jsx)(f.a, { from: "/auth", to: "/" })
-              : Object(r.jsx)(f.b, { children: Object(r.jsx)(ue, {}) }),
-            Object(r.jsx)(f.b, { path: "/error", component: ne }),
+              : Object(r.jsx)(f.b, { children: Object(r.jsx)(fe, {}) }),
+            Object(r.jsx)(f.b, { path: "/error", component: ae }),
             e
-              ? Object(r.jsx)(w, { children: Object(r.jsx)(ee, {}) })
+              ? Object(r.jsx)(I, { children: Object(r.jsx)(ne, {}) })
               : Object(r.jsx)(f.a, { to: "/auth/login" }),
           ],
         });
       }
-      n(295);
-      var fe = function (e) {
+      n(302);
+      var he = function (e) {
           var t = e.store,
             n = e.persistor,
             a = e.basename;
@@ -1698,47 +1715,47 @@
               persistor: n,
               children: Object(r.jsx)(l.a, {
                 basename: a,
-                children: Object(r.jsx)(le, {}),
+                children: Object(r.jsx)(de, {}),
               }),
             }),
           });
         },
-        de = n(24),
-        he = n(171),
-        pe = n(107),
-        me = n(25),
-        be = n(109),
-        je = n(125),
-        ve = Object(me.c)({
-          auth: D.b,
+        pe = n(25),
+        me = n(174),
+        be = n(110),
+        je = n(26),
+        ve = n(112),
+        Oe = n(126),
+        Ce = Object(je.c)({
+          auth: g.b,
           notifications: E.b.reducer,
-          announcements: be.b.reducer,
-          activities: je.b.reducer,
-          courses: T.b.reducer,
-          clinicalCases: _.b.reducer,
-          hcn: S.b.reducer,
-          students: J.reducer,
+          announcements: ve.b.reducer,
+          activities: Oe.b.reducer,
+          courses: A.b.reducer,
+          clinicalCases: H.b.reducer,
+          hcn: P.b.reducer,
+          students: V.reducer,
         }),
-        Oe = Object(he.a)(),
-        Ce = [].concat(
-          Object(de.a)(
-            Object(G.c)({
+        ye = Object(me.a)(),
+        De = [].concat(
+          Object(pe.a)(
+            Object(M.c)({
               immutableCheck: !1,
               serializableCheck: !1,
               thunk: !0,
             })
           ),
-          [Oe]
+          [ye]
         ),
-        xe = Object(G.a)({ reducer: ve, middleware: Ce, devTools: !1 }),
-        ye = Object(pe.b)(xe),
-        De = xe,
-        ge = function (e) {
+        xe = Object(M.a)({ reducer: Ce, middleware: De, devTools: !1 }),
+        we = Object(be.b)(xe),
+        ge = xe,
+        Ne = function (e) {
           e &&
             e instanceof Function &&
             n
               .e(7)
-              .then(n.bind(null, 357))
+              .then(n.bind(null, 358))
               .then(function (t) {
                 var n = t.getCLS,
                   r = t.getFID,
@@ -1749,10 +1766,88 @@
               });
         };
       o.a.render(
-        Object(r.jsx)(fe, { store: De, persistor: ye, basename: "" }),
+        Object(r.jsx)(he, { store: ge, persistor: we, basename: "" }),
         document.getElementById("root")
       ),
-        ge();
+        Ne();
+    },
+    36: function (e, t, n) {
+      "use strict";
+      n.d(t, "b", function () {
+        return i;
+      }),
+        n.d(t, "c", function () {
+          return u;
+        }),
+        n.d(t, "d", function () {
+          return l;
+        }),
+        n.d(t, "a", function () {
+          return f;
+        });
+      var r = n(9),
+        a = n(17),
+        i = "/Courses",
+        c = i + "/GetAllCourses",
+        o = i + "/GetCourse",
+        s = i + "/GetAllStudentsCourse";
+      function u(e, t) {
+        return new Promise(function (n, i) {
+          Object(r.a)({
+            path: c + Object(a.c)(e),
+            method: "GET",
+            headers: new Headers({ Token: t }),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              return e.json();
+            })
+            .then(function (e) {
+              return n(e);
+            })
+            .catch(function (e) {
+              return i(e.message);
+            });
+        });
+      }
+      function l(e, t) {
+        return new Promise(function (n, i) {
+          Object(r.a)({
+            path: o + Object(a.c)(e),
+            method: "GET",
+            headers: new Headers({ Token: t }),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              return e.json();
+            })
+            .then(function (e) {
+              return n(e);
+            })
+            .catch(function (e) {
+              return i(e.message);
+            });
+        });
+      }
+      function f(e, t) {
+        return new Promise(function (n, i) {
+          Object(r.a)({
+            path: s + Object(a.c)(e),
+            method: "GET",
+            headers: new Headers({ Token: t }),
+          })
+            .then(function (e) {
+              if (!e.ok) throw new Error(e.status);
+              return e.json();
+            })
+            .then(function (e) {
+              return n(e);
+            })
+            .catch(function (e) {
+              return i(e.message);
+            });
+        });
+      }
     },
     39: function (e, t, n) {
       "use strict";
@@ -1886,62 +1981,205 @@
           { ID: 5, TeacherID: 3 },
         ];
     },
-    40: function (e, t, n) {
+    48: function (e, t, n) {
       "use strict";
       n.d(t, "a", function () {
-        return i;
+        return f;
       }),
         n.d(t, "b", function () {
-          return s;
-        }),
-        n.d(t, "c", function () {
-          return u;
+          return d;
         });
-      var r = n(9),
-        a = n(18),
-        i = "/Courses",
-        c = i + "/GetAllCourses",
-        o = i + "/GetCourse";
-      function s(e, t) {
-        return new Promise(function (n, i) {
-          Object(r.a)({
-            path: c + Object(a.c)(e),
-            method: "GET",
-            headers: new Headers({ Token: t }),
-          })
-            .then(function (e) {
-              if (!e.ok) throw new Error(e.status);
-              return e.json();
-            })
-            .then(function (e) {
-              return n(e);
-            })
-            .catch(function (e) {
-              return i(e.message);
-            });
+      var r = n(5),
+        a = n.n(r),
+        i = n(11),
+        c = n(28),
+        o = n(36),
+        s = (n(49), n(112), n(39)),
+        u = {
+          coursesList: [],
+          currentCourse: {
+            id: void 0,
+            data: {},
+            announcementsList: [],
+            activitiesList: [],
+            studentsList: [],
+          },
+        },
+        l = { set_list: "SET_LIST", set_current_course: "SET_CURRENT_COURSE" },
+        f = {
+          setCurrentCourse: function (e, t) {
+            return function (n) {
+              n(
+                d.actions.setCurrentCourse({
+                  type: l.setCurrentCourse,
+                  field: e,
+                  data: t,
+                })
+              );
+            };
+          },
+          getCoursesList: function () {
+            return (function () {
+              var e = Object(i.a)(
+                a.a.mark(function e(t, n) {
+                  var r;
+                  return a.a.wrap(function (e) {
+                    for (;;)
+                      switch ((e.prev = e.next)) {
+                        case 0:
+                          return (
+                            (r = n().auth.user.ID),
+                            e.abrupt(
+                              "return",
+                              o
+                                .c(void 0, n().auth.authToken)
+                                .then(function (e) {
+                                  t(
+                                    d.actions.setCoursesList({
+                                      type: l.set_list,
+                                      list: e
+                                        .filter(function (e) {
+                                          return e.TeacherID === r;
+                                        })
+                                        .sort(function (e, t) {
+                                          return (
+                                            new Date(t.CreationDate) -
+                                            new Date(e.CreationDate)
+                                          );
+                                        }),
+                                    })
+                                  );
+                                })
+                                .catch(function (e) {
+                                  console.log(e),
+                                    t(
+                                      d.actions.setCoursesList({
+                                        type: l.set_list,
+                                        list: s.d,
+                                      })
+                                    );
+                                })
+                            )
+                          );
+                        case 2:
+                        case "end":
+                          return e.stop();
+                      }
+                  }, e);
+                })
+              );
+              return function (t, n) {
+                return e.apply(this, arguments);
+              };
+            })();
+          },
+          getCourseData: function (e) {
+            return (function () {
+              var t = Object(i.a)(
+                a.a.mark(function t(n, r) {
+                  return a.a.wrap(function (t) {
+                    for (;;)
+                      switch ((t.prev = t.next)) {
+                        case 0:
+                          return t.abrupt(
+                            "return",
+                            o
+                              .d({ ID: e }, r().auth.authToken)
+                              .then(function (e) {
+                                n(
+                                  d.actions.setCurrentCourse({
+                                    type: l.set_current_course,
+                                    field: "data",
+                                    data: e,
+                                  })
+                                );
+                              })
+                              .catch(function (t) {
+                                console.log(t),
+                                  n(
+                                    d.actions.setCurrentCourse({
+                                      type: l.set_current_course,
+                                      field: "data",
+                                      data: s.d.find(function (t) {
+                                        return t.ID === e;
+                                      }),
+                                    })
+                                  );
+                              })
+                          );
+                        case 1:
+                        case "end":
+                          return t.stop();
+                      }
+                  }, t);
+                })
+              );
+              return function (e, n) {
+                return t.apply(this, arguments);
+              };
+            })();
+          },
+          getAllStudentsCourse: function () {
+            return (function () {
+              var e = Object(i.a)(
+                a.a.mark(function e(t, n) {
+                  var r;
+                  return a.a.wrap(function (e) {
+                    for (;;)
+                      switch ((e.prev = e.next)) {
+                        case 0:
+                          return (
+                            (r = n().courses.currentCourse.id),
+                            e.abrupt(
+                              "return",
+                              o
+                                .a({ ID: r }, n().auth.authToken)
+                                .then(function (e) {
+                                  console.log(e),
+                                    t(
+                                      d.actions.setCurrentCourse({
+                                        type: l.set_current_course,
+                                        field: "studentsList",
+                                        data: e,
+                                      })
+                                    );
+                                })
+                                .catch(function (e) {
+                                  console.log(e);
+                                })
+                            )
+                          );
+                        case 2:
+                        case "end":
+                          return e.stop();
+                      }
+                  }, e);
+                })
+              );
+              return function (t, n) {
+                return e.apply(this, arguments);
+              };
+            })();
+          },
+        },
+        d = Object(c.b)({
+          name: "courses",
+          initialState: u,
+          reducers: {
+            setCoursesList: function (e, t) {
+              var n = t.payload.list;
+              e.coursesList = n;
+            },
+            setCurrentCourse: function (e, t) {
+              var n = t.payload,
+                r = n.field,
+                a = n.data;
+              e.currentCourse[r] = a;
+            },
+          },
         });
-      }
-      function u(e, t) {
-        return new Promise(function (n, i) {
-          Object(r.a)({
-            path: o + Object(a.c)(e),
-            method: "GET",
-            headers: new Headers({ Token: t }),
-          })
-            .then(function (e) {
-              if (!e.ok) throw new Error(e.status);
-              return e.json();
-            })
-            .then(function (e) {
-              return n(e);
-            })
-            .catch(function (e) {
-              return i(e.message);
-            });
-        });
-      }
     },
-    48: function (e, t, n) {
+    49: function (e, t, n) {
       "use strict";
       n.d(t, "b", function () {
         return u;
@@ -1950,11 +2188,11 @@
           return l;
         });
       var r = n(12),
-        a = n(107),
-        i = n(162),
+        a = n(110),
+        i = n(168),
         c = n.n(i),
         o =
-          (n(297),
+          (n(304),
           {
             Login: "[Login] Action",
             Logout: "[Logout] Action",
@@ -2019,194 +2257,40 @@
           },
         };
     },
-    49: function (e, t, n) {
-      "use strict";
-      n.d(t, "a", function () {
-        return f;
-      }),
-        n.d(t, "b", function () {
-          return d;
-        });
-      var r = n(5),
-        a = n.n(r),
-        i = n(11),
-        c = n(28),
-        o = n(40),
-        s = (n(48), n(109), n(39)),
-        u = {
-          coursesList: [],
-          currentCourse: {
-            id: void 0,
-            data: {},
-            announcementsList: [],
-            activitiesList: [],
-          },
-        },
-        l = { set_list: "SET_LIST", set_current_course: "SET_CURRENT_COURSE" },
-        f = {
-          setCurrentCourse: function (e, t) {
-            return function (n) {
-              n(
-                d.actions.setCurrentCourse({
-                  type: l.setCurrentCourse,
-                  field: e,
-                  data: t,
-                })
-              );
-            };
-          },
-          getCoursesList: function () {
-            return (function () {
-              var e = Object(i.a)(
-                a.a.mark(function e(t, n) {
-                  var r;
-                  return a.a.wrap(function (e) {
-                    for (;;)
-                      switch ((e.prev = e.next)) {
-                        case 0:
-                          return (
-                            (r = n().auth.user.ID),
-                            e.abrupt(
-                              "return",
-                              o
-                                .b(void 0, n().auth.authToken)
-                                .then(function (e) {
-                                  t(
-                                    d.actions.setCoursesList({
-                                      type: l.set_list,
-                                      list: e
-                                        .filter(function (e) {
-                                          return e.TeacherID === r;
-                                        })
-                                        .sort(function (e, t) {
-                                          return (
-                                            new Date(t.CreationDate) -
-                                            new Date(e.CreationDate)
-                                          );
-                                        }),
-                                    })
-                                  );
-                                })
-                                .catch(function (e) {
-                                  console.log(e),
-                                    t(
-                                      d.actions.setCoursesList({
-                                        type: l.set_list,
-                                        list: s.d,
-                                      })
-                                    );
-                                })
-                            )
-                          );
-                        case 2:
-                        case "end":
-                          return e.stop();
-                      }
-                  }, e);
-                })
-              );
-              return function (t, n) {
-                return e.apply(this, arguments);
-              };
-            })();
-          },
-          getCourseData: function (e) {
-            return (function () {
-              var t = Object(i.a)(
-                a.a.mark(function t(n, r) {
-                  return a.a.wrap(function (t) {
-                    for (;;)
-                      switch ((t.prev = t.next)) {
-                        case 0:
-                          return t.abrupt(
-                            "return",
-                            o
-                              .c({ ID: e }, r().auth.authToken)
-                              .then(function (e) {
-                                n(
-                                  d.actions.setCurrentCourse({
-                                    type: l.set_current_course,
-                                    field: "data",
-                                    data: e,
-                                  })
-                                );
-                              })
-                              .catch(function (t) {
-                                console.log(t),
-                                  n(
-                                    d.actions.setCurrentCourse({
-                                      type: l.set_current_course,
-                                      field: "data",
-                                      data: s.d.find(function (t) {
-                                        return t.ID === e;
-                                      }),
-                                    })
-                                  );
-                              })
-                          );
-                        case 1:
-                        case "end":
-                          return t.stop();
-                      }
-                  }, t);
-                })
-              );
-              return function (e, n) {
-                return t.apply(this, arguments);
-              };
-            })();
-          },
-        },
-        d = Object(c.b)({
-          name: "courses",
-          initialState: u,
-          reducers: {
-            setCoursesList: function (e, t) {
-              var n = t.payload.list;
-              e.coursesList = n;
-            },
-            setCurrentCourse: function (e, t) {
-              var n = t.payload,
-                r = n.field,
-                a = n.data;
-              e.currentCourse[r] = a;
-            },
-          },
-        });
-    },
     55: function (e, t, n) {
       "use strict";
-      n.d(t, "d", function () {
-        return u;
+      n.d(t, "c", function () {
+        return l;
       }),
-        n.d(t, "f", function () {
-          return l;
-        }),
         n.d(t, "e", function () {
           return f;
         }),
-        n.d(t, "a", function () {
+        n.d(t, "d", function () {
           return d;
         }),
-        n.d(t, "g", function () {
+        n.d(t, "a", function () {
           return h;
         }),
-        n.d(t, "b", function () {
+        n.d(t, "f", function () {
           return p;
         }),
-        n.d(t, "h", function () {
+        n.d(t, "b", function () {
           return m;
         }),
-        n.d(t, "c", function () {
+        n.d(t, "g", function () {
           return b;
+        }),
+        n.d(t, "h", function () {
+          return j;
         });
       var r = n(9),
-        a = n(18),
-        i = n(40),
-        c = i.a + "/GetAllClinicalCases",
-        o = i.a + "/AddClinicalCase",
-        s = i.a + "/RemoveClinicalCase";
-      function u(e, t) {
+        a = n(17),
+        i = n(36),
+        c = i.b + "/GetAllClinicalCases",
+        o = i.b + "/AddClinicalCase",
+        s = i.b + "/RemoveClinicalCase",
+        u = i.b + "/VisibilityClinicalCase";
+      function l(e, t) {
         return new Promise(function (n, i) {
           Object(r.a)({
             path: "/ClinicalCases/GetAllClinicalCases" + Object(a.c)(e),
@@ -2225,7 +2309,7 @@
             });
         });
       }
-      function l(e, t) {
+      function f(e, t) {
         return new Promise(function (n, i) {
           Object(r.a)({
             path: "/ClinicalCases/GetClinicalCase" + Object(a.c)(e),
@@ -2244,7 +2328,7 @@
             });
         });
       }
-      function f(e, t) {
+      function d(e, t) {
         return new Promise(function (n, i) {
           Object(r.a)({
             path: c + Object(a.c)(e),
@@ -2252,7 +2336,8 @@
             headers: new Headers({ Token: t }),
           })
             .then(function (e) {
-              if (!e.ok) throw new Error(e.status);
+              if (("404" == e.status && n([]), !e.ok))
+                throw new Error(e.status);
               return e.json();
             })
             .then(function (e) {
@@ -2263,7 +2348,7 @@
             });
         });
       }
-      function d(e, t) {
+      function h(e, t) {
         return new Promise(function (n, a) {
           Object(r.a)({
             path: o,
@@ -2287,7 +2372,7 @@
             });
         });
       }
-      function h(e, t) {
+      function p(e, t) {
         return new Promise(function (n, a) {
           Object(r.a)({
             path: s,
@@ -2310,7 +2395,7 @@
             });
         });
       }
-      function p(e, t) {
+      function m(e, t) {
         return new Promise(function (n, a) {
           Object(r.a)({
             path: "/ClinicalCases/CreateClinicalCase",
@@ -2332,7 +2417,7 @@
             });
         });
       }
-      function m(e, t) {
+      function b(e, t) {
         return new Promise(function (n, a) {
           Object(r.a)({
             path: "/ClinicalCases/UpdateClinicalCase",
@@ -2355,20 +2440,21 @@
             });
         });
       }
-      function b(e, t) {
+      function j(e, t) {
         return new Promise(function (n, a) {
           Object(r.a)({
-            path: "/ClinicalCases/DeleteClinicalCase",
-            method: "DELETE",
+            path: u,
+            method: "POST",
             headers: new Headers({ Token: t }),
-            body: JSON.stringify({ ID: e.ID }),
+            body: JSON.stringify({
+              CourseID: e.CourseID,
+              ClinicalCaseID: e.ClinicalCaseID,
+              Displayable: e.Displayable,
+            }),
           })
             .then(function (e) {
               if (!e.ok) throw new Error(e.status);
-              return "It works!";
-            })
-            .then(function (e) {
-              return n(e);
+              n(e);
             })
             .catch(function (e) {
               return a(e.message);
@@ -2376,7 +2462,7 @@
         });
       }
     },
-    65: function (e, t, n) {
+    67: function (e, t, n) {
       "use strict";
       var r = n(12),
         a = n(10),
@@ -2426,50 +2512,6 @@
             }),
             u,
           ],
-        });
-      };
-    },
-    69: function (e, t, n) {
-      "use strict";
-      var r = n(2);
-      n(0);
-      t.a = function (e) {
-        var t = e.data,
-          n = e.size,
-          a = void 0 === n ? 3 : n,
-          i = e.limit,
-          c = e.children;
-        return (function (e) {
-          for (
-            var t =
-                arguments.length > 1 && void 0 !== arguments[1]
-                  ? arguments[1]
-                  : 3,
-              n = [],
-              r = 0;
-            r < e.length;
-            r += t
-          )
-            n.push(e.slice(r, r + t));
-          return n;
-        })(i ? t.slice(0, i) : t, a).map(function (e, t) {
-          return Object(r.jsx)(
-            "div",
-            {
-              className: "row mb-3",
-              children: e.map(function (e, t) {
-                return Object(r.jsx)(
-                  "div",
-                  {
-                    className: "col-".concat(Math.ceil(12 / a)),
-                    children: c(e),
-                  },
-                  t
-                );
-              }),
-            },
-            t
-          );
         });
       };
     },
@@ -2528,13 +2570,57 @@
           },
         });
     },
-    84: function (e, t, n) {
+    72: function (e, t, n) {
+      "use strict";
+      var r = n(2);
+      n(0);
+      t.a = function (e) {
+        var t = e.data,
+          n = e.size,
+          a = void 0 === n ? 3 : n,
+          i = e.limit,
+          c = e.children;
+        return (function (e) {
+          for (
+            var t =
+                arguments.length > 1 && void 0 !== arguments[1]
+                  ? arguments[1]
+                  : 3,
+              n = [],
+              r = 0;
+            r < e.length;
+            r += t
+          )
+            n.push(e.slice(r, r + t));
+          return n;
+        })(i ? t.slice(0, i) : t, a).map(function (e, t) {
+          return Object(r.jsx)(
+            "div",
+            {
+              className: "row mb-3",
+              children: e.map(function (e, t) {
+                return Object(r.jsx)(
+                  "div",
+                  {
+                    className: "col-".concat(Math.ceil(12 / a)),
+                    children: c(e),
+                  },
+                  t
+                );
+              }),
+            },
+            t
+          );
+        });
+      };
+    },
+    86: function (e, t, n) {
       "use strict";
       n.d(t, "a", function () {
-        return T;
+        return k;
       }),
         n.d(t, "b", function () {
-          return k;
+          return A;
         });
       var r = n(12),
         a = n(5),
@@ -2543,12 +2629,13 @@
         o = n(28),
         s = n(7),
         u = n(9),
-        l = n(18),
-        f = n(40),
-        d = f.a + "/GetAllHCN",
-        h = f.a + "/AddHCN",
-        p = f.a + "/RemoveHCN";
-      function m(e, t) {
+        l = n(17),
+        f = n(36),
+        d = f.b + "/GetAllHCN",
+        h = f.b + "/AddHCN",
+        p = f.b + "/RemoveHCN",
+        m = f.b + "/VisibilityHCN";
+      function b(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
             path: "/HCN/GetAllHCN" + Object(l.c)(e),
@@ -2567,7 +2654,7 @@
             });
         });
       }
-      function b(e, t) {
+      function j(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
             path: d + Object(l.c)(e),
@@ -2623,7 +2710,7 @@
             });
         });
       }
-      function j(e, t) {
+      function v(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
             path: h,
@@ -2647,7 +2734,7 @@
             });
         });
       }
-      function v(e, t) {
+      function O(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
             path: "/HCN/CreateHCNMongo",
@@ -2667,7 +2754,7 @@
             });
         });
       }
-      function O(e, t) {
+      function C(e, t) {
         return (
           console.log(e),
           new Promise(function (n, r) {
@@ -2687,7 +2774,7 @@
           })
         );
       }
-      function C(e, t) {
+      function y(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
             path: "/HCN/GetHCNMongo" + Object(l.c)(e),
@@ -2706,7 +2793,7 @@
             });
         });
       }
-      function x(e, t) {
+      function D(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
             path: "/SolvedHCN/UpdateSolvedHCN",
@@ -2723,13 +2810,13 @@
             });
         });
       }
-      function y(e, t) {
+      function x(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
-            path: "/HCN/DeleteHCN",
+            path: p,
             method: "DELETE",
             headers: new Headers({ Token: t }),
-            body: JSON.stringify({ ID: e.ID }),
+            body: JSON.stringify(e),
           })
             .then(function (e) {
               if (!e.ok) throw new Error(e.status);
@@ -2740,13 +2827,17 @@
             });
         });
       }
-      function D(e, t) {
+      function w(e, t) {
         return new Promise(function (n, r) {
           Object(u.a)({
-            path: p,
-            method: "DELETE",
+            path: m,
+            method: "POST",
             headers: new Headers({ Token: t }),
-            body: JSON.stringify({ ID: e.ID }),
+            body: JSON.stringify({
+              CourseID: e.CourseID,
+              HCNID: e.HCNID,
+              Displayable: e.Displayable,
+            }),
           })
             .then(function (e) {
               if (!e.ok) throw new Error(e.status);
@@ -2758,8 +2849,8 @@
         });
       }
       var g = n(39),
-        w = "SET_LIST",
-        N = function () {
+        N = "SET_LIST",
+        I = function () {
           return (function () {
             var e = Object(c.a)(
               i.a.mark(function e(t, n) {
@@ -2772,11 +2863,11 @@
                           (r = n().auth.user.ID),
                           e.abrupt(
                             "return",
-                            m(void 0, n().auth.authToken)
+                            b(void 0, n().auth.authToken)
                               .then(function (e) {
                                 t(
-                                  k.actions.setList({
-                                    type: w,
+                                  A.actions.setList({
+                                    type: N,
                                     list: e.filter(function (e) {
                                       return e.TeacherID === r;
                                     }),
@@ -2786,7 +2877,7 @@
                               .catch(function (e) {
                                 console.log(e),
                                   t(s.a.setNotification(e.message, "error")),
-                                  t(k.actions.setList({ type: w, list: g.e }));
+                                  t(A.actions.setList({ type: N, list: g.e }));
                               })
                           )
                         );
@@ -2802,7 +2893,7 @@
             };
           })();
         },
-        I = function () {
+        T = function () {
           return (function () {
             var e = Object(c.a)(
               i.a.mark(function e(t, n) {
@@ -2815,15 +2906,78 @@
                           (r = n().courses.currentCourse.id),
                           e.abrupt(
                             "return",
-                            b({ CourseID: r }, n().auth.authToken)
-                              .then(function (e) {
-                                t(
-                                  k.actions.setListByCourse({
-                                    type: w,
-                                    list: null !== e && void 0 !== e ? e : [],
-                                  })
-                                );
-                              })
+                            j({ CourseID: r }, n().auth.authToken)
+                              .then(
+                                (function () {
+                                  var e = Object(c.a)(
+                                    i.a.mark(function e(n) {
+                                      var r;
+                                      return i.a.wrap(function (e) {
+                                        for (;;)
+                                          switch ((e.prev = e.next)) {
+                                            case 0:
+                                              return (
+                                                (e.next = 2),
+                                                Promise.all(
+                                                  n.map(
+                                                    (function () {
+                                                      var e = Object(c.a)(
+                                                        i.a.mark(function e(t) {
+                                                          return i.a.wrap(
+                                                            function (e) {
+                                                              for (;;)
+                                                                switch (
+                                                                  (e.prev =
+                                                                    e.next)
+                                                                ) {
+                                                                  case 0:
+                                                                    t.Displayable;
+                                                                  case 1:
+                                                                  case "end":
+                                                                    return e.stop();
+                                                                }
+                                                            },
+                                                            e
+                                                          );
+                                                        })
+                                                      );
+                                                      return function (t) {
+                                                        return e.apply(
+                                                          this,
+                                                          arguments
+                                                        );
+                                                      };
+                                                    })()
+                                                  )
+                                                )
+                                              );
+                                            case 2:
+                                              t(
+                                                A.actions.setListByCourse({
+                                                  type: N,
+                                                  list:
+                                                    null !==
+                                                      (r = n.filter(function (
+                                                        e
+                                                      ) {
+                                                        return e.Displayable;
+                                                      })) && void 0 !== r
+                                                      ? r
+                                                      : [],
+                                                })
+                                              );
+                                            case 3:
+                                            case "end":
+                                              return e.stop();
+                                          }
+                                      }, e);
+                                    })
+                                  );
+                                  return function (t) {
+                                    return e.apply(this, arguments);
+                                  };
+                                })()
+                              )
                               .catch(function (e) {
                                 console.log(e),
                                   t(s.a.setNotification(e.message, "error"));
@@ -2842,9 +2996,9 @@
             };
           })();
         },
-        T = {
-          getHcnList: N,
-          getHcnListByCourse: I,
+        k = {
+          getHcnList: I,
+          getHcnListByCourse: T,
           getHcn: function (e) {
             return (function () {
               var t = Object(c.a)(
@@ -2855,7 +3009,7 @@
                         case 0:
                           return t.abrupt(
                             "return",
-                            C(e, r().auth.authToken).catch(function (e) {
+                            y(e, r().auth.authToken).catch(function (e) {
                               console.log(e),
                                 n(s.a.setNotification(e.message, "error"));
                             })
@@ -2885,7 +3039,7 @@
                             (c = a().auth.user.ID),
                             t.abrupt(
                               "return",
-                              v(
+                              O(
                                 Object(r.a)(
                                   Object(r.a)({}, e),
                                   {},
@@ -2899,7 +3053,7 @@
                                       "HCN creada exitosamente"
                                     )
                                   ),
-                                    n(N());
+                                    n(I());
                                 })
                                 .catch(function (e) {
                                   console.log(e),
@@ -2929,7 +3083,7 @@
                         case 0:
                           return t.abrupt(
                             "return",
-                            O(e, r().auth.authToken)
+                            C(e, r().auth.authToken)
                               .then(function () {
                                 n(
                                   s.a.setNotification(
@@ -2967,10 +3121,10 @@
                             (c = a().auth.authToken),
                             n.abrupt(
                               "return",
-                              O(e, c)
+                              C(e, c)
                                 .then(function () {
                                   if (t.Reviewed)
-                                    return x(
+                                    return D(
                                       {
                                         ActivityID: t.ActivityID,
                                         Solver: t.Solver,
@@ -3017,14 +3171,14 @@
                             (a = r().courses.currentCourse.id),
                             t.abrupt(
                               "return",
-                              j({ HCNID: e, CourseID: a }, r().auth.authToken)
+                              v({ HCNID: e, CourseID: a }, r().auth.authToken)
                                 .then(function () {
                                   n(
                                     s.a.setNotification(
                                       "HCN a\xf1adida exitosamente"
                                     )
                                   ),
-                                    n(I());
+                                    n(T());
                                 })
                                 .catch(function (e) {
                                   console.log(e),
@@ -3057,7 +3211,7 @@
                             (a = r().auth.authToken),
                             t.abrupt(
                               "return",
-                              x(
+                              D(
                                 {
                                   ActivityID: e.ActivityID,
                                   Solver: e.Solver,
@@ -3094,22 +3248,24 @@
             return (function () {
               var t = Object(c.a)(
                 i.a.mark(function t(n, r) {
-                  var a;
+                  var a, c;
                   return i.a.wrap(function (t) {
                     for (;;)
                       switch ((t.prev = t.next)) {
                         case 0:
                           return (
-                            (a = r().auth.authToken),
+                            (a = r().courses.currentCourse.id),
+                            (c = r().auth.authToken),
                             t.abrupt(
                               "return",
-                              y({ ID: e }, a)
+                              w({ HCNID: e, CourseID: a, Displayable: 0 }, c)
                                 .then(function () {
-                                  n(
-                                    s.a.setNotification(
-                                      "HCN eliminada exitosamente"
-                                    )
-                                  );
+                                  n(T()),
+                                    n(
+                                      s.a.setNotification(
+                                        "HCN eliminada exitosamente"
+                                      )
+                                    );
                                 })
                                 .catch(function (e) {
                                   console.log(e),
@@ -3117,7 +3273,7 @@
                                 })
                             )
                           );
-                        case 2:
+                        case 3:
                         case "end":
                           return t.stop();
                       }
@@ -3133,22 +3289,25 @@
             return (function () {
               var t = Object(c.a)(
                 i.a.mark(function t(n, r) {
-                  var a;
+                  var a, c;
                   return i.a.wrap(function (t) {
                     for (;;)
                       switch ((t.prev = t.next)) {
                         case 0:
                           return (
-                            (a = r().auth.authToken),
+                            (a = r().courses.currentCourse.id),
+                            console.log(a),
+                            (c = r().auth.authToken),
                             t.abrupt(
                               "return",
-                              D({ ID: e }, a)
+                              x({ HCNID: e, CourseID: a }, c)
                                 .then(function () {
-                                  n(
-                                    s.a.setNotification(
-                                      "HCN removida exitosamente"
-                                    )
-                                  );
+                                  n(T()),
+                                    n(
+                                      s.a.setNotification(
+                                        "HCN removida exitosamente"
+                                      )
+                                    );
                                 })
                                 .catch(function (e) {
                                   console.log(e),
@@ -3156,7 +3315,7 @@
                                 })
                             )
                           );
-                        case 2:
+                        case 4:
                         case "end":
                           return t.stop();
                       }
@@ -3169,7 +3328,7 @@
             })();
           },
         },
-        k = Object(o.b)({
+        A = Object(o.b)({
           name: "hcn",
           initialState: { hcnList: [], hcnListByCourse: [], hcnObject: {} },
           reducers: {
@@ -3191,7 +3350,7 @@
           },
         });
     },
-    86: function (e, t, n) {
+    88: function (e, t, n) {
       "use strict";
       n.d(t, "a", function () {
         return m;
@@ -3222,7 +3381,7 @@
                           e.abrupt(
                             "return",
                             u
-                              .d(void 0, n().auth.authToken)
+                              .c(void 0, n().auth.authToken)
                               .then(function (e) {
                                 t(
                                   b.actions.setList({
@@ -3267,7 +3426,7 @@
                           e.abrupt(
                             "return",
                             u
-                              .e({ CourseID: r }, a)
+                              .d({ CourseID: r }, a)
                               .then(
                                 (function () {
                                   var e = Object(c.a)(
@@ -3300,10 +3459,9 @@
                                                                   case 0:
                                                                     return (
                                                                       (e.next = 2),
-                                                                      u.f(
+                                                                      u.e(
                                                                         {
-                                                                          ID:
-                                                                            n.ClinicalCaseID,
+                                                                          ID: n.ClinicalCaseID,
                                                                         },
                                                                         a
                                                                       )
@@ -3311,14 +3469,16 @@
                                                                   case 2:
                                                                     (r =
                                                                       e.sent),
-                                                                      t(
-                                                                        b.actions.addListByCourse(
-                                                                          {
-                                                                            type: f,
-                                                                            value: r,
-                                                                          }
-                                                                        )
-                                                                      );
+                                                                      n.Displayable &&
+                                                                        t(
+                                                                          b.actions.addListByCourse(
+                                                                            {
+                                                                              type: f,
+                                                                              value:
+                                                                                r,
+                                                                            }
+                                                                          )
+                                                                        );
                                                                   case 4:
                                                                   case "end":
                                                                     return e.stop();
@@ -3353,6 +3513,12 @@
                               .catch(function (e) {
                                 console.log(e),
                                   t(s.a.setNotification(e.message, "error")),
+                                  t(
+                                    b.actions.setListByCourse({
+                                      type: f,
+                                      list: l.c,
+                                    })
+                                  ),
                                   t(
                                     b.actions.sortListByCourse({
                                       type: f,
@@ -3393,7 +3559,7 @@
                           t.abrupt(
                             "return",
                             u
-                              .g(
+                              .f(
                                 { ClinicalCaseID: e, CourseID: a },
                                 r().auth.authToken
                               )
@@ -3532,7 +3698,7 @@
                             t.abrupt(
                               "return",
                               u
-                                .h(
+                                .g(
                                   Object(r.a)(
                                     Object(r.a)({}, e),
                                     {},
@@ -3570,9 +3736,13 @@
           removeCCase: p,
           deleteCCaseByCourse: function (e) {
             return function (t, n) {
+              var r = n().courses.currentCourse.id;
               return t(p(e))
                 .then(function () {
-                  return u.c({ ID: e }, n().auth.authToken);
+                  return u.h(
+                    { ClinicalCaseID: e, CourseID: r, Displayable: 0 },
+                    n().auth.authToken
+                  );
                 })
                 .then(function () {
                   t(
@@ -3616,7 +3786,7 @@
       "use strict";
       var r = n(12),
         a = n(10),
-        i = n(18);
+        i = n(17);
       t.a = function (e) {
         var t = e.path,
           n = e.method,
@@ -3641,6 +3811,6 @@
       };
     },
   },
-  [[296, 1, 2]],
+  [[303, 1, 2]],
 ]);
-//# sourceMappingURL=main.1530e9eb.chunk.js.map
+//# sourceMappingURL=main.ea7859ce.chunk.js.map

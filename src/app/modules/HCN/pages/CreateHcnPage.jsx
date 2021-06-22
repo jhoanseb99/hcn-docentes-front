@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import { actions as hcnRedux } from "../_redux/hcnRedux";
@@ -9,6 +9,7 @@ import HcnForm from "../components/HcnForm";
 function CreateHcnPage() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { progress } = useSelector((state) => state.hcn);
 
   const saveHCN = (hcn_data) => {
     dispatch(hcnRedux.createHcn(hcn_data)).then(() =>
@@ -19,16 +20,7 @@ function CreateHcnPage() {
   return (
     <div className="card">
       <div className="card-body">
-        <BaseSection
-          title="Crear Historia Clínica Nutricional"
-          component={() => (
-            <ProgressBar
-              className="mb-3"
-              now={60}
-              label={`Progreso de la hcn %`}
-            />
-          )}
-        >
+        <BaseSection title="Crear Historia Clínica Nutricional">
           <HcnForm handleSubmit={saveHCN} />
         </BaseSection>
       </div>

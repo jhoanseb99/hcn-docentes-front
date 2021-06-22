@@ -61,42 +61,20 @@ export function getCourse(params, authToken) {
   });
 }
 
-export function updateStudent(props, authToken) {
-  return makeRequest({
-    path: PATH_UPDATE_COURSE,
-    method: "POST",
-    headers: new Headers({
-      Token: authToken,
-    }),
-    body: JSON.stringify({
-      ID: props.id,
-      Name: props.name,
-      Email: props.email,
-    }),
-  });
-}
-
-export function createStudent(props, authToken) {
-  return makeRequest({
-    path: PATH_CREATE_COURSE,
-    method: "POST",
-    headers: new Headers({
-      Token: authToken,
-    }),
-    body: JSON.stringify({
-      ID: props.id,
-      Name: props.name,
-      Email: props.email,
-    }),
-  });
-}
-
-export function deleteStudent(authToken) {
-  return makeRequest({
-    path: PATH_DELETE_COURSE,
-    method: "DELETE",
-    headers: new Headers({
-      Token: authToken,
-    }),
+export function GetAllStudentsCourse(params, authToken) {
+  return new Promise((resolve, reject) => {
+    makeRequest({
+      path: PATH_GET_ALL_STUDENTS_COURSE + getQueryParams(params),
+      method: "GET",
+      headers: new Headers({
+        Token: authToken,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.json();
+      })
+      .then((response) => resolve(response))
+      .catch((err) => reject(err.message));
   });
 }

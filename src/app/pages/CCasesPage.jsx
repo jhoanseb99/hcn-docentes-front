@@ -128,9 +128,6 @@ function CCasesPage() {
                     {moment(value.CreationDate).format("DD-MM-YYYY")}
                   </small>
                 </div>
-                <div className="card-body p-0 pt-2">
-                  <strong>Contiene:</strong>
-                </div>
               </div>
             </div>
           </div>

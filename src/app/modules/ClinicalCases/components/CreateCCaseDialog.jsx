@@ -9,7 +9,9 @@ function CreateCCaseDialog({ open, handleClose }) {
   const dispatch = useDispatch();
 
   const handleCreate = (values) => {
-    dispatch(actions.createCCase(values)).then(() => handleClose());
+    dispatch(actions.createCCase(values)).then(() => {
+      handleClose();
+    });
   };
 
   return (

@@ -9,9 +9,9 @@ import { actions } from "app/modules/Activities/_redux/activitiesRedux";
 
 function FeedbackHcnPage(props) {
   const { activity_id, mongo_id } = props.match.params;
-  const { gradeList } = useSelector(({ activities, auth }) => ({
+  const { gradeList, progress } = useSelector(({ activities, hcn }) => ({
     gradeList: activities.gradeList,
-    studentsList: auth.authToken,
+    progress: hcn.progress,
   }));
   const [hcn_data, setHcnData] = React.useState({});
   const [activity, setActivity] = React.useState({ Reviewed: 0 });
@@ -53,7 +53,7 @@ function FeedbackHcnPage(props) {
           component={() => (
             <ProgressBar
               className="mb-3"
-              now={60}
+              now={progress}
               label={`Progreso de la hcn %`}
             />
           )}

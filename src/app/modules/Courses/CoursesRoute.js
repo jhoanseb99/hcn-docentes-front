@@ -9,6 +9,7 @@ import Announcements from "app/pages/Announcements.jsx";
 import CCasesPage from "app/pages/CCasesPage.jsx";
 import HcnPage from "app/pages/HcnPage.jsx";
 import GradePage from "app/pages/GradePage";
+import StudentsPage from "app/pages/StudentsPage";
 
 export default function CoursesRoute() {
   const { currentCourse } = useSelector((state) => state.courses);
@@ -45,13 +46,17 @@ export default function CoursesRoute() {
             path="/courses/clinical-cases"
             component={CCasesPage}
           />
+          <Route
+            exact={true}
+            path="/courses/students"
+            component={StudentsPage}
+          />
           <Route exact={true} path="/courses/hcn" component={HcnPage} />
         </>
       ) : (
         <Redirect to="/courses/all" />
       )}
 
-      {/* <Route exact={true} path="/courses/:id" component={(props) => <MainCoursePage {...props}/>} /> */}
       <Redirect to="/error/404" />
     </Switch>
   );

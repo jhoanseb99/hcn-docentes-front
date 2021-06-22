@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -9,6 +10,8 @@ import GeneralDataForm from "../utils/GeneralDataForm";
 import PatientDataForm from "../utils/PatientDataForm";
 import AnthropometryDataForm from "../utils/AnthropometryDataForm";
 import { CircularProgress } from "@material-ui/core";
+
+import { actions } from "../_redux/hcnRedux";
 
 const modeTypes = {
   create: "create",
@@ -76,6 +79,7 @@ function HcnForm(props) {
   } = props;
 
   const history = useHistory();
+  const dispatch = useDispatch();
   const [displayFields, setDisplayFields] = React.useState(getDisplayObject());
 
   const hcnSchema = Yup.object().shape({
@@ -106,7 +110,10 @@ function HcnForm(props) {
     });
   };
 
-  console.log(formik);
+  React.useEffect(() => {
+    const progress = (Object.keys(formik.values).length / 26) * 100;
+    dispatch(actions.setProgress(progress));
+  }, [formik.values]);
 
   return (
     <form onSubmit={formik.handleSubmit}>

@@ -12,18 +12,9 @@ function GeneralDataForm(props) {
               type="date"
               name="GeneralData_ValorationDate"
               className="form-control"
+              disabled={hasFeedback}
               {...formik.getFieldProps("GeneralData_ValorationDate")}
             />
-            {hasFeedback && (
-              <button
-                type="button"
-                className="btn btn-primary ml-3"
-                name="GeneralData_ValorationDate"
-                onClick={handleClick}
-              >
-                +
-              </button>
-            )}
           </div>
           {displayFields["GeneralData_ValorationDate"].Feedback ? (
             <textarea type="text" className="form-control" />
@@ -36,18 +27,9 @@ function GeneralDataForm(props) {
               type="date"
               name="GeneralData_AdmissionDate"
               className="form-control"
+              disabled={hasFeedback}
               {...formik.getFieldProps("GeneralData_AdmissionDate")}
             />
-            {hasFeedback && (
-              <button
-                type="button"
-                className="btn btn-primary ml-3"
-                name="GeneralData_AdmissionDate"
-                onClick={handleClick}
-              >
-                +
-              </button>
-            )}
           </div>
           {displayFields["GeneralData_AdmissionDate"].Feedback ? (
             <textarea type="text" className="form-control" />
@@ -62,18 +44,9 @@ function GeneralDataForm(props) {
             type="number"
             name="GeneralData_HCNNumber"
             className="form-control"
+            disabled={hasFeedback}
             {...formik.getFieldProps("GeneralData_HCNNumber")}
           />
-          {hasFeedback && (
-            <button
-              type="button"
-              className="btn btn-primary ml-3"
-              name="GeneralData_HCNNumber"
-              onClick={handleClick}
-            >
-              +
-            </button>
-          )}
         </div>
         {displayFields["GeneralData_HCNNumber"].Feedback ? (
           <textarea type="text" className="form-control" />
@@ -86,18 +59,9 @@ function GeneralDataForm(props) {
             type="number"
             name="GeneralData_Room"
             className="form-control"
+            disabled={hasFeedback}
             {...formik.getFieldProps("GeneralData_Room")}
           />
-          {hasFeedback && (
-            <button
-              type="button"
-              className="btn btn-primary ml-3"
-              name="GeneralData_Room"
-              onClick={handleClick}
-            >
-              +
-            </button>
-          )}
         </div>
         {displayFields["GeneralData_Room"].Feedback ? (
           <textarea type="text" className="form-control" />
@@ -110,32 +74,26 @@ function GeneralDataForm(props) {
             type="text"
             name="GeneralData_Interpretation"
             className="form-control"
+            disabled={hasFeedback}
             {...formik.getFieldProps("GeneralData_Interpretation")}
           />
-          {hasFeedback && (
-            <div>
-              <button
-                type="button"
-                className="btn btn-primary ml-3"
-                name="GeneralData_Interpretation"
-                onClick={handleClick}
-              >
-                +
-              </button>
-            </div>
-          )}
         </div>
         {displayFields["GeneralData_Interpretation"].Feedback ? (
           <textarea type="text" className="form-control" />
         ) : null}
       </div>
 
-      <textarea
-        type="text"
-        name="GeneralData_Feedback"
-        className="form-control"
-        {...formik.getFieldProps("GeneralData_Feedback")}
-      />
+      {hasFeedback && (
+        <div className="form-group">
+          <label htmlFor="GeneralData_Feedback">Comentario docente</label>
+          <textarea
+            type="text"
+            name="GeneralData_Feedback"
+            className="form-control"
+            {...formik.getFieldProps("GeneralData_Feedback")}
+          />
+        </div>
+      )}
     </>
   );
 }
